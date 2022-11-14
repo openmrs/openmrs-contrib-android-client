@@ -27,6 +27,7 @@ import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
 import com.openmrs.android_sdk.library.databases.entities.PatientEntity
 import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
 import com.openmrs.android_sdk.library.models.Allergy
 import com.openmrs.android_sdk.library.models.Encounter
@@ -43,6 +44,7 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
 import com.openmrs.android_sdk.utilities.execute
+import dagger.hilt.android.EntryPointAccessors
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.io.ByteArrayInputStream
@@ -144,7 +146,11 @@ object AppDatabaseHelper {
             null
         }
         encounter.location = location
-        encounter.form = FormRepository().fetchFormByUuid(entity.formUuid).execute()
+        val formRepository: FormRepository = EntryPointAccessors.fromApplication(
+                OpenmrsAndroid.getInstance()!!.applicationContext,
+                RepositoryEntryPoint::class.java
+        ).provideFormRepository()
+        encounter.form = formRepository.fetchFormByUuid(entity.formUuid).execute()
         return encounter
     }
 

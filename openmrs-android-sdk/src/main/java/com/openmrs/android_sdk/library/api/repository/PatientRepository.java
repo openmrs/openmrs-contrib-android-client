@@ -38,7 +38,6 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
 import com.openmrs.android_sdk.R;
-import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.RestServiceBuilder;
@@ -69,31 +68,19 @@ import com.openmrs.android_sdk.utilities.ToastUtil;
  */
 @Singleton
 public class PatientRepository extends BaseRepository {
-    private PatientDAO patientDAO;
-    private LocationRepository locationRepository;
+    private final PatientDAO patientDAO;
+    private final LocationRepository locationRepository;
+    private final EncounterRepository encounterRepository;
 
     /**
      * Instantiates a new Patient repository.
      */
     @Inject
-    public PatientRepository() {
-        this.patientDAO = new PatientDAO();
-        this.locationRepository = new LocationRepository();
-    }
-
-    /**
-     * Instantiates a new Patient repository.
-     *
-     * @param logger             the logger
-     * @param patientDAO         the patient dao
-     * @param restApi            the rest api
-     * @param locationRepository the location repository
-     */
-    //used in the unit tests
-    public PatientRepository(OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
-        super(restApi, logger);
+    public PatientRepository(PatientDAO patientDAO, LocationRepository locationRepository,
+                             EncounterRepository encounterRepository) {
         this.patientDAO = patientDAO;
         this.locationRepository = locationRepository;
+        this.encounterRepository = encounterRepository;
     }
 
     /**
@@ -144,18 +131,18 @@ public class PatientRepository extends BaseRepository {
         personPhotoCall.enqueue(new Callback<PatientPhoto>() {
             @Override
             public void onResponse(@NonNull Call<PatientPhoto> call, @NonNull Response<PatientPhoto> response) {
-                logger.i(response.message());
                 if (!response.isSuccessful()) {
-
+                    getLogger().e(response.message());
                     //string resource added "patient_photo_update_unsuccessful"
-                    ToastUtil.error("Patient photo cannot be synced due to server error: " + response.message());
+                    ToastUtil.error("Patient photo cannot be synced due to server error " + response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PatientPhoto> call, @NonNull Throwable t) {
+                getLogger().e(t.getMessage());
                 //string resource added "patient_photo_update_unsuccessful"
-                ToastUtil.notify("Patient photo cannot be synced due to server error: " + t.toString());
+                ToastUtil.error("Patient photo cannot be synced due to server error " + t.toString());
             }
         });
     }
@@ -206,7 +193,7 @@ public class PatientRepository extends BaseRepository {
 
                 Data data = new Data.Builder().putString(PRIMARY_KEY_ID, patient.getId().toString()).build();
                 Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-                workManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
+                getWorkManager().enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
 
                 return ResultType.PatientUpdateLocalSuccess;
             }
@@ -272,7 +259,7 @@ public class PatientRepository extends BaseRepository {
                     inputStream.close();
                     return bitmap;
                 } catch (Exception e) {
-                    logger.e(e.getMessage());
+                    getLogger().e(e.getMessage());
                 }
             }
             return null;
@@ -295,7 +282,7 @@ public class PatientRepository extends BaseRepository {
             Encountercreate encountercreate = dao.getCreatedEncountersByID(id);
             encountercreate.setPatient(patient.getUuid());
             encountercreate.setSynced(false);
-            new EncounterRepository().updateEncounterCreate(encountercreate);
+            encounterRepository.updateEncounterCreate(encountercreate);
         }
     }
 

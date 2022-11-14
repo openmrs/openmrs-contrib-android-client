@@ -18,7 +18,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ExifInterface
-import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.utilities.ApplicationConstants.INTENT_KEY_NAME
 import com.openmrs.android_sdk.utilities.ApplicationConstants.INTENT_KEY_PHOTO
 import com.openmrs.android_sdk.utilities.ImageUtils
@@ -60,7 +60,7 @@ object ImageUtils {
             }
             portraitImg = ImageUtils.rotateImage(photo, rotateAngle)
         } catch (e: IOException) {
-            OpenMRSLogger().e(e.message)
+            OpenmrsAndroid.getOpenMRSLogger().e(e.message)
             portraitImg = photo
         }
         return ImageUtils.resizePhoto(portraitImg)

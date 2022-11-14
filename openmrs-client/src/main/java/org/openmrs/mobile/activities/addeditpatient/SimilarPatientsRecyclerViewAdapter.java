@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.addeditpatient;
 
 import java.util.List;
 
+import dagger.hilt.android.EntryPointAccessors;
 import rx.android.schedulers.AndroidSchedulers;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.common.base.Objects;
 import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.DateUtils;
@@ -44,11 +46,13 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
+    private final VisitRepository visitRepository;
 
     public SimilarPatientsRecyclerViewAdapter(Activity mContext, List<Patient> patientList, Patient patient) {
         this.newPatient = patient;
         this.patientList = patientList;
         this.mContext = mContext;
+        this.visitRepository = EntryPointAccessors.fromApplication(mContext, RepositoryEntryPoint.class).provideVisitRepository();
     }
 
     @NonNull
@@ -118,8 +122,8 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         new PatientDAO().savePatient(patient)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(id -> {
-                new VisitRepository().syncVisitsData(patient);
-                new VisitRepository().syncLastVitals(patient.getUuid());
+                visitRepository.syncVisitsData(patient);
+                visitRepository.syncLastVitals(patient.getUuid());
             });
     }
 

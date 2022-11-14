@@ -103,12 +103,8 @@ public class EncounterDAO {
      */
     public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
         return AppDatabaseHelper.createObservableIO(() -> {
-            try {
-                EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
-                return AppDatabaseHelper.convert(encounterEntity);
-            } catch (Exception e) {
-                return new Encounter();
-            }
+            EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
+            return AppDatabaseHelper.convert(encounterEntity);
         });
     }
 

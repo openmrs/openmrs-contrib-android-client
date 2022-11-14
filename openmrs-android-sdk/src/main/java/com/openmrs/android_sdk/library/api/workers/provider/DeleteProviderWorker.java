@@ -14,34 +14,35 @@
 
 package com.openmrs.android_sdk.library.api.workers.provider;
 
+import java.io.IOException;
+
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
+import androidx.hilt.work.HiltWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.openmrs.android_sdk.R;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 /**
  * The type Delete provider worker.
  */
+@HiltWorker
 public class DeleteProviderWorker extends Worker {
-    ProviderRoomDAO providerRoomDao;
-    RestApi restApi;
+    private final ProviderRoomDAO providerRoomDao;
+    private final RestApi restApi;
 
     /**
      * Instantiates a new Delete provider worker.
@@ -49,10 +50,13 @@ public class DeleteProviderWorker extends Worker {
      * @param context      the context
      * @param workerParams the worker params
      */
-    public DeleteProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    @AssistedInject
+    public DeleteProviderWorker(@Assisted @NonNull Context context,
+                                @Assisted @NonNull WorkerParameters workerParams,
+                                ProviderRoomDAO providerRoomDao, RestApi restApi) {
         super(context, workerParams);
-        restApi = RestServiceBuilder.createService(RestApi.class);
-        providerRoomDao = AppDatabase.getDatabase(getApplicationContext()).providerRoomDAO();
+        this.providerRoomDao = providerRoomDao;
+        this.restApi = restApi;
     }
 
     @NonNull
@@ -63,7 +67,7 @@ public class DeleteProviderWorker extends Worker {
         if (deleteProvider(restApi, providerUuidTobeDeleted)) {
             new Handler(Looper.getMainLooper()).post(() -> {
                 ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_provider_success_msg));
-                OpenmrsAndroid.getOpenMRSLogger().e(OpenmrsAndroid.getInstance().getString(R.string.delete_provider_success_msg));
+                OpenmrsAndroid.getOpenMRSLogger().i(OpenmrsAndroid.getInstance().getString(R.string.delete_provider_success_msg));
             });
             return Result.success();
         } else {

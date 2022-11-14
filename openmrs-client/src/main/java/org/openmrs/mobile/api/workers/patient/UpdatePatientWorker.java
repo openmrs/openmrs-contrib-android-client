@@ -13,6 +13,10 @@
 
 package org.openmrs.mobile.api.workers.patient;
 
+import javax.inject.Inject;
+import java.io.IOException;
+
+import retrofit2.Response;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,7 +27,6 @@ import androidx.work.WorkerParameters;
 
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
@@ -34,20 +37,17 @@ import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
-import java.io.IOException;
-
-import retrofit2.Response;
 
 public class UpdatePatientWorker extends Worker {
-    private RestApi restApi;
-    private OpenMRSLogger logger;
-    private PatientDAO patientDAO;
+    @Inject
+    RestApi restApi;
+    @Inject
+    OpenMRSLogger logger;
+    @Inject
+    PatientDAO patientDAO;
 
     public UpdatePatientWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
         super(appContext, workerParams);
-        restApi = RestServiceBuilder.createService(RestApi.class);
-        logger = new OpenMRSLogger();
-        patientDAO = new PatientDAO();
     }
 
     @NonNull

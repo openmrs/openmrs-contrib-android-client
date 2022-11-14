@@ -195,6 +195,9 @@ dependencies {
     // Hilt Dependency Injection
     implementation "com.google.dagger:hilt-android:${versions.hilt}"
     kapt "com.google.dagger:hilt-compiler:${versions.hilt}"
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    kapt("androidx.hilt:hilt-compiler:1.0.0") /* Use it for Kotlin Workers */
+    annotationProcessor("androidx.hilt:hilt-compiler:1.0.0") /* Use it for Java Workers */
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_version}")

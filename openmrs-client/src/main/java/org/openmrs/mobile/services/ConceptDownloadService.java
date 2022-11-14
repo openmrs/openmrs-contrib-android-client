@@ -1,5 +1,16 @@
 package org.openmrs.mobile.services;
 
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
+
+import javax.inject.Inject;
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -17,33 +28,25 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
 import com.openmrs.android_sdk.library.models.Link;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.library.models.SystemSetting;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
-
+@AndroidEntryPoint
 public class ConceptDownloadService extends Service {
     private int downloadedConcepts;
     private int maxConceptsInOneQuery = 100;
+    @Inject
+    RestApi service;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -60,7 +63,6 @@ public class ConceptDownloadService extends Service {
     }
 
     private void startDownload() {
-        RestApi service = RestServiceBuilder.createService(RestApi.class);
         Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
                 ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
                 ApplicationConstants.API.FULL);
@@ -119,7 +121,6 @@ public class ConceptDownloadService extends Service {
     }
 
     private void downloadConcepts(int startIndex) {
-        RestApi service = RestServiceBuilder.createService(RestApi.class);
         Call<Results<ConceptEntity>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
         call.enqueue(new Callback<Results<ConceptEntity>>() {
             @Override

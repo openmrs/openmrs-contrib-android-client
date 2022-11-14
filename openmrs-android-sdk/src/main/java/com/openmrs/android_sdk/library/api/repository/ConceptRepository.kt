@@ -12,9 +12,7 @@ import javax.inject.Singleton
 import java.util.concurrent.Callable
 
 @Singleton
-class ConceptRepository @Inject constructor() : BaseRepository() {
-
-    private val conceptRoomDAO: ConceptRoomDAO = db.conceptRoomDAO()
+class ConceptRepository @Inject constructor(private val conceptRoomDAO: ConceptRoomDAO) : BaseRepository() {
 
     /**
      * Gets system property.

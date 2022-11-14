@@ -48,18 +48,9 @@ import com.openmrs.android_sdk.utilities.NetworkUtils;
  */
 @Singleton
 public class AllergyRepository extends BaseRepository {
-    private AllergyRoomDAO allergyRoomDAO;
+    private final AllergyRoomDAO allergyRoomDAO;
 
     @Inject
-    public AllergyRepository() {
-        allergyRoomDAO = db.allergyRoomDAO();
-    }
-
-    /**
-     * Instantiates a new Allergy repository.
-     *
-     * @param allergyRoomDAO the allergy room dao
-     */
     public AllergyRepository(AllergyRoomDAO allergyRoomDAO) {
         this.allergyRoomDAO = allergyRoomDAO;
     }
@@ -86,7 +77,7 @@ public class AllergyRepository extends BaseRepository {
                 }
                 return allergies;
             } else {
-                logger.e("Error with fetching allergies: " + response.message());
+                getLogger().e("Error with fetching allergies: " + response.message());
                 throw new Exception("Error with fetching allergies: " + response.message());
             }
         });
@@ -145,7 +136,7 @@ public class AllergyRepository extends BaseRepository {
 
                 // enqueue the work to workManager
                 Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-                workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
+                getWorkManager().enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
                 return ResultType.AllergyDeletionLocalSuccess;
             }
         });

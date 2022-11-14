@@ -33,8 +33,6 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
-import com.openmrs.android_sdk.library.OpenMRSLogger;
-import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.workers.provider.AddProviderWorker;
 import com.openmrs.android_sdk.library.api.workers.provider.DeleteProviderWorker;
 import com.openmrs.android_sdk.library.api.workers.provider.UpdateProviderWorker;
@@ -52,32 +50,13 @@ import com.openmrs.android_sdk.utilities.NetworkUtils;
 @Singleton
 public class ProviderRepository extends BaseRepository {
 
-    ProviderRoomDAO providerRoomDao;
+    private final ProviderRoomDAO providerRoomDao;
 
     /**
      * Instantiates a new Provider repository.
      */
     @Inject
-    public ProviderRepository() {
-        providerRoomDao = db.providerRoomDAO();
-    }
-
-    /**
-     * Instantiates a new Provider repository.
-     *
-     * @param restApi the rest api
-     * @param logger  the logger
-     */
-    public ProviderRepository(RestApi restApi, OpenMRSLogger logger) {
-        super(restApi, logger);
-    }
-
-    /**
-     * Sets provider room dao.
-     *
-     * @param providerRoomDao the provider room dao
-     */
-    public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
+    public ProviderRepository(ProviderRoomDAO providerRoomDao) {
         this.providerRoomDao = providerRoomDao;
     }
 
@@ -90,7 +69,7 @@ public class ProviderRepository extends BaseRepository {
         return createObservableIO(() -> {
             // If not online, fetch providers locally
             if (!NetworkUtils.isOnline()) {
-                logger.e("Offline providers fetched, couldn't sync with the database while offline");
+                getLogger().e("Offline providers fetched, couldn't sync with the database while offline");
                 return providerRoomDao.getProviderList().blockingGet();
             }
             providerRoomDao.deleteAll();
@@ -115,7 +94,7 @@ public class ProviderRepository extends BaseRepository {
                     }
                 }
             } else {
-                logger.e("Error fetching providers from the server: " + response.errorBody().string());
+                getLogger().e("Error fetching providers from the server: " + response.errorBody().string());
             }
 
             return providerRoomDao.getProviderList().blockingGet();
@@ -141,13 +120,13 @@ public class ProviderRepository extends BaseRepository {
                 Constraints constraints = new Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build();
-                workManager.enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class)
+                getWorkManager().enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class)
                         .setConstraints(constraints)
                         .setInputData(data)
                         .build()
                 );
 
-                logger.i("Provider will be synced to the server when device gets connected to network");
+                getLogger().i("Provider will be synced to the server when device gets connected to network");
                 return ResultType.AddProviderLocalSuccess;
             }
 
@@ -156,10 +135,10 @@ public class ProviderRepository extends BaseRepository {
             if (response.isSuccessful()) {
                 // Add provider to the database.
                 providerRoomDao.addProvider(response.body());
-                logger.i("Adding provider succeeded " + response.raw());
+                getLogger().i("Adding provider succeeded " + response.raw());
                 return ResultType.AddProviderSuccess;
             } else {
-                logger.e("Failed to add provider. Error:  " + response.message());
+                getLogger().e("Failed to add provider. Error:  " + response.message());
                 throw new Exception("Failed to add provider. Error:  " + response.message());
             }
         });
@@ -185,13 +164,13 @@ public class ProviderRepository extends BaseRepository {
                 Constraints constraints = new Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build();
-                workManager.enqueue(new OneTimeWorkRequest.Builder(UpdateProviderWorker.class)
+                getWorkManager().enqueue(new OneTimeWorkRequest.Builder(UpdateProviderWorker.class)
                         .setConstraints(constraints)
                         .setInputData(data)
                         .build()
                 );
 
-                logger.i("Updated provider will be synced to the server when device gets connected to network");
+                getLogger().i("Updated provider will be synced to the server when device gets connected to network");
                 return ResultType.UpdateProviderLocalSuccess;
             }
 
@@ -202,10 +181,10 @@ public class ProviderRepository extends BaseRepository {
                 providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
                         response.body().getPerson(), response.body().getUuid(),
                         response.body().getIdentifier());
-                logger.i("Updating provider succeeded " + response.raw());
+                getLogger().i("Updating provider succeeded " + response.raw());
                 return ResultType.UpdateProviderSuccess;
             } else {
-                logger.e("Failed to update provider. Error:  " + response.message());
+                getLogger().e("Failed to update provider. Error:  " + response.message());
                 throw new Exception("Failed to update provider. Error:  " + response.message());
             }
         });
@@ -230,13 +209,13 @@ public class ProviderRepository extends BaseRepository {
                 Constraints constraints = new Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build();
-                workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteProviderWorker.class)
+                getWorkManager().enqueue(new OneTimeWorkRequest.Builder(DeleteProviderWorker.class)
                         .setConstraints(constraints)
                         .setInputData(data)
                         .build()
                 );
 
-                logger.i("Provider will be removed from the server when you're back online");
+                getLogger().i("Provider will be removed from the server when you're back online");
                 return ResultType.ProviderDeletionLocalSuccess;
             }
 
@@ -245,10 +224,10 @@ public class ProviderRepository extends BaseRepository {
             if (response.isSuccessful()) {
                 // Delete provider from the database.
                 providerRoomDao.deleteByUuid(providerUuid);
-                logger.i("Deleting Provider Successful " + response.raw());
+                getLogger().i("Deleting Provider Successful " + response.raw());
                 return ResultType.ProviderDeletionSuccess;
             } else {
-                logger.e("Failed to delete provider. Error: " + response.message());
+                getLogger().e("Failed to delete provider. Error: " + response.message());
                 throw new Exception("Failed to delete provider. Error: " + response.message());
             }
         });

@@ -506,7 +506,7 @@ class AddEditPatientFragment : BaseFragment(), onInputSelected {
             }.show()
         }
 
-        PatientBirthdateValidatorWatcher(dobEditText, estimatedMonth, estimatedYear).let {
+        PatientBirthdateValidatorWatcher(requireContext(), dobEditText, estimatedMonth, estimatedYear).let {
             estimatedMonth.addTextChangedListener(it)
             estimatedYear.addTextChangedListener(it)
         }

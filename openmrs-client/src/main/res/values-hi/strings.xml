@@ -122,7 +122,6 @@
     <string name="action_find_patients">मरीजों का पता लगाएं </string>
     <string name="action_synced_patients">सिंक किए गए मरीज</string>
     <string name="action_download_patients">मरीजों को डाउनलोड करें</string>
-    <string name="action_add_patients">मरीजों को जोड़ें</string>
     <string name="search_patient_hint">रोगी का नाम</string>
     <string name="search_patient_no_results">डेटाबेस में कोई भी मरीज मौजूद नहीं है </string>
     <string name="search_patient_no_result_for_query">क्वेरी \"%1$s\" के लिए कोई परिणाम नहीं मिला \</string>
@@ -500,6 +499,7 @@
     <string name="patent_data_synced_successfully">रोगी [ %1$i ] सर्वर से सफलतापूर्वक समन्वयित हो गया</string>
 
     <!--LastViewPatients Fragment-->
+    <string name="use_search_to_find_patients">रोगियों को खोजने के लिए खोज बटन का उपयोग करें</string>
     <string name="fetch_patients_remote_error">रोगियों को लोड करने में त्रुटि</string>
     <string name="search_patient_remote_error">रोगी को खोजने में त्रुटि</string>
     <string name="search_patient_remote_no_results">कोई मरीज नहीं मिला।</string>

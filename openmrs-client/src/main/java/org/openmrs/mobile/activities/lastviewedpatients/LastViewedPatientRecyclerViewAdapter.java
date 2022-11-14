@@ -375,7 +375,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                                     visitRepository.syncLastVitals(newPatient.getUuid());
                                     patients.remove(patient);
                                     notifyDataSetChanged();
-                                    if (showSnackBar) {
+                                    if (showSnackBar && view.isActive()) {
                                         view.showOpenPatientSnackbar(id);
                                     }
                                 }),

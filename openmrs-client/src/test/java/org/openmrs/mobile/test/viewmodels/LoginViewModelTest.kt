@@ -312,6 +312,7 @@ class LoginViewModelTest : ACUnitTestBaseRx() {
     fun saveLocationsToDatabase() {
         val locations = listOf(LocationEntity("Pharmacy"), LocationEntity("Clinic"))
         val selectedLocation = "Pharmacy"
+        `when`(locationDAO.deleteAllLocations()).thenReturn(Observable.just(true))
         `when`(locationDAO.saveLocation(any())).thenReturn(Observable.just(1L))
 
         viewModel.saveLocationsToDatabase(locations, selectedLocation)

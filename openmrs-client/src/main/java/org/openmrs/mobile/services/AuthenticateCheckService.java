@@ -14,6 +14,13 @@
 
 package org.openmrs.mobile.services;
 
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.ComponentName;
@@ -25,24 +32,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.models.Session;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AuthenticateCheckService extends Service {
     private IBinder mBinder = new SocketServerBinder();
@@ -97,7 +95,7 @@ public class AuthenticateCheckService extends Service {
                     if (response.isSuccessful()) {
                         Session session = response.body();
                         if (session.isAuthenticated()) {
-                            Log.e("Service Task ", "user authenticated");
+                            Log.i("Service Task ", "user authenticated");
                         } else {
                             Log.e("Service Task ", "User Credentials Changed");
                             if (isForeground(OpenMRS.getInstance().getPackageName())) {
@@ -105,7 +103,6 @@ public class AuthenticateCheckService extends Service {
                                 broadcastIntent.setAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
                                 sendBroadcast(broadcastIntent);
                             } else {
-                                AppDatabase.getDatabase(getApplicationContext()).close();
                                 OpenmrsAndroid.clearUserPreferencesData();
                                 OpenmrsAndroid.clearCurrentLoggedInUserInfo();
                             }

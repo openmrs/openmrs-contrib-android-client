@@ -39,6 +39,7 @@ class DashboardActivity : ACBaseActivity() {
             doubleBackToExitPressedOnce = false
         }
     }
+    internal var isNavigationInProgress = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,6 +102,11 @@ class DashboardActivity : ACBaseActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.dashboard_nav_host_fragment) as NavHostFragment
         val dashboardFragment: DashboardFragment? = navHostFragment.childFragmentManager.primaryNavigationFragment as DashboardFragment?
         dashboardFragment?.bindDrawableResources()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        isNavigationInProgress = false
     }
 
     override fun onBackPressed() {

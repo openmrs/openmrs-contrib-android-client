@@ -189,9 +189,12 @@ class DashboardFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun navigateToScreen(destination: NavDirections) {
-        if (!(activity as DashboardActivity).isNavigationInProgress) {
-            (activity as DashboardActivity).isNavigationInProgress = true
-            findNavController().navigate(destination)
+        (activity as DashboardActivity).apply {
+            if (!isNavigationInProgress) {
+                showProgressBar()
+                isNavigationInProgress = true
+                findNavController().navigate(destination)
+            }
         }
     }
 

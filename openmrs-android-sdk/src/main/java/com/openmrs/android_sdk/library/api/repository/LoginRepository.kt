@@ -23,7 +23,12 @@ class LoginRepository @Inject constructor() : BaseRepository() {
         return createObservableIO(Callable {
             restApi = RestServiceBuilder.createService(RestApi::class.java, username, password)
             restApi.getSession().execute().run {
-                if (isSuccessful && body() != null) return@Callable body()!!
+                if (isSuccessful && body() != null) {
+                    val sessionId = headers().get("Set-Cookie").toString().split("=")[1]
+                    body()?.sessionId = sessionId
+                    return@Callable body()!!
+                }
+
                 else throw Exception("Error fetching session: ${message()}")
             }
         })

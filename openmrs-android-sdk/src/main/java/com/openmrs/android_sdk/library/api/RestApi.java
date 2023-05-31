@@ -230,6 +230,24 @@ public interface RestApi {
     Call<Encounter> updateEncounter(@Path("uuid") String uuid, @Body Encountercreate encountercreate);
 
     /**
+     * Get all encounter resources for a patient.
+     *
+     * @param uuid the UUID of the patient
+     * @return the encounter list
+     */
+    @GET("encounter")
+    Call<Results<Resource>> getAllEncountersForPatientByPatientUuid(@Query("patient") String uuid);
+
+    /**
+     * Get Encounter from Uuid
+     *
+     * @param encounterUuid the UUID of the patient
+     * @return the encounter list
+     */
+    @GET("encounter/{encounterUuid}")
+    Call<Encounter> getEncounterByUuid(String encounterUuid);
+
+    /**
      * Gets encounter types.
      *
      * @return the encounter types
@@ -282,6 +300,17 @@ public interface RestApi {
     @GET("visit")
     Call<Results<Visit>> findVisitsByPatientUUID(@Query("patient") String patientUUID,
                                                  @Query("v") String representation);
+
+    /**
+     * Get a Visit by visit uuid
+     *
+     * @param visitUuid the patient uuid
+     *
+     * @return the Visit
+     */
+
+    @GET("visit/{visitUuid}")
+    Call<Visit> getVisitFromUuid(String visitUuid);
 
     /**
      * Gets visit type.

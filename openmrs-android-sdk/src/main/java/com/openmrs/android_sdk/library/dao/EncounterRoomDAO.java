@@ -20,6 +20,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity;
 
 import java.util.List;
 
@@ -86,12 +87,40 @@ public interface EncounterRoomDAO {
     long addEncounter(EncounterEntity encounterEntity);
 
     /**
+     * Add encounter standalone entity.
+     *
+     * @param standaloneEncounterEntity the encounterStandalone entity
+     * @return the long
+     */
+
+    @Insert
+    long addEncounterStandaloneEntity(StandaloneEncounterEntity standaloneEncounterEntity);
+
+    /**
+     * Add encounter standalone entity.
+     *
+     * @param standaloneEncounterEntity the encounterStandalone entity
+     * @return the long
+     */
+
+    @Insert
+    List<Long> addEncounterStandaloneEntityList(List<StandaloneEncounterEntity> standaloneEncounterEntity);
+
+    /**
      * Delete encounter.
      *
      * @param uuid the uuid
      */
     @Query("DELETE FROM encounters WHERE uuid = :uuid")
     void deleteEncounter(String uuid);
+
+    /**
+     * Delete Standalone Encounter.
+     *
+     * @param patientUuid the uuid of the patient
+     */
+    @Query("DELETE FROM standaloneEncounters WHERE uuid = :patientUuid")
+    void deleteStandaloneEncounter(String patientUuid);
 
     /**
      * Delete encounter by id.

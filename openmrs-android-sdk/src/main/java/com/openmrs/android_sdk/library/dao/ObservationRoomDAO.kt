@@ -11,34 +11,30 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 
-import java.util.List;
-
-import io.reactivex.Single;
-
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
+import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
+import io.reactivex.Single
 
 /**
  * The interface Observation room dao.
  */
 @Dao
-public interface ObservationRoomDAO {
+interface ObservationRoomDAO {
     /**
      * Add observation.
      *
      * @param observationEntity the observation entity
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addObservation(ObservationEntity observationEntity);
+    fun addObservation(observationEntity: ObservationEntity)
 
     /**
      * Update observation.
@@ -46,7 +42,7 @@ public interface ObservationRoomDAO {
      * @param observationEntity the observation entity
      */
     @Update
-    void updateObservation(ObservationEntity observationEntity);
+    fun updateObservation(observationEntity: ObservationEntity)
 
     /**
      * Delete observation.
@@ -54,7 +50,7 @@ public interface ObservationRoomDAO {
      * @param observationEntity the observation entity
      */
     @Delete
-    void deleteObservation(ObservationEntity observationEntity);
+    fun deleteObservation(observationEntity: ObservationEntity)
 
     /**
      * Find observation by encounter id single.
@@ -63,7 +59,7 @@ public interface ObservationRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
-    Single<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
+    fun findObservationByEncounterID(encounterID: Long): Single<List<ObservationEntity?>?>?
 
     /**
      * Gets observation by uuid.
@@ -72,14 +68,13 @@ public interface ObservationRoomDAO {
      * @return the observation by uuid
      */
     @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
-    Single<ObservationEntity> getObservationByUUID(String observationUUID);
+    fun getObservationByUUID(observationUUID: String): Single<ObservationEntity?>?
 
     /**
      * Gets all observations.
      *
      * @return the all observations
      */
-    @Query("SELECT * FROM observations")
-    Single<List<ObservationEntity>> getAllObservations();
-
+    @get:Query("SELECT * FROM observations")
+    val allObservations: Single<List<ObservationEntity?>?>?
 }

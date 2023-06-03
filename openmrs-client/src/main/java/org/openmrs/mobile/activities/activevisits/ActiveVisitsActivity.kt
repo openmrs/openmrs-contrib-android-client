@@ -39,5 +39,6 @@ class ActiveVisitsActivity : ACBaseActivity() {
             addFragmentToActivity(supportFragmentManager,
                     activeVisitsFragment, R.id.activeVisitContentFrame)
         }
+        //test
     }
 }

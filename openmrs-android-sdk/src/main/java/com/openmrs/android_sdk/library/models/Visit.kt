@@ -49,3 +49,4 @@ class Visit : Resource() {
 
     fun isActiveVisit() = stopDatetime.isNullOrEmpty()
 }
+//test

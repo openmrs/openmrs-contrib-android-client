@@ -40,4 +40,5 @@ class ActiveVisitsActivity : ACBaseActivity() {
                     activeVisitsFragment, R.id.activeVisitContentFrame)
         }
     }
+    //test
 }

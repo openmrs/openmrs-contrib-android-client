@@ -233,7 +233,7 @@ public interface RestApi {
      * Get all encounter resources for a patient.
      *
      * @param uuid the UUID of the patient
-     * @return the encounter list
+     * @return the encounter resource list
      */
     @GET("encounter")
     Call<Results<Resource>> getAllEncountersForPatientByPatientUuid(@Query("patient") String uuid);
@@ -242,10 +242,54 @@ public interface RestApi {
      * Get Encounter from Uuid
      *
      * @param encounterUuid the UUID of the patient
-     * @return the encounter list
+     * @return the encounter
      */
     @GET("encounter/{encounterUuid}")
     Call<Encounter> getEncounterByUuid(String encounterUuid);
+
+    /**
+     * Get Encounter Resources from Patient uuid and EncounterType uuid
+     *
+     * @param patient_uuid the UUID of the Patient
+     * @param encounterType_uuid the UUID of the Encounter type
+     * @return the encounter resource list
+     */
+    @GET("encounter")
+    Call<Results<Resource>> getEncounterResourcesByEncounterType(@Query("patient") String patient_uuid,
+                                                  @Query("encounterType") String encounterType_uuid);
+
+    /**
+     * Get Encounter Resources from Patient uuid and OrderType uuid
+     *
+     * @param patient_uuid the UUID of the Patient
+     * @param orderType_uuid the UUID of the Order type
+     * @return the encounter resource list
+     */
+    @GET("encounter")
+    Call<Results<Resource>> getEncounterResourcesByOrderType(@Query("patient") String patient_uuid,
+                                                  @Query("orderType") String orderType_uuid);
+
+    /**
+     * Get Encounter Resources from Patient uuid and starting from the given date
+     *
+     * @param patient_uuid the UUID of the Patient
+     * @param fromDate the String representation of Date in 'YYYY-MM-DD' format
+     * @return the encounter resource list
+     */
+    @GET("encounter")
+    Call<Results<Resource>> getEncounterResourcesFromDate(@Query("patient") String patient_uuid,
+                                                  @Query("fromdate") String fromDate);
+
+    /**
+     * Get Encounter Resources from Patient uuid and Visit uuid
+     *
+     * @param patient_uuid the UUID of the Patient
+     * @param visit_uuid the UUID of the visit
+     * @return the encounter resource list
+     */
+    @GET("encounter")
+    Call<Results<Resource>> getEncounterResourcesByVisit(@Query("patient") String patient_uuid,
+                                                  @Query("fromdate") String visit_uuid);
 
     /**
      * Gets encounter types.

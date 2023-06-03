@@ -117,7 +117,6 @@ object AppDatabaseHelper {
     @JvmStatic
     fun convertToStandalone(encounter: Encounter): StandaloneEncounterEntity {
         val standaloneEncounterEntity = StandaloneEncounterEntity(
-            id = null,
             display = encounter.display,
             uuid = encounter.uuid,
             encounterDateTime = encounter.encounterDate,

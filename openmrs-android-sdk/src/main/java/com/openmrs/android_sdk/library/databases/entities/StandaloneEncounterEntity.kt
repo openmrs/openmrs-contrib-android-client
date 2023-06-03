@@ -55,7 +55,6 @@ class StandaloneEncounterEntity : Resource {
     var encounterProviderUuid: String? = null
 
     constructor(
-        id: Long?,
         uuid: String?,
         display: String?,
         visitUuid: String?,
@@ -66,7 +65,6 @@ class StandaloneEncounterEntity : Resource {
         locationUuid: String?,
         encounterProviderUuid: String?
     ) {
-        this.id = id
         this.uuid = uuid
         this.display = display
         this.visitUuid = visitUuid

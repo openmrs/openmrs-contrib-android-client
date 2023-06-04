@@ -114,6 +114,8 @@ public interface RestApi {
      * @param password the password
      * @return the patient identifiers
      */
+
+    //
     @GET("module/idgen/generateIdentifier.form?source=1")
     Call<IdGenPatientIdentifiers> getPatientIdentifiers(@Query("username") String username,
                                                         @Query("password") String password);

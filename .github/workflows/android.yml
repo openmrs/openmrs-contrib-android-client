@@ -4,7 +4,8 @@ on:
   push:
     branches: [ "master" ]
   pull_request:
-  types:
+    branches: [ "master" ]
+    types:
       - opened
       - synchronize
 

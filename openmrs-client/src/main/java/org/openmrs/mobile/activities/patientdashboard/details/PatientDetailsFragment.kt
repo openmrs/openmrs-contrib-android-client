@@ -85,7 +85,13 @@ class PatientDetailsFragment : BaseFragment() {
 
     private fun showPatientDetails(patient: Patient) {
         with(binding) {
-            setMenuTitle(patient.name.nameString, patient.identifier.identifier!!)
+            val patientIdForActionBar: String
+            if (patient.identifier.identifier == null)
+                patientIdForActionBar = patient.id.toString()
+            else
+                patientIdForActionBar = patient.identifier.identifier!!
+
+            setMenuTitle(patient.name.nameString, patientIdForActionBar)
             if (isAdded) {
                 if ("M" == patient.gender) {
                     patientDetailsGender.text = getString(R.string.male)

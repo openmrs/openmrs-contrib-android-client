@@ -71,6 +71,25 @@ interface ObservationRoomDAO {
     fun getObservationByUUID(observationUUID: String): Single<ObservationEntity?>?
 
     /**
+     * Gets observation by patient uuid
+     *
+     * @param patient_uuid the observation uuid
+     * @return the observation
+     */
+    @Query("SELECT * FROM observations WHERE patient_uuid = :patient_uuid")
+    fun getObservationForPatientByPatientUuid(patient_uuid: String): Single<ObservationEntity?>?
+
+    /**
+     * Gets observation by patient uuid and concept uuid.
+     *
+     * @param patient_uuid the observation uuid
+     * @param concept_uuid the observation uuid
+     * @return the observation
+     */
+    @Query("SELECT * FROM observations WHERE patient_uuid = :patient_uuid AND conceptUuid = :concept_uuid")
+    fun getObservationForPatientByConceptUuid(patient_uuid: String, concept_uuid: String): Single<ObservationEntity?>?
+
+    /**
      * Gets all observations.
      *
      * @return the all observations

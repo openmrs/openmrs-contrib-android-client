@@ -22,6 +22,7 @@ import com.openmrs.android_sdk.library.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * The type Observation dao.
@@ -31,6 +32,37 @@ public class ObservationDAO {
      * The Observation room dao.
      */
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
+
+    @Inject
+    public ObservationDAO() { }
+    /**
+     * Saves an observation entity to db
+     *
+     * @param obs the observation model
+     * @param encounterID the encounterId
+     *
+     * @return id (primary key)
+     */
+    public Long saveObservation(Observation obs, long encounterID) {
+        ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
+        Long id = observationRoomDAO.addObservation(observationEntity);
+        return id;
+    }
+
+    /**
+     * Update observation in db (ROOM will match the primary keys for updating)
+     *
+     * @param obs the observation
+     * @param encounterId the observation (needed to verify that the observation already exists)
+     *
+     * @return count of updated values
+     */
+    public int updateObservation(Observation obs, long encounterId) {
+        ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterId);
+        observationEntity.setId(encounterId);
+        int count = observationRoomDAO.updateObservation(observationEntity);
+        return count;
+    }
 
     /**
      * Find observation by encounter id list.
@@ -49,4 +81,5 @@ public class ObservationDAO {
             return new ArrayList<>();
         }
     }
+
 }

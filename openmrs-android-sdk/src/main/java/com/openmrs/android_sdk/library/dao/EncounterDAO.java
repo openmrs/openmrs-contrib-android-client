@@ -40,8 +40,10 @@ public class EncounterDAO {
     EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
     @Inject
-    public EncounterDAO() { }
+    ObservationDAO observationDAO;
 
+    @Inject
+    public EncounterDAO() { }
     /**
      * Save encounter long.
      *
@@ -89,8 +91,7 @@ public class EncounterDAO {
             }
             long encounterID = saveEncounter(encounter, null);
             for (Observation obs : encounter.getObservations()) {
-                ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
-                observationRoomDAO.addObservation(observationEntity);
+                observationDAO.saveObservation(obs, encounterID);
             }
         }
     }

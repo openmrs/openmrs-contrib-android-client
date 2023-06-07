@@ -64,11 +64,7 @@ object AppDatabaseHelper {
         observationEntity.diagnosisList = obs.diagnosisList
         observationEntity.diagnosisCertainty = obs.diagnosisCertainty
         observationEntity.diagnosisNote = obs.diagnosisNote
-        if (obs.concept != null) {
-            observationEntity.conceptuuid = obs.concept!!.uuid
-        } else {
-            observationEntity.conceptuuid = null
-        }
+        observationEntity.conceptuuid = obs.concept?.uuid
         return observationEntity
     }
 

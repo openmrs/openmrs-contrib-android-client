@@ -38,6 +38,7 @@ import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
 import com.openmrs.android_sdk.library.databases.entities.PatientEntity;
+import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity;
 import com.openmrs.android_sdk.library.databases.entities.VisitEntity;
 import com.openmrs.android_sdk.library.models.EncounterType;
 import com.openmrs.android_sdk.library.models.Encountercreate;
@@ -51,6 +52,7 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
         EncounterEntity.class,
         LocationEntity.class,
         ObservationEntity.class,
+        StandaloneObservationEntity.class,
         PatientEntity.class,
         VisitEntity.class,
         Provider.class,

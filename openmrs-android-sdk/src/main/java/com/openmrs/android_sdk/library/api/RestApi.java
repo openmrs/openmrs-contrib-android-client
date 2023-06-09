@@ -202,6 +202,15 @@ public interface RestApi {
     Call<Results<Patient>> getSimilarPatients(@QueryMap Map<String, String> patientData);
 
     /**
+     * Gets Observation by uuid
+     *
+     * @param obsUuid the uuid of the observation
+     * @return the Call<Observation>
+     */
+    @GET("obs/{obsUuid}")
+    Call<Observation> getObservationByUuid(@Path("obsUuid") String obsUuid);
+
+    /**
      * Create obs call.
      *
      * @param obscreate the obscreate

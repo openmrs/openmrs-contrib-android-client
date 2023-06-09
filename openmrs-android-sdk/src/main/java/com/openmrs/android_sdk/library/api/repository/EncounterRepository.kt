@@ -195,7 +195,7 @@ class EncounterRepository @Inject constructor(
     /**
      * Get an Encounter from Encounter Uuid from the server
      *
-     * @param uuid the UUID of the patient
+     * @param uuid the UUID of the encounter
      * @return Observable<Encounter>
      */
 

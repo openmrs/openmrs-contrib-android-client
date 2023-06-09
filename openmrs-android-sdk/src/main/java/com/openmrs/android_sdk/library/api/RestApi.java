@@ -245,7 +245,7 @@ public interface RestApi {
      * @return the encounter
      */
     @GET("encounter/{encounterUuid}")
-    Call<Encounter> getEncounterByUuid(String encounterUuid);
+    Call<Encounter> getEncounterByUuid(@Path("encounterUuid") String encounterUuid);
 
     /**
      * Get Encounter Resources from Patient uuid and EncounterType uuid

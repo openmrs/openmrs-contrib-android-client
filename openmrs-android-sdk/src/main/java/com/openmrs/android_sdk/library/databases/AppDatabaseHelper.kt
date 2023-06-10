@@ -18,15 +18,16 @@ import android.graphics.BitmapFactory
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.api.repository.FormRepository
 import com.openmrs.android_sdk.library.dao.EncounterDAO
+import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
 import com.openmrs.android_sdk.library.dao.ObservationDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
 import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
-import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
 import com.openmrs.android_sdk.library.databases.entities.EncounterEntity
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
 import com.openmrs.android_sdk.library.databases.entities.PatientEntity
 import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
 import com.openmrs.android_sdk.library.models.Allergy
@@ -40,6 +41,8 @@ import com.openmrs.android_sdk.library.models.PersonName
 import com.openmrs.android_sdk.library.models.Resource
 import com.openmrs.android_sdk.library.models.Visit
 import com.openmrs.android_sdk.library.models.VisitType
+import com.openmrs.android_sdk.library.models.Person
+import com.openmrs.android_sdk.library.models.ConceptClass
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -52,6 +55,10 @@ import java.io.ByteArrayOutputStream
 import java.util.concurrent.Callable
 
 object AppDatabaseHelper {
+    val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).encounterRoomDAO()
+
     @JvmStatic
     fun convert(obs: Observation, encounterID: Long): ObservationEntity {
         val observationEntity = ObservationEntity()
@@ -69,6 +76,35 @@ object AppDatabaseHelper {
     }
 
     @JvmStatic
+    fun convert(obs: ObservationEntity): Observation {
+
+        val observation = Observation()
+
+        val encounter = Encounter()
+        encounter.uuid = encounterRoomDAO.getEncounterUuidByID(obs.encounterKeyID).toString()
+
+        val person = Person()
+        person.uuid = obs.patientUuid
+
+        val concept = ConceptClass()
+        concept.uuid = obs.conceptuuid
+
+        observation.person = person
+        observation.value = obs.displayValue
+        observation.concept = concept
+        observation.uuid = obs.uuid
+        observation.display = obs.display
+        observation.encounter = encounter
+        observation.diagnosisOrder = obs.diagnosisOrder
+        observation.diagnosisList = obs.diagnosisList
+        observation.diagnosisCertainty = obs.diagnosisCertainty
+        observation.diagnosisNote = obs.diagnosisNote
+        observation.obsDatetime = obs.obsDateTime
+
+        return observation
+    }
+
+    @JvmStatic
     fun convert(observationEntityList: List<ObservationEntity>): List<Observation> {
         val observationList: MutableList<Observation> = ArrayList()
         for (entity in observationEntityList) {
@@ -82,7 +118,7 @@ object AppDatabaseHelper {
             obs.diagnosisList = entity.diagnosisList
             obs.setDiagnosisCertanity(entity.diagnosisCertainty)
             obs.diagnosisNote = entity.diagnosisNote
-            val concept = ConceptEntity()
+            val concept = ConceptClass()
             concept.uuid = entity.conceptuuid
             obs.concept = concept
             observationList.add(obs)
@@ -315,6 +351,25 @@ object AppDatabaseHelper {
             allergy.severity = Resource(allergyEntity.severityUUID!!, allergyEntity.severityDisplay!!, ArrayList(), 1)
         }
         return allergy
+    }
+
+    @JvmStatic
+    fun convertToStandalone(observation: Observation): StandaloneObservationEntity {
+        val standaloneObservationEntity = StandaloneObservationEntity(
+            uuid = observation.uuid,
+            display = observation.display,
+            encounterUuid = observation.encounter?.uuid,
+            patientUuid = observation.person?.uuid,
+            locationUuid = observation.location?.uuid,
+            value = observation.value.toString(),
+            status = observation.status,
+            obsDateTime = observation.obsDatetime,
+            interpretation = observation.interpretation,
+            conceptuuid = observation.concept?.uuid,
+            order = observation.order,
+            comment = observation.comment
+        )
+        return standaloneObservationEntity
     }
 
     private fun bitmapToByteArray(image: Bitmap): ByteArray {

@@ -68,6 +68,15 @@ public interface EncounterRoomDAO {
     Single<Long> getEncounterByUUID(String encounterUUID);
 
     /**
+     * Gets encounter uuid by encounter id.
+     *
+     * @param encounterId the encounter id
+     * @return the encounter uuid
+     */
+    @Query("SELECT uuid FROM encounters WHERE _id = :encounterId")
+    Single<String> getEncounterUuidByID(Long encounterId);
+
+    /**
      * Find encounters by visit id single.
      *
      * @param visitID the visit id

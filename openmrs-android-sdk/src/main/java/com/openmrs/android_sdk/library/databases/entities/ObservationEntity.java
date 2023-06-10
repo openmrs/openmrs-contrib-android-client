@@ -15,7 +15,7 @@ public class ObservationEntity extends Resource {
     @ColumnInfo(name = "encounter_id")
     private long encounterKeyID;
     @ColumnInfo(name = "patient_uuid")
-    private long patientUuid;
+    private String patientUuid;
     @ColumnInfo(name = "displayValue")
     private String displayValue;
     @ColumnInfo(name = "diagnosisOrder")
@@ -28,6 +28,8 @@ public class ObservationEntity extends Resource {
     private String diagnosisNote;
     @ColumnInfo(name = "conceptUuid")
     private String conceptuuid;
+    @ColumnInfo(name = "obsDateTime")
+    private String obsDateTime;
 
     /**
      * Instantiates a new Observation entity.
@@ -166,7 +168,7 @@ public class ObservationEntity extends Resource {
      *
      * @return the patientuuid
      */
-    public long getPatientUuid() {
+    public String getPatientUuid() {
         return patientUuid;
     }
 
@@ -175,7 +177,15 @@ public class ObservationEntity extends Resource {
      *
      * @param patientUuid the patient uuid
      */
-    public void setPatientUuid(long patientUuid) {
+    public void setPatientUuid(String patientUuid) {
         this.patientUuid = patientUuid;
+    }
+
+    public String getObsDateTime() {
+        return obsDateTime;
+    }
+
+    public void setObsDateTime(String obsDateTime) {
+        this.obsDateTime = obsDateTime;
     }
 }

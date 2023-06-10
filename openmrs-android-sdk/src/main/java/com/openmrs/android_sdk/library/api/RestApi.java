@@ -220,6 +220,15 @@ public interface RestApi {
     Call<Observation> createObs(@Body Obscreate obscreate);
 
     /**
+     * Create obs on the server.
+     *
+     * @param observation the Observation to create
+     * @return the call
+     */
+    @POST("obs")
+    Call<Observation> createObservation(@Body Observation observation);
+
+    /**
      * Get all observations for a patient
      *
      * @param patientUuid the patient uuid

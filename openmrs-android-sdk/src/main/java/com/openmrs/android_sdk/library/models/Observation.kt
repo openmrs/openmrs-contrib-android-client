@@ -10,8 +10,6 @@
 
 package com.openmrs.android_sdk.library.models
 
-import com.google.gson.JsonElement
-import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -30,11 +28,11 @@ class Observation : Resource(), Serializable {
 
     @SerializedName("concept")
     @Expose
-    var concept: ConceptEntity? = null
+    var concept: ConceptClass? = null
 
     @SerializedName("value")
     @Expose
-    var value: JsonElement? = null
+    var value: String? = null
 
     @SerializedName("person")
     @Expose
@@ -111,7 +109,6 @@ class Observation : Resource(), Serializable {
 
     var diagnosisList: String? = null
     var diagnosisCertainty: String? = null
-        private set
     var diagnosisOrder: String? = null
 
     var diagnosisNote: String? = null

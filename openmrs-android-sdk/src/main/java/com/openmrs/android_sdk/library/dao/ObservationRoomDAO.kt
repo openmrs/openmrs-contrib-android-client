@@ -46,7 +46,7 @@ interface ObservationRoomDAO {
      * @param standaloneObservationEntityList the standalone observation entity
      */
     @Insert
-    fun addStandaloneObservationList(standaloneEncounterEntityList: List<StandaloneObservationEntity>): List<Long>
+    fun addStandaloneObservationList(standaloneObservationEntityList: List<StandaloneObservationEntity>): List<Long>
 
 
     /**
@@ -87,7 +87,15 @@ interface ObservationRoomDAO {
      * @param obsUuid uuid of the standalone observation entry id in the db
      */
     @Query("DELETE FROM standaloneObservations WHERE uuid = :obsUuid")
-    fun deleteStandaloneObservation(obsUuid: String)
+    fun deleteStandaloneObservationByObsUuid(obsUuid: String)
+
+    /**
+     * Delete standalone observations by patient uuid
+     *
+     * @param patientUuid patientUuid of the standalone observation entry id in the db
+     */
+    @Query("DELETE FROM standaloneObservations WHERE patient_uuid = :patientUuid")
+    fun deleteAllStandaloneObservationsByPatientUuid(patientUuid: String)
 
     /**
      * Find observation by encounter id single.

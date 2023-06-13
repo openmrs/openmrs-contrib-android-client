@@ -76,6 +76,16 @@ public interface VisitRoomDAO {
     Single<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
 
     /**
+     * Gets visits by patient id and visit location.
+     *
+     * @param patientID the patient id
+     * @param visitPlace the visit place
+     * @return the visits by patient id
+     */
+    @Query("SELECT * FROM visits WHERE patient_id = :patientID AND visit_place = :visitPlace ORDER BY start_date DESC")
+    Single<List<VisitEntity>> getVisitsByPatientIDAndVisitPlace(final Long patientID, String visitPlace);
+
+    /**
      * Gets active visit by patient id.
      *
      * @param patientId the patient id
@@ -83,6 +93,19 @@ public interface VisitRoomDAO {
      */
     @Query("SELECT * FROM visits WHERE patient_id = :patientId AND (stop_date IS NULL OR stop_date = '')  ORDER BY start_date DESC")
     Single<VisitEntity> getActiveVisitByPatientId(Long patientId);
+
+    /**
+     * Gets active visits by patient id filtered by visit place.
+     *
+     * @param patientId the patient id
+     * @param visitPlace the visit place
+     * @return the active visit by patient id
+     */
+    @Query("SELECT * FROM visits WHERE patient_id = :patientId " +
+            "AND visit_place = :visitPlace " +
+            "AND (stop_date IS NULL OR stop_date = '') " +
+            "ORDER BY start_date DESC")
+    Single<VisitEntity> getActiveVisitByPatientIdAndVisitPlace(Long patientId, String visitPlace);
 
     /**
      * Gets visit by id.
@@ -119,4 +142,13 @@ public interface VisitRoomDAO {
      */
     @Query("DELETE FROM visits WHERE patient_id = :patientID")
     int deleteVisitsByPatientId(long patientID);
+
+    /**
+     * Gets all visit places (which are associated to atleast one visit saved)
+     *
+     * @param patientID the patient id
+     * @return the visit_place list
+     */
+    @Query("SELECT visit_place FROM visits WHERE patient_id = :patientID")
+    Single<List<String>> getVisitPlacesByPatientID(final Long patientID);
 }

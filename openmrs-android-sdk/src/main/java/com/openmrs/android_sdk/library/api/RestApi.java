@@ -284,6 +284,81 @@ public interface RestApi {
                                                  @Query("v") String representation);
 
     /**
+     * Fetch visit resources by patient uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientUUID(@Query("patient") String patientUUID);
+
+    /**
+     * Fetch visit resources by patient uuid and location uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID   the location uuid
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndLocation(@Query("patient") String patientUUID,
+                                                                   @Query("location") String locationUUID);
+
+    /**
+     * Fetch visit resources by patient uuid, location uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID   the location uuid
+     * @param fromStartDate  starting date of the visit
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                                   @Query("location") String locationUUID,
+                                                                   @Query("fromStartDate") String fromStartDate);
+
+    /**
+     * Fetch visit resources by patient uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate  starting date of the visit
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndDate(@Query("patient") String patientUUID,
+                                                               @Query("fromStartDate") String fromStartDate);
+
+    /**
+     * Create Visit
+     *
+     * @param visit the Visit
+     * @return the call
+     */
+    @POST("visit")
+    Call<Visit> createVisit(@Body Visit visit);
+
+    /**
+     * Update Visit
+     *
+     * @param uuid the uuid of the visit
+     * @param visit the Visit
+     * @return the call
+     */
+    @POST("visit/{uuid}")
+    Call<Visit> createVisit(@Path("uuid") String uuid, @Body Visit visit);
+
+    /**
+     * Delete Visit
+     *
+     * @param uuid the uuid of the visit
+     * @return the call
+     */
+    @DELETE("visit/{uuid}")
+    Call<ResponseBody> deleteVisit(@Path("uuid") String uuid);
+
+    /**
      * Gets visit type.
      *
      * @return the visit type

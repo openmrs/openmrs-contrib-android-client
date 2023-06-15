@@ -284,6 +284,48 @@ public interface RestApi {
                                                  @Query("v") String representation);
 
     /**
+     * Fetch visits by patient uuid and location
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndLocation(@Query("patient") String patientUUID,
+                                                              @Query("location") String locationUUID,
+                                                              @Query("v") String representation);
+
+    /**
+     * Fetch visits by patient uuid and start date
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate  the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndDate(@Query("patient") String patientUUID,
+                                                        @Query("fromStartDate") String fromStartDate,
+                                                        @Query("v") String representation);
+
+    /**
+     * Fetch visits by patient uuid, location and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param fromStartDate    the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                                     @Query("location") String locationUUID,
+                                                                     @Query("fromStartDate") String fromStartDate,
+                                                                     @Query("v") String representation);
+
+
+    /**
      * Fetch visit resources by patient uuid
      *
      * @param patientUUID    the patient uuid
@@ -334,10 +376,11 @@ public interface RestApi {
      * Fetch active visits by patient uuid
      *
      * @param patientUUID    the patient uuid
+     * @param representation the required representation
      * @return the list of visits
      */
     @GET("visit?includeInactive=false")
-    Call<Results<Visit>> findVisitsByPatientUuid(@Query("patient") String patientUUID,
+    Call<Results<Visit>> findActiveVisitsByPatientUuid(@Query("patient") String patientUUID,
                                                  @Query("v") String representation);
 
     /**
@@ -345,10 +388,11 @@ public interface RestApi {
      *
      * @param patientUUID    the patient uuid
      * @param locationUUID    the loation uuid
+     * @param representation the required representation
      * @return the list of visits
      */
     @GET("visit?includeInactive=false")
-    Call<Results<Visit>> findVisitsByPatientAndLocation(@Query("patient") String patientUUID,
+    Call<Results<Visit>> findActiveVisitsByPatientAndLocation(@Query("patient") String patientUUID,
                                                         @Query("location") String locationUUID,
                                                         @Query("v") String representation);
 
@@ -358,10 +402,11 @@ public interface RestApi {
      * @param patientUUID    the patient uuid
      * @param locationUUID    the loation uuid
      * @param fromStartDate    the start date
+     * @param representation the required representation
      * @return the list of visits
      */
     @GET("visit?includeInactive=false")
-    Call<Results<Visit>> findVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+    Call<Results<Visit>> findActiveVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
                                                                @Query("location") String locationUUID,
                                                                @Query("fromStartDate") String fromStartDate,
                                                                @Query("v") String representation);
@@ -371,10 +416,11 @@ public interface RestApi {
      *
      * @param patientUUID    the patient uuid
      * @param fromStartDate    the start date
+     * @param representation the required representation
      * @return the list of visits
      */
     @GET("visit?includeInactive=false")
-    Call<Results<Visit>> findVisitsByPatientAndDate(@Query("patient") String patientUUID,
+    Call<Results<Visit>> findActiveVisitsByPatientAndDate(@Query("patient") String patientUUID,
                                                     @Query("fromStartDate") String fromStartDate,
                                                     @Query("v") String representation);
 

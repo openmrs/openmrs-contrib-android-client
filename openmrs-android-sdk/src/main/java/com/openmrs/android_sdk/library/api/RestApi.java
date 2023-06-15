@@ -331,6 +331,55 @@ public interface RestApi {
                                                                @Query("fromStartDate") String fromStartDate);
 
     /**
+     * Fetch active visits by patient uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findVisitsByPatientUuid(@Query("patient") String patientUUID,
+                                                 @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid and location
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findVisitsByPatientAndLocation(@Query("patient") String patientUUID,
+                                                        @Query("location") String locationUUID,
+                                                        @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid, location and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param fromStartDate    the start date
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                               @Query("location") String locationUUID,
+                                                               @Query("fromStartDate") String fromStartDate,
+                                                               @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate    the start date
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findVisitsByPatientAndDate(@Query("patient") String patientUUID,
+                                                    @Query("fromStartDate") String fromStartDate,
+                                                    @Query("v") String representation);
+
+
+    /**
      * Create Visit
      *
      * @param visit the Visit

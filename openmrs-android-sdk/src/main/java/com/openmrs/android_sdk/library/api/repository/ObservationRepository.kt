@@ -39,7 +39,8 @@ class ObservationRepository @Inject constructor(
         val observation = AppDatabaseHelper.convert(observationEntity)
 
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("To retrieve observations, an internet connection is required.")
+            if (!NetworkUtils.isOnline())
+                throw Exception("To retrieve observations, an internet connection is required.")
 
             restApi.createObservation(observation).execute().run{
                 if (isSuccessful && body() != null) {
@@ -59,7 +60,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getObservationByUuid(uuid: String): Observable<Observation> {
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("To retrieve observations, an internet connection is required.")
+            if (!NetworkUtils.isOnline())
+                throw Exception("To retrieve observations, an internet connection is required.")
 
             restApi.getObservationByUuid(uuid).execute().run {
                 if (isSuccessful && body() != null) {
@@ -79,7 +81,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getAllObservationResourcesByPatientUuid(uuid: String): Observable<List<Resource>> {
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch observations")
+            if (!NetworkUtils.isOnline())
+                throw Exception("To retrieve observations, an internet connection is required")
 
             restApi.getObservationsByPatientUuid(uuid).execute().run {
                 if (isSuccessful) {
@@ -99,7 +102,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getAllObservationResourcesByEncounterUuid(encounterUuid: String): Observable<List<Resource>> {
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch observations")
+            if (!NetworkUtils.isOnline())
+                throw Exception("To retrieve observations, an internet connection is required")
 
             restApi.getObservationsByEncounterUuid(encounterUuid).execute().run {
                 if (isSuccessful) {
@@ -120,7 +124,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getAllObservationsByPatientUuidAndSaveLocally(uuid: String): Observable<List<Observation>> {
         val observationList: MutableList<Observation> = mutableListOf()
-        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+        if (!NetworkUtils.isOnline())
+            throw Exception("To retrieve observations, an internet connection is required")
 
         restApi.getObservationsByPatientUuid(uuid).execute().run {
             if (isSuccessful && this.body() != null) {
@@ -159,7 +164,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getAllObservationsByEncounterUuidAndSaveLocally(encounterUuid: String): Observable<List<Observation>> {
         val observationList: MutableList<Observation> = mutableListOf()
-        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+        if (!NetworkUtils.isOnline())
+            throw Exception("To retrieve observations, an internet connection is required")
 
         restApi.getObservationsByEncounterUuid(encounterUuid).execute().run {
             if (isSuccessful && this.body() != null) {
@@ -199,7 +205,8 @@ class ObservationRepository @Inject constructor(
      */
     fun getAllObservationsByConceptUuidSaveLocally(patientUuid: String, conceptUuid: String): Observable<List<Observation>> {
         val observationList: MutableList<Observation> = mutableListOf()
-        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+        if (!NetworkUtils.isOnline())
+            throw Exception("To retrieve observations, an internet connection is required")
 
         restApi.getObservationsByConceptUuid(patientUuid, conceptUuid).execute().run {
             if (isSuccessful && this.body() != null) {

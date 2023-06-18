@@ -93,8 +93,7 @@ public class ObservationDAO {
             StandaloneObservationEntity standaloneObservationEntity = AppDatabaseHelper.convertToStandalone(observation);
             standaloneObservationEntityList.add(standaloneObservationEntity);
         }
-        List<Long> id = observationRoomDAO.addStandaloneObservationList(standaloneObservationEntityList);
-        return id;
+        return observationRoomDAO.addStandaloneObservationList(standaloneObservationEntityList);
     }
 
     /**
@@ -103,7 +102,7 @@ public class ObservationDAO {
      * @param patientUuid the patient uuid for which the standalone encounters should be deleted
      */
     public void deleteAllStandaloneObservations(String patientUuid) {
-            observationRoomDAO.deleteAllStandaloneObservationsByPatientUuid(patientUuid);
+        observationRoomDAO.deleteAllStandaloneObservationsByPatientUuid(patientUuid);
     }
 
 }

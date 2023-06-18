@@ -3,7 +3,11 @@ package com.openmrs.android_sdk.library.api.repository
 import com.openmrs.android_sdk.library.dao.PatientDAO
 import com.openmrs.android_sdk.library.dao.VisitDAO
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
-import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.library.models.Encountercreate
+import com.openmrs.android_sdk.library.models.ResultType
+import com.openmrs.android_sdk.library.models.Encounter
+import com.openmrs.android_sdk.library.models.EncounterType
+import com.openmrs.android_sdk.library.models.ConceptClass
 import com.openmrs.android_sdk.utilities.NetworkUtils
 import com.openmrs.android_sdk.utilities.execute
 import rx.Observable

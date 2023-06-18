@@ -35,7 +35,7 @@ class ObservationRepository @Inject constructor(
      * @param observationEntity the locally stored observation
      * @return Observable<Observation>
      */
-    fun createObservationFromLocal(observationEntity: ObservationEntity): Observable<Observation>{
+    fun createObservationFromLocal(observationEntity: ObservationEntity): Observable<Observation> {
         val observation = AppDatabaseHelper.convert(observationEntity)
 
         return AppDatabaseHelper.createObservableIO(Callable{

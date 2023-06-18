@@ -1,22 +1,38 @@
 package com.openmrs.android_sdk.library.api.repository
 
+import android.util.Log
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.dao.EncounterDAO
+import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
 import com.openmrs.android_sdk.library.dao.VisitDAO
+import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.Encountercreate
 import com.openmrs.android_sdk.library.models.ResultType
 import com.openmrs.android_sdk.library.models.Encounter
 import com.openmrs.android_sdk.library.models.EncounterType
 import com.openmrs.android_sdk.library.models.ConceptClass
+import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
 import com.openmrs.android_sdk.utilities.NetworkUtils
 import com.openmrs.android_sdk.utilities.execute
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import java.util.concurrent.Callable
 import javax.inject.Inject
 import javax.inject.Singleton
-import java.util.concurrent.Callable
 
 @Singleton
-class EncounterRepository @Inject constructor(private val visitRepository: VisitRepository) : BaseRepository() {
+class EncounterRepository @Inject constructor(
+    private val visitRepository: VisitRepository,
+    private val encounterDAO: EncounterDAO
+) : BaseRepository() {
+
+    val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).encounterRoomDAO()
 
     /**
      * Saves an encounter to local database and to server when online.
@@ -90,6 +106,289 @@ class EncounterRepository @Inject constructor(private val visitRepository: Visit
                 }
             }
         })
+    }
+
+    /**
+     * Get all encounter resources of a patient from the server.
+     *
+     * @param uuid the UUID of the patient
+     * @return Observable<List<Resource>>
+     */
+    fun getAllEncounterResourcesByPatientUuid(uuid: String): Observable<List<Resource>> {
+        return AppDatabaseHelper.createObservableIO(Callable {
+            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+            restApi.getAllEncountersForPatientByPatientUuid(uuid).execute().run {
+                if (isSuccessful) {
+                    return@Callable this.body()?.results!!
+                } else {
+                    throw Exception("Get Encounters error: ${message()}")
+                }
+            }
+        })
+    }
+
+    /**
+     * Get all encounters of a patient from the server
+     * and save to local database.
+     *
+     * @param uuid the UUID of the patient
+     * @return Observable<Encounter>
+     */
+    fun getAllEncountersByPatientUuidAndSaveLocally(uuid: String): Observable<List<Encounter>> {
+        val encounterList: MutableList<Encounter> = mutableListOf()
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+        restApi.getAllEncountersForPatientByPatientUuid(uuid).execute().run {
+            if (isSuccessful && this.body() != null) {
+
+                val encounterResources: List<Resource> = this.body()!!.results
+                for (encounterResource in encounterResources) {
+                    getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            { encounter ->
+                                encounterList.add(encounter)
+                            },
+                            { error ->
+                                Log.e("Encounter Repository", "Error: ${error.message}")
+                            },
+                            {
+                                Log.d("Encounter Repository", "Observable completed")
+                            }
+                        )
+                }
+                encounterDAO.deleteAllStandaloneEncounters(uuid)      //delete previous list
+                encounterDAO.saveStandaloneEncounters(encounterList) //save latest list
+                return Observable.just(encounterList.toList())
+            } else {
+                throw Exception("Get Encounters error: ${message()}")
+            }
+        }
+    }
+
+    /**
+     * Get all encounters of a patient from the server filtered by visit uuid
+     *
+     * @param visitUuid the UUID of the Visit
+     * @return Observable<Resource>?
+     */
+    fun getAllEncounterResourcesByVisitUuid(visitUuid: String): Observable<Resource>? {
+        var encounterResourceList: List<Resource> = mutableListOf()
+        var fetchedVisit: Visit? = null
+
+        visitRepository.getVisit(visitUuid).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { visit ->
+                    fetchedVisit = visit
+                },
+                { error ->
+                    Log.e("Visit Repository", "Error: ${error.message}")
+                },
+                {
+                    Log.d("Visit Repository", "Observable completed")
+                }
+            )
+
+        if(fetchedVisit != null) encounterResourceList = fetchedVisit!!.encounters
+
+        return Observable.from(encounterResourceList)
+    }
+
+    /**
+     * Get an Encounter from Encounter Uuid from the server
+     *
+     * @param uuid the UUID of the encounter
+     * @return Observable<Encounter>
+     */
+
+    fun getEncounterByUuid(uuid: String): Observable<Encounter> {
+        return AppDatabaseHelper.createObservableIO(Callable{
+            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+            restApi.getEncounterByUuid(uuid).execute().run{
+                if (isSuccessful && body() != null) {
+                    return@Callable this.body()!!
+                } else {
+                    throw Exception("Get Encounters error: ${message()}")
+                }
+            }
+        })
+    }
+
+    /**
+     * Utility Function
+     */
+
+    fun saveLocallyIfNotExist(encounterList: List<Encounter>) {
+
+        val existingStandaloneEncounters: List<StandaloneEncounterEntity> =
+            encounterRoomDAO.getAllStandAloneEncounters().blockingGet()
+
+        val encountersToInsert = mutableListOf<Encounter>()
+
+        for (encounterToSave in encounterList) {
+            var exists = false
+
+            for (existingEncounter in existingStandaloneEncounters) {
+                if (existingEncounter.uuid.equals(encounterToSave.uuid)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                encountersToInsert.add(encounterToSave);
+            }
+        }
+        encounterDAO.saveStandaloneEncounters(encountersToInsert)
+    }
+
+    /**
+     * Get all encounters of a patient from the server
+     * filtered by the Encounter Type and save to local database.
+     *
+     * @param patient_uuid the UUID of the patient
+     * @param encounterType_uuid the UUID of the EncounterType
+     *
+     * @return Observable<Encounter>
+     */
+
+    fun getAllEncountersByPatientUuidAndEncounterTypeAndSaveLocally(
+        patient_uuid: String,
+        encounterType_uuid: String
+    ): Observable<List<Encounter>> {
+
+        val encounterList: MutableList<Encounter> = mutableListOf()
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+        restApi.getEncounterResourcesByEncounterType(patient_uuid, encounterType_uuid).execute().run {
+
+                if (isSuccessful && this.body() != null) {
+
+                    val encounterResources: List<Resource> = this.body()!!.results
+                    for (encounterResource in encounterResources) {
+                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { encounter ->
+                                    encounterList.add(encounter)
+                                },
+                                { error ->
+                                    Log.e("Encounter Repository", "Error: ${error.message}")
+                                },
+                                {
+                                    Log.d("Encounter Repository", "Observable completed")
+                                }
+                            )
+                    }
+
+                    saveLocallyIfNotExist(encounterList)
+                    return Observable.just(encounterList.toList())
+                } else {
+                    throw Exception("Get Encounters error: ${message()}")
+                }
+        }
+
+    }
+
+    /**
+     * Get all encounters of a patient from the server
+     * filtered by the Order Type and save to local database.
+     *
+     * @param patient_uuid the UUID of the patient
+     * @param orderType_uuid the UUID of the EncounterType
+     *
+     * @return Observable<Encounter>
+     */
+
+    fun getAllEncountersByPatientUuidAndOrderTypeAndSaveLocally(
+        patient_uuid: String,
+        orderType_uuid: String
+    ): Observable<List<Encounter>> {
+
+        val encounterList: MutableList<Encounter> = mutableListOf()
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+        restApi.getEncounterResourcesByOrderType(patient_uuid, orderType_uuid).execute()
+            .run {
+
+                if (isSuccessful && this.body() != null) {
+
+                    val encounterResources: List<Resource> = this.body()!!.results
+                    for (encounterResource in encounterResources) {
+                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { encounter ->
+                                    encounterList.add(encounter)
+                                },
+                                { error ->
+                                    Log.e("Encounter Repository", "Error: ${error.message}")
+                                },
+                                {
+                                    Log.d("Encounter Repository", "Observable completed")
+                                }
+                            )
+                    }
+
+                    saveLocallyIfNotExist(encounterList)
+                    return Observable.just(encounterList.toList())
+                } else {
+                    throw Exception("Get Encounters error: ${message()}")
+                }
+            }
+
+    }
+
+    /**
+     * Get all encounters of a patient from the server
+     * filtered from the given Date and save to local database.
+     *
+     * @param patient_uuid the UUID of the patient
+     * @param fromDate the String representation of Date in 'YYYY-MM-DD' format
+     *
+     * @return Observable<Encounter>
+     */
+
+    fun getAllEncountersByPatientUuidAndFromDateAndSaveLocally(
+        patient_uuid: String,
+        fromDate: String
+    ): Observable<List<Encounter>> {
+
+        val encounterList: MutableList<Encounter> = mutableListOf()
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch encounters")
+
+        restApi.getEncounterResourcesFromDate(patient_uuid, fromDate).execute()
+            .run {
+
+                if (isSuccessful && this.body() != null) {
+
+                    val encounterResources: List<Resource> = this.body()!!.results
+                    for (encounterResource in encounterResources) {
+                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                { encounter ->
+                                    encounterList.add(encounter)
+                                },
+                                { error ->
+                                    Log.e("Encounter Repository", "Error: ${error.message}")
+                                },
+                                {
+                                    Log.d("Encounter Repository", "Observable completed")
+                                }
+                            )
+                    }
+
+                    saveLocallyIfNotExist(encounterList)
+                    return Observable.just(encounterList.toList())
+                } else {
+                    throw Exception("Get Encounters error: ${message()}")
+                }
+            }
+
     }
 
     /**

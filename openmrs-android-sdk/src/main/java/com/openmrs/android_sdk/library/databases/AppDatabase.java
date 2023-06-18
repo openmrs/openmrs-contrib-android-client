@@ -50,6 +50,7 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
  */
 @Database(entities = {ConceptEntity.class,
         EncounterEntity.class,
+        StandaloneEncounterEntity.class,
         LocationEntity.class,
         ObservationEntity.class,
         StandaloneObservationEntity.class,

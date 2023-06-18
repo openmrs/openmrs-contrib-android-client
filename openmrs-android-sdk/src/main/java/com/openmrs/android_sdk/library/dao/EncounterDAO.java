@@ -26,6 +26,7 @@ import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.EncounterType;
 import com.openmrs.android_sdk.library.models.Observation;
@@ -55,6 +56,47 @@ public class EncounterDAO {
         EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);
         long id = encounterRoomDAO.addEncounter(encounterEntity);
         return id;
+    }
+
+    /**
+     * Save encounter independently.
+     *
+     * @param encounter the encounter
+     * @return the long
+     */
+    public long saveStandaloneEncounter(Encounter encounter) {
+        StandaloneEncounterEntity standaloneEncounterEntity = AppDatabaseHelper.convertToStandalone(encounter);
+        long id = encounterRoomDAO.addEncounterStandaloneEntity(standaloneEncounterEntity);
+        return id;
+    }
+
+    /**
+     * Save encounters independently.
+     *
+     * @param encounterList the encounter
+     * @return the long
+     */
+    public List<Long> saveStandaloneEncounters(List<Encounter> encounterList) {
+        List<StandaloneEncounterEntity> standaloneEncounterEntityList = new ArrayList<>();
+        for(Encounter encounter: encounterList){
+            StandaloneEncounterEntity standaloneEncounterEntity = AppDatabaseHelper.convertToStandalone(encounter);
+            standaloneEncounterEntityList.add(standaloneEncounterEntity);
+        }
+        List<Long> id = encounterRoomDAO.addEncounterStandaloneEntityList(standaloneEncounterEntityList);
+        return id;
+    }
+
+    /**
+     * Delete Standalone Encounters
+     *
+     * @param patientUuid the patient uuid for which the standalone encounters should be deleted
+     * @return the long
+     */
+    public Observable<Boolean> deleteAllStandaloneEncounters(String patientUuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            encounterRoomDAO.deleteStandaloneEncounter(patientUuid);
+            return true;
+        });
     }
 
     /**

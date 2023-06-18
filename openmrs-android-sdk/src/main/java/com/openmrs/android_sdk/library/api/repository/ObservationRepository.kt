@@ -59,9 +59,9 @@ class ObservationRepository @Inject constructor(
      */
     fun getObservationByUuid(uuid: String): Observable<Observation> {
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch observations")
+            if (!NetworkUtils.isOnline()) throw Exception("To retrieve observations, an internet connection is required.")
 
-            restApi.getObservationByUuid(uuid).execute().run{
+            restApi.getObservationByUuid(uuid).execute().run {
                 if (isSuccessful && body() != null) {
                     return@Callable this.body()!!
                 } else {

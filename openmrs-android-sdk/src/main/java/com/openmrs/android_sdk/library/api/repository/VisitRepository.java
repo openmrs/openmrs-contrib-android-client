@@ -86,6 +86,25 @@ public class VisitRepository extends BaseRepository {
     }
 
     /**
+     * Get a particular Visit of a patient from the server
+     *
+     * @param visitUuid the UUID of the visit.
+     */
+    public Observable<Visit> getVisit(String visitUuid){
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Visit> call = restApi.getVisitFromUuid(visitUuid);
+            Response<Visit> response = call.execute();
+
+            if (response.isSuccessful()) {
+                Visit visit = response.body();
+                return visit;
+            } else {
+                throw new IOException("Error with fetching visit by visit uuid: " + response.message());
+            }
+        });
+    }
+
+    /**
      * This method is used for fetching VisitType asynchronously.
      *
      * @return Observable VisitType object or null

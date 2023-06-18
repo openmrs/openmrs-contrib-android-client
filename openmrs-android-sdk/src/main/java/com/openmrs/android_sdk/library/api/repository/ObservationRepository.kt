@@ -39,7 +39,7 @@ class ObservationRepository @Inject constructor(
         val observation = AppDatabaseHelper.convert(observationEntity)
 
         return AppDatabaseHelper.createObservableIO(Callable {
-            if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch observations")
+            if (!NetworkUtils.isOnline()) throw Exception("To retrieve observations, an internet connection is required.")
 
             restApi.createObservation(observation).execute().run{
                 if (isSuccessful && body() != null) {

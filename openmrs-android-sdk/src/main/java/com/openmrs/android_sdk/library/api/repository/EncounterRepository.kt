@@ -9,11 +9,12 @@ import com.openmrs.android_sdk.library.dao.VisitDAO
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.Encountercreate
+import com.openmrs.android_sdk.library.models.Visit
 import com.openmrs.android_sdk.library.models.ResultType
 import com.openmrs.android_sdk.library.models.Encounter
 import com.openmrs.android_sdk.library.models.EncounterType
 import com.openmrs.android_sdk.library.models.ConceptClass
-import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
+import com.openmrs.android_sdk.library.models.Resource
 import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
 import com.openmrs.android_sdk.utilities.NetworkUtils
 import com.openmrs.android_sdk.utilities.execute
@@ -233,13 +234,13 @@ class EncounterRepository @Inject constructor(
 
             for (existingEncounter in existingStandaloneEncounters) {
                 if (existingEncounter.uuid.equals(encounterToSave.uuid)) {
-                    exists = true;
-                    break;
+                    exists = true
+                    break
                 }
             }
 
             if (!exists) {
-                encountersToInsert.add(encounterToSave);
+                encountersToInsert.add(encounterToSave)
             }
         }
         encounterDAO.saveStandaloneEncounters(encountersToInsert)

@@ -28,6 +28,7 @@ import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.models.Allergy;
 import com.openmrs.android_sdk.library.models.AllergyCreate;
+import com.openmrs.android_sdk.library.models.Appointment;
 import com.openmrs.android_sdk.library.models.ConceptAnswers;
 import com.openmrs.android_sdk.library.models.ConceptMembers;
 import com.openmrs.android_sdk.library.models.Encounter;
@@ -477,4 +478,31 @@ public interface RestApi {
     Call<Allergy> updateAllergy(@Path("patientUuid") String patientUuid,
                                 @Path("allergyUuid") String allergyUuid,
                                 @Body AllergyCreate allergyCreate);
+
+    /**
+     * Create Appointment
+     *
+     * @param appointment the appointment object
+     * @return the call
+     */
+    @POST("appointmentscheduling/appointment")
+    Call<Appointment> createAppointment(@Body Appointment appointment);
+
+    /**
+     * Get an Appointment
+     *
+     * @param uuid the uuid of the appointment
+     * @return the Appointment
+     */
+    @GET("appointmentscheduling/appointment/{uuid}")
+    Call<Appointment> getAppointment(@Path("uuid") String uuid);
+
+    /**
+     * Delete Appointment
+     *
+     * @param uuid the appointment uuid
+     * @return the call
+     */
+    @DELETE("appointmentscheduling/appointment/{uuid}")
+    Call<ResponseBody> deleteAppointment(@Path("uuid") String uuid);
 }

@@ -46,8 +46,7 @@ public class ObservationDAO {
      */
     public Long saveObservation(Observation obs, long encounterID) {
         ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
-        Long id = observationRoomDAO.addObservation(observationEntity);
-        return id;
+        return observationRoomDAO.addObservation(observationEntity);
     }
 
     /**

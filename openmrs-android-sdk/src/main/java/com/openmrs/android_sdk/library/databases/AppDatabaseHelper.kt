@@ -355,7 +355,7 @@ object AppDatabaseHelper {
 
     @JvmStatic
     fun convertToStandalone(observation: Observation): StandaloneObservationEntity {
-        val standaloneObservationEntity = StandaloneObservationEntity(
+        return StandaloneObservationEntity(
             uuid = observation.uuid,
             display = observation.display,
             encounterUuid = observation.encounter?.uuid,

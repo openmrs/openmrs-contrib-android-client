@@ -60,8 +60,7 @@ public class ObservationDAO {
     public int updateObservation(Observation obs, long encounterId) {
         ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterId);
         observationEntity.setId(encounterId);
-        int count = observationRoomDAO.updateObservation(observationEntity);
-        return count;
+        return observationRoomDAO.updateObservation(observationEntity);
     }
 
     /**

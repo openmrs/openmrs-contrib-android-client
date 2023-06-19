@@ -29,6 +29,8 @@ import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.models.Allergy;
 import com.openmrs.android_sdk.library.models.AllergyCreate;
 import com.openmrs.android_sdk.library.models.Appointment;
+import com.openmrs.android_sdk.library.models.AppointmentBlock;
+import com.openmrs.android_sdk.library.models.AppointmentType;
 import com.openmrs.android_sdk.library.models.ConceptAnswers;
 import com.openmrs.android_sdk.library.models.ConceptMembers;
 import com.openmrs.android_sdk.library.models.Encounter;
@@ -51,6 +53,7 @@ import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.library.models.Session;
 import com.openmrs.android_sdk.library.models.SystemProperty;
 import com.openmrs.android_sdk.library.models.SystemSetting;
+import com.openmrs.android_sdk.library.models.TimeSlot;
 import com.openmrs.android_sdk.library.models.User;
 import com.openmrs.android_sdk.library.models.Visit;
 import com.openmrs.android_sdk.library.models.VisitType;
@@ -505,4 +508,130 @@ public interface RestApi {
      */
     @DELETE("appointmentscheduling/appointment/{uuid}")
     Call<ResponseBody> deleteAppointment(@Path("uuid") String uuid);
+
+    /**
+     * Get Appointment(s) for a patient
+     *
+     * @param patientUuid the uuid of the patient
+     * @param representation the representation to return
+     *
+     * @return the Appointment(s)
+     */
+    @GET("appointmentscheduling/appointment")
+    Call<Results<Appointment>> getPatientAppointments(@Query("patient") String patientUuid,
+                                                      @Query("v") String representation);
+
+    /**
+     * Get all available TimeSlot(s)
+     *
+     * @return the TimeSlot(s)
+     */
+    @GET("appointmentscheduling/timeslot")
+    Call<Results<TimeSlot>> getTimeslots(@Query("v") String representation);
+
+    /**
+     * Create a TimeSlot
+     *
+     * @param timeSlot the TimeSlot object
+     * @return the call
+     */
+    @POST("appointmentscheduling/timeslot")
+    Call<TimeSlot> createTimeslot(@Body TimeSlot timeSlot);
+
+    /**
+     * Get a TimeSlot
+     *
+     * @param timeslotUuid the uuid of the TimeSlot
+     * @param representation the representation to return
+     *
+     * @return the TimeSlot
+     */
+    @GET("appointmentscheduling/timeslot/{uuid}")
+    Call<TimeSlot> getTimeslotByUuid(@Path("uuid") String timeslotUuid,
+                                     @Query("v") String representation);
+
+    /**
+     * Delete TimeSlot
+     *
+     * @param timeslotUuid the TimeSlot uuid
+     * @return the call
+     */
+    @DELETE("appointmentscheduling/timeslot/{uuid}")
+    Call<ResponseBody> deleteTimeslot(@Path("uuid") String timeslotUuid);
+
+    /**
+     * Get all available Appointment Block(s)
+     *
+     * @return the Appointment Block(s)
+     */
+    @GET("appointmentscheduling/appointmentblock")
+    Call<Results<AppointmentBlock>> getAppointmentBlocks(@Query("v") String representation);
+
+    /**
+     * Create an Appointment Block
+     *
+     * @param appointmentBlock the Appointment Block object
+     * @return the call
+     */
+    @POST("appointmentscheduling/appointmentblock")
+    Call<AppointmentBlock> createAppointmentBlock(@Body AppointmentBlock appointmentBlock);
+
+    /**
+     * Delete Appointment Block
+     *
+     * @param appointmentBlockUuid the Appointment Block uuid
+     * @return the call
+     */
+    @DELETE("appointmentscheduling/appointmentblock/{uuid}")
+    Call<ResponseBody> deleteAppointmentBlock(@Path("uuid") String appointmentBlockUuid);
+
+    /**
+     * Get an Appointment Block
+     *
+     * @param appointmentBlockUuid the uuid of the Appointment Block
+     * @param representation the representation to return
+     *
+     * @return the Appointment Block
+     */
+    @GET("appointmentscheduling/appointmentblock/{uuid}")
+    Call<AppointmentBlock> getAppointmentBlockByUuid(@Path("uuid") String appointmentBlockUuid,
+                                                     @Query("v") String representation);
+
+    /**
+     * Get all available Appointment Type(s)
+     *
+     * @return the Appointment Type(s)
+     */
+    @GET("appointmentscheduling/appointmenttype")
+    Call<Results<AppointmentType>> getAppointmentTypes(@Query("v") String representation);
+
+    /**
+     * Create an Appointment Type
+     *
+     * @param appointmentType the Appointment Type object
+     * @return the call
+     */
+    @POST("appointmentscheduling/appointmenttype")
+    Call<AppointmentType> createAppointmentType(@Body AppointmentType appointmentType);
+
+    /**
+     * Delete Appointment Type
+     *
+     * @param appointmentTypeUuid the Appointment Type uuid
+     * @return the call
+     */
+    @DELETE("appointmentscheduling/appointmenttype/{uuid}")
+    Call<ResponseBody> deleteAppointmentType(@Path("uuid") String appointmentTypeUuid);
+
+    /**
+     * Get an Appointment Type
+     *
+     * @param appointmentTypeUuid the uuid of the Appointment Type
+     * @param representation the representation to return
+     *
+     * @return the Appointment Type
+     */
+    @GET("appointmentscheduling/appointmenttype/{uuid}")
+    Call<AppointmentType> getAppointmentTypeByUuid(@Path("uuid") String appointmentTypeUuid,
+                                                   @Query("v") String representation);
 }

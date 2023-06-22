@@ -22,6 +22,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
+import com.openmrs.android_sdk.library.dao.AppointmentRoomDAO;
 import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterRoomDAO;
@@ -164,4 +165,11 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return the allergy room dao
      */
     public abstract AllergyRoomDAO allergyRoomDAO();
+
+    /**
+     * Appointment Room DAO
+     *
+     * @return the Appointment Room DAO
+     */
+    public abstract AppointmentRoomDAO appointmentRoomDAO();
 }

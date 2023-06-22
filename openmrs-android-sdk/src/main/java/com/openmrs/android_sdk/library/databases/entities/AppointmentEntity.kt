@@ -36,7 +36,7 @@ class AppointmentEntity{
     @Embedded(prefix = "visit_")
     var visit: AppointmentVisitEntity? = null
 
-    @Embedded(prefix = "patient-")
+    @Embedded(prefix = "patient_")
     var patient: AppointmentPatientEntity? = null
 
     @ColumnInfo(name = "status")

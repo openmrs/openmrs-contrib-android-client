@@ -24,11 +24,21 @@ class EncounterType : Resource {
         this.display = display
     }
 
+    constructor(uuid: String?, display: String?, links: List<Link>){
+        this.uuid = uuid
+        this.display = display
+        this.links = links
+    }
+
     companion object {
 
         const val VITALS = "Vitals"
         const val VISIT_NOTE = "Visit Note"
         const val DISCHARGE = "Discharge"
         const val ADMISSION = "Admission"
+        const val ATTACHMENT_UPLOAD = "Attachment Upload"
+        const val CHECK_IN = "Check In"
+        const val CHECK_OUT = "Check Out"
+        const val TRANSFER = "Transfer"
     }
 }

@@ -14,6 +14,8 @@ import com.openmrs.android_sdk.library.models.Resource;
 public class EncounterEntity extends Resource {
     @ColumnInfo(name = "visit_id")
     private String visitKeyId;
+    @ColumnInfo(name = "visit_uuid")
+    private String visitUuid;
     @NonNull
     @ColumnInfo(name = "encounterDatetime")
     private String encounterDateTime;
@@ -50,6 +52,16 @@ public class EncounterEntity extends Resource {
      */
     public void setEncounterDateTime(@NonNull String encounterDateTime) {
         this.encounterDateTime = encounterDateTime;
+    }
+
+    /**
+     * Sets visitUuid.
+     *
+     * @param visitUuid the visit uuid
+     */
+
+    public void setVisitUuid(String visitUuid) {
+        this.visitUuid = visitUuid;
     }
 
     /**
@@ -104,6 +116,15 @@ public class EncounterEntity extends Resource {
      */
     public String getVisitKeyId() {
         return visitKeyId;
+    }
+
+    /**
+     * Gets visitUuid.
+     * @return the visitUuid
+     */
+
+    public String getVisitUuid() {
+        return visitUuid;
     }
 
     /**

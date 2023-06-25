@@ -20,6 +20,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity;
+import com.openmrs.android_sdk.library.models.Encounter;
 
 import java.util.List;
 
@@ -68,13 +70,100 @@ public interface EncounterRoomDAO {
     Single<Long> getEncounterByUUID(String encounterUUID);
 
     /**
-     * Find encounters by visit id single.
+     * Filter encounters by encounter type.
+     *
+     * @param encounterTypeUUID the encounter uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE type = :encounterTypeUUID")
+    Single<List<EncounterEntity>> getEncountersByEncounterType(String encounterTypeUUID);
+
+    /**
+     * Filter encounters for a patient by encounter type.
+     *
+     * @param patientUuid the patient uuid
+     * @param encounterTypeUUID the encounter uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE patient_uuid = :patientUuid AND type = :encounterTypeUUID")
+    Single<List<EncounterEntity>> getEncountersByEncounterType(String patientUuid, String encounterTypeUUID);
+
+    /**
+     * Filter encounters starting from a particular date.
+     *
+     * @param dateValue the filter date value
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE SUBSTR(encounterDatetime, 1, 10) >= :dateValue")
+    Single<List<EncounterEntity>> getEncountersSinceDate(String dateValue);
+
+    /**
+     * Filter encounters for a patient starting from a particular date.
+     *
+     * @param patientUuid the patient uuid
+     * @param dateValue the filter date value
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE patient_uuid = :patientUuid AND SUBSTR(encounterDatetime, 1, 10) >= :dateValue")
+    Single<List<EncounterEntity>> getEncountersSinceDate(String patientUuid, String dateValue);
+
+    /**
+     * Filter encounters by visit id
      *
      * @param visitID the visit id
      * @return the single
      */
     @Query("SELECT * FROM encounters WHERE visit_id = :visitID")
     Single<List<EncounterEntity>> findEncountersByVisitID(String visitID);
+
+    /**
+     * Filter encounters for a patient for a particular visit
+     *
+     * @param patientUuid the patient uuid
+     * @param visitUuid the visit uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE patient_uuid = :patientUuid AND visit_uuid = :visitUuid")
+    Single<List<EncounterEntity>> getEncountersByVisitUuid(String patientUuid, String visitUuid);
+
+    /**
+     * Filter encounters by location
+     *
+     * @param  location_uuid location uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE location_uuid = :location_uuid")
+    Single<List<EncounterEntity>> getEncountersByLocationUuid(String location_uuid);
+
+    /**
+     * Filter encounters for a patient by location
+     *
+     * @param patientUuid the patient uuid
+     * @param location_uuid the location uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE patient_uuid = :patientUuid AND location_uuid = :location_uuid")
+    Single<List<EncounterEntity>> getEncountersByLocationUuid(String patientUuid, String location_uuid);
+
+    /**
+     * Filter encounters by encounter provider
+     *
+     * @param  encounter_provider_uuid the encounter provider uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE encounter_provider_uuid = :encounter_provider_uuid")
+    Single<List<EncounterEntity>> getEncountersByEncounterProvider(String encounter_provider_uuid);
+
+    /**
+     * Filter encounters for a patient by encounter provider
+     *
+     * @param patientUuid the patient uuid
+     * @param encounter_provider_uuid the encounter provider uuid
+     * @return the list of encounters
+     */
+    @Query("SELECT * FROM standaloneEncounters WHERE patient_uuid = :patientUuid AND encounter_provider_uuid = :encounter_provider_uuid")
+    Single<List<EncounterEntity>> getEncountersByEncounterProvider(String patientUuid, String encounter_provider_uuid);
+
 
     /**
      * Add encounter long.
@@ -86,12 +175,49 @@ public interface EncounterRoomDAO {
     long addEncounter(EncounterEntity encounterEntity);
 
     /**
+     * Add encounter standalone entity.
+     *
+     * @param standaloneEncounterEntity the encounterStandalone entity
+     * @return the long
+     */
+
+    @Insert
+    long addEncounterStandaloneEntity(StandaloneEncounterEntity standaloneEncounterEntity);
+
+    /**
+     * Add encounter standalone entity.
+     *
+     * @param standaloneEncounterEntity the encounterStandalone entity
+     * @return the long
+     */
+
+    @Insert
+    List<Long> addEncounterStandaloneEntityList(List<StandaloneEncounterEntity> standaloneEncounterEntity);
+
+    /**
+     * Get all standalone Encounters
+     *
+     * @return the Standalone Encounter Entity List
+     */
+
+    @Query("SELECT * FROM standaloneEncounters")
+    Single<List<StandaloneEncounterEntity>> getAllStandAloneEncounters();
+
+    /**
      * Delete encounter.
      *
      * @param uuid the uuid
      */
     @Query("DELETE FROM encounters WHERE uuid = :uuid")
     void deleteEncounter(String uuid);
+
+    /**
+     * Delete Standalone Encounter.
+     *
+     * @param patientUuid the uuid of the patient
+     */
+    @Query("DELETE FROM standaloneEncounters WHERE uuid = :patientUuid")
+    void deleteStandaloneEncounter(String patientUuid);
 
     /**
      * Delete encounter by id.

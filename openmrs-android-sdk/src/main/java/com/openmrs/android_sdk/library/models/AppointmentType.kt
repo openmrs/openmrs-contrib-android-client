@@ -15,15 +15,15 @@ import java.io.Serializable
 class AppointmentType(
 
     @Expose
-    private var visitType: VisitType? = null,
+    var visitType: VisitType? = null,
 
     @Expose
-    private var description: String? = null,
+    var description: String? = null,
 
     @Expose
-    private var duration: Int? = null,
+    var duration: String? = null,
 
     @Expose
-    private var confidential: Boolean = false
+    var confidential: Boolean = false
 
 ): Resource(), Serializable

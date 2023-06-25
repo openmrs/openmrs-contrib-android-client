@@ -14,26 +14,24 @@ import java.io.Serializable
 
 class Appointment(
 
-    @Expose
-    private var timeSlot: TimeSlot? = null,
+    @Expose var timeSlot: TimeSlot? = null,
 
     @Expose
-    private var visit: Visit? = null,
+    var visit: Visit? = null,
 
     @Expose
-    private var patient: Patient? = null,
+    var patient: Patient? = null,
+
+    @Expose var status: String? = null,
 
     @Expose
-    private var status: AppointmentStatus? = null,
+    var reason: String? = null,
 
     @Expose
-    private var reason: String? = null,
+    var cancelReason: String? = null,
 
     @Expose
-    private var cancelReason: String? = null,
-
-    @Expose
-    private var appointmentType: AppointmentType? = null
+    var appointmentType: AppointmentType? = null
 
 ): Resource(), Serializable {
 

@@ -16,18 +16,18 @@ import java.io.Serializable
 class AppointmentBlock(
 
     @Expose
-    private val startDate: String? = null,
+    var startDate: String? = null,
 
     @Expose
-    private val endDate: String? = null,
+    var endDate: String? = null,
 
     @Expose
-    private val provider: Provider? = null,
+    var provider: Provider? = null,
 
     @Expose
-    private val location: LocationEntity? = null,
+    var location: LocationEntity? = null,
 
     @Expose
-    private val types: Set<AppointmentType>? = null
+    var types: List<AppointmentType>? = null
 
 ): Resource(), Serializable

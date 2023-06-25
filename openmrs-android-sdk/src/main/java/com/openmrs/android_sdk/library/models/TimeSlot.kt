@@ -14,13 +14,12 @@ import java.io.Serializable
 
 class TimeSlot(
 
-    @Expose
-    private var appointmentBlock: AppointmentBlock? = null,
+    @Expose var appointmentBlock: AppointmentBlock? = null,
 
     @Expose
-    private var startDate: String? = null,
+    var startDate: String? = null,
 
     @Expose
-    private var endDate: String? = null
+    var endDate: String? = null
 
 ): Resource(), Serializable

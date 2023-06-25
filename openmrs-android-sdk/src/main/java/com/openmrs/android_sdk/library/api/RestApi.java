@@ -518,7 +518,7 @@ public interface RestApi {
      * @return the Appointment(s)
      */
     @GET("appointmentscheduling/appointment")
-    Call<Results<Appointment>> getPatientAppointments(@Query("patient") String patientUuid,
+    Call<Results<Appointment>> getAppointmentsForPatient(@Query("patient") String patientUuid,
                                                       @Query("v") String representation);
 
     /**

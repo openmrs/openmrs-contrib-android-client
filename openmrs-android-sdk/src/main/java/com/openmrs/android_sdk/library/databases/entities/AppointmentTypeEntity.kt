@@ -26,7 +26,7 @@ class AppointmentTypeEntity {
     var description: String? = null
 
     @ColumnInfo(name = "duration")
-    var duration: Int? = null
+    var duration: String? = null
 
     @ColumnInfo(name = "confidential")
     var confidential: Boolean = false

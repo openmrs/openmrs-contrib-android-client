@@ -10,12 +10,14 @@
 
 package com.openmrs.android_sdk.library.api;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -492,6 +494,21 @@ public interface RestApi {
     Call<Appointment> createAppointment(@Body Appointment appointment);
 
     /**
+     * Create Appointment
+     *
+     * @param patientUUID the patient uuid
+     * @param status the appointment status
+     * @param typeUUID the appointment type uuid
+     * @param timeslot the appointment timeslot
+     * @return the call
+     */
+    @POST("appointmentscheduling/appointment")
+    Call<Appointment> createAppointment(@Field("patient") String patientUUID,
+                                        @Field("status") String status,
+                                        @Field("appointmentType") String typeUUID,
+                                        @Field("timeSlot") TimeSlot timeslot);
+
+    /**
      * Get an Appointment
      *
      * @param uuid the uuid of the appointment
@@ -539,6 +556,20 @@ public interface RestApi {
     Call<TimeSlot> createTimeslot(@Body TimeSlot timeSlot);
 
     /**
+     * Create a TimeSlot
+     *
+     * @param startDate the start date
+     * @param endDate the end date
+     * @param appointmentBlock the Appointment Block object
+     *
+     * @return the call
+     */
+    @POST("appointmentscheduling/timeslot")
+    Call<TimeSlot> createTimeslot(@Field("startDate") String startDate,
+                                  @Field("endDate") String endDate,
+                                  @Field("location") AppointmentBlock appointmentBlock);
+
+    /**
      * Get a TimeSlot
      *
      * @param timeslotUuid the uuid of the TimeSlot
@@ -570,11 +601,18 @@ public interface RestApi {
     /**
      * Create an Appointment Block
      *
-     * @param appointmentBlock the Appointment Block object
+     * @param startDate the start date of the block
+     * @param endDate the end date of the block
+     * @param location the location name of the block
+     * @param types the list of appointment types
+     *
      * @return the call
      */
     @POST("appointmentscheduling/appointmentblock")
-    Call<AppointmentBlock> createAppointmentBlock(@Body AppointmentBlock appointmentBlock);
+    Call<AppointmentBlock> createAppointmentBlock(@Field("startDate") String startDate,
+                                                  @Field("endDate") String endDate,
+                                                  @Field("location") String location,
+                                                  @Field("types") List<AppointmentType> types);
 
     /**
      * Delete Appointment Block

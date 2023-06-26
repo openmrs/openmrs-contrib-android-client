@@ -27,6 +27,9 @@ import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
 import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.databases.entities.TimeSlotEntity
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentTypeEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentLocationEntity
@@ -34,10 +37,6 @@ import com.openmrs.android_sdk.library.databases.entities.AppointmentProviderEnt
 import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
-import com.openmrs.android_sdk.library.databases.entities.TimeSlotEntity
-import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
-import com.openmrs.android_sdk.library.databases.entities.PatientEntity
-import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
 import com.openmrs.android_sdk.library.models.Allergy

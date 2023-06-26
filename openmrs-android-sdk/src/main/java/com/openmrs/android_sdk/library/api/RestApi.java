@@ -202,6 +202,15 @@ public interface RestApi {
     Call<Results<Patient>> getSimilarPatients(@QueryMap Map<String, String> patientData);
 
     /**
+     * Gets Observation by uuid
+     *
+     * @param obsUuid the uuid of the observation
+     * @return the Call<Observation>
+     */
+    @GET("obs/{obsUuid}")
+    Call<Observation> getObservationByUuid(@Path("obsUuid") String obsUuid);
+
+    /**
      * Create obs call.
      *
      * @param obscreate the obscreate
@@ -209,6 +218,64 @@ public interface RestApi {
      */
     @POST("obs")
     Call<Observation> createObs(@Body Obscreate obscreate);
+
+    /**
+     * Create obs on the server.
+     *
+     * @param observation the Observation to create
+     * @return the call
+     */
+    @POST("obs")
+    Call<Observation> createObservation(@Body Observation observation);
+
+    /**
+     * Get all observations for a patient
+     *
+     * @param patientUuid the patient uuid
+     * @return Observation Resource List
+     */
+    @GET("obs")
+    Call<Results<Resource>> getObservationsByPatientUuid(@Query("patient") String patientUuid);
+
+    /**
+     * Get all observations for a patient
+     *
+     * @param encounterUuid the encounter uuid
+     * @return Observation Resource List
+     */
+    @GET("obs")
+    Call<Results<Resource>> getObservationsByEncounterUuid(@Query("encounter") String encounterUuid);
+
+    /**
+     * Get all observations for a patient
+     *
+     * @param patientUuid patient uuid
+     * @param conceptUuid the concept uuid
+     * @return Observation Resource List
+     */
+    @GET("obs")
+    Call<Results<Resource>> getObservationsByConceptUuid(@Query("patient") String patientUuid,
+                                                         @Query("concept") String conceptUuid);
+
+    /**
+     * Delete Observation from server by uuid
+     *
+     * @param obsUuid the observation uuid
+     * @return the response body
+     */
+    @DELETE("obs/{obsUuid}")
+    Call<ResponseBody> deleteObservation(@Path("obsUuid") String obsUuid);
+
+    /**
+     * Update Observation object on the server.
+     *
+     * @param obsUuid the uuid of the observation
+     * @param observation the Observation object
+     * @return the updated observation
+     */
+    @POST("obs/{obsUuid}")
+    Call<Observation> updateObservation(@Path("obsUuid") String obsUuid,
+                                        @Body Observation observation);
 
     /**
      * Create encounter call.

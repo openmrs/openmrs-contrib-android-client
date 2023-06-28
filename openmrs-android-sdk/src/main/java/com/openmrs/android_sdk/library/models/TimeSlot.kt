@@ -14,7 +14,8 @@ import java.io.Serializable
 
 class TimeSlot(
 
-    @Expose var appointmentBlock: AppointmentBlock? = null,
+    @Expose
+    var appointmentBlock: AppointmentBlock? = null,
 
     @Expose
     var startDate: String? = null,

@@ -14,7 +14,8 @@ import java.io.Serializable
 
 class Appointment(
 
-    @Expose var timeSlot: TimeSlot? = null,
+    @Expose
+    var timeSlot: TimeSlot? = null,
 
     @Expose
     var visit: Visit? = null,
@@ -22,7 +23,8 @@ class Appointment(
     @Expose
     var patient: Patient? = null,
 
-    @Expose var status: String? = null,
+    @Expose
+    var status: String? = null,
 
     @Expose
     var reason: String? = null,

@@ -431,9 +431,9 @@ object AppDatabaseHelper {
         appointmentLocationEntity.uuid = appointmentBlock?.location?.uuid
 
         val appointmentBlockEntity = AppointmentBlockEntity()
-        val blockTypesObjectList = appointmentBlock?.types //List received from server
-        val typeStringList = mutableListOf<String>() //Entity requires this list
-        for(type in blockTypesObjectList!!){
+        val blockTypesObjectList = appointmentBlock?.types // List received from server
+        val typeStringList = mutableListOf<String>() // Entity requires this list
+        for(type in blockTypesObjectList!!) {
             typeStringList.add(type.display!!)
         }
         appointmentBlockEntity.uuid = appointmentBlock.uuid

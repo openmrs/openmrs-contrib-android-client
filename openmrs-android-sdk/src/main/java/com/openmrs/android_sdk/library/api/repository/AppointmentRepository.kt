@@ -18,6 +18,7 @@ import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
 import com.openmrs.android_sdk.library.models.*
+import retrofit2.Call
 import rx.Observable
 import java.io.IOException
 import java.util.concurrent.Callable
@@ -25,11 +26,29 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppointmentRepository @Inject constructor() : BaseRepository(){
+class AppointmentRepository @Inject constructor() : BaseRepository() {
 
     val representation =  context.resources.getString(R.string.appointment_resource_representation)
     var appointmentRoomDAO = AppDatabase.getDatabase(context).appointmentRoomDAO()
 
+    /**
+     * Executes a retrofit request
+     *
+     * @param call the interface call
+     * @param message the error message to display
+     *
+     * @return T
+     */
+    fun <T> executeRequest(call: Call<T>, message: String): T {
+        val response = call.execute()
+
+        if (response.isSuccessful && response != null) {
+            return response.body()!!
+        } else {
+            logger.e(message + response.message())
+            throw Exception(response.message())
+        }
+    }
 
     /**
      * Creates an appointment block
@@ -49,16 +68,8 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
     ): Observable<AppointmentBlock> {
         return createObservableIO<AppointmentBlock>(Callable {
             val call = restApi.createAppointmentBlock(startDate, endDate, locationUUID, types)
-            val response = call.execute()
-
-            if (response.isSuccessful && response != null) {
-                return@Callable response.body()!!
-            } else {
-                logger.e("Error creating an appointment block: " + response.message())
-                throw Exception(response.message())
-            }
-        }
-        )
+            executeRequest(call, "Error creating an appointment block: ")
+        })
     }
 
     /**
@@ -68,19 +79,11 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
      *
      * @return the TimeSlot object
      */
-    fun createTimeSlot(timeSlot: TimeSlot): Observable<TimeSlot>{
+    fun createTimeSlot(timeSlot: TimeSlot): Observable<TimeSlot> {
         return createObservableIO<TimeSlot>(Callable {
             val call = restApi.createTimeslot(timeSlot)
-            val response = call.execute()
-
-            if (response.isSuccessful && response != null) {
-                return@Callable response.body()!!
-            } else {
-                logger.e("Error creating Time Slot: " + response.message())
-                throw Exception(response.message())
-            }
-        }
-        )
+            executeRequest(call, "Error creating Time Slot: ")
+        })
     }
 
     /**
@@ -99,16 +102,8 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
     ): Observable<TimeSlot> {
         return createObservableIO<TimeSlot>(Callable {
             val call = restApi.createTimeslot(startDate, endDate, appointmentBlock)
-            val response = call.execute()
-
-            if (response.isSuccessful && response != null) {
-                return@Callable response.body()!!
-            } else {
-                logger.e("Error creating Time Slot: " + response.message())
-                throw Exception(response.message())
-            }
-        }
-        )
+            executeRequest(call, "Error creating Time Slot: ")
+        })
     }
 
     /**
@@ -134,16 +129,9 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
         val timeSlot = createTimeSlot(timeSlotStartDate, timeSlotEndDate, appointmentBlock).toBlocking().first()
         return createObservableIO<Appointment>(Callable {
             val call = restApi.createAppointment(patientUUID, appointmentStatus, appointmentTypeUUID, timeSlot)
-            val response = call.execute()
+            executeRequest(call, "Error creating Appointment: ")
+        })
 
-            if (response.isSuccessful && response != null) {
-                return@Callable response.body()!!
-            } else {
-                logger.e("Error creating Appointment: " + response.message())
-                throw Exception(response.message())
-            }
-        }
-        )
     }
 
     /**
@@ -171,7 +159,7 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
         blockEndDate: String,
         blockLocationUUID: String,
         blockTypes: List<AppointmentType>
-    ){
+    ) {
         val mAppointmentBlock = createAppointmentBlock(blockStartDate, blockEndDate,
             blockLocationUUID, blockTypes).toBlocking().first()
 
@@ -195,7 +183,7 @@ class AppointmentRepository @Inject constructor() : BaseRepository(){
                 }
                 return@Callable appointments
             } else {
-                throw IOException("Error with fetching visits by patient uuid: " + response.message())
+                throw IOException("Error getting and saving appointments from server: " + response.message())
             }
         })
     }

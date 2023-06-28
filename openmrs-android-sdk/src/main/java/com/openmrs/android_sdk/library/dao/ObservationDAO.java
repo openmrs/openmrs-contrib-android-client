@@ -18,10 +18,12 @@ import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
+import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity;
 import com.openmrs.android_sdk.library.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * The type Observation dao.
@@ -31,6 +33,35 @@ public class ObservationDAO {
      * The Observation room dao.
      */
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
+
+    @Inject
+    public ObservationDAO() { }
+    /**
+     * Saves an observation entity to db
+     *
+     * @param obs the observation model
+     * @param encounterID the encounterId
+     *
+     * @return id (primary key)
+     */
+    public Long saveObservation(Observation obs, long encounterID) {
+        ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
+        return observationRoomDAO.addObservation(observationEntity);
+    }
+
+    /**
+     * Update observation in db (ROOM will match the primary keys for updating)
+     *
+     * @param obs the observation
+     * @param encounterId the observation (needed to verify that the observation already exists)
+     *
+     * @return count of updated values
+     */
+    public int updateObservation(Observation obs, long encounterId) {
+        ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterId);
+        observationEntity.setId(encounterId);
+        return observationRoomDAO.updateObservation(observationEntity);
+    }
 
     /**
      * Find observation by encounter id list.
@@ -49,4 +80,29 @@ public class ObservationDAO {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Save observations independently to the offline database
+     *
+     * @param observationList the observation list to be saved
+     * @return the list of primary keys
+     */
+    public List<Long> saveStandaloneObservations(List<Observation> observationList) {
+        List<StandaloneObservationEntity> standaloneObservationEntityList = new ArrayList<>();
+        for(Observation observation: observationList){
+            StandaloneObservationEntity standaloneObservationEntity = AppDatabaseHelper.convertToStandalone(observation);
+            standaloneObservationEntityList.add(standaloneObservationEntity);
+        }
+        return observationRoomDAO.addStandaloneObservationList(standaloneObservationEntityList);
+    }
+
+    /**
+     * Delete all standalone observations in the database
+     *
+     * @param patientUuid the patient uuid for which the standalone encounters should be deleted
+     */
+    public void deleteAllStandaloneObservations(String patientUuid) {
+        observationRoomDAO.deleteAllStandaloneObservationsByPatientUuid(patientUuid);
+    }
+
 }

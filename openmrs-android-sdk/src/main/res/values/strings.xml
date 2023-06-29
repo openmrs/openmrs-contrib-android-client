@@ -516,4 +516,32 @@
     <string name="about_openmrs_1">OpenMRS is a global community of truly dedicated, talented, and generous contributors who build and maintain the OpenMRS platform and other, foundational OpenMRS technical products.</string>
     <string name="about_openmrs_2">OpenMRS is a platform that countries and implementers use to create a customized EMR system in response to actual needs on the ground.</string>
     <string name="more_about_openmrs"><![CDATA[more]]></string>
+
+    <!-- Appointment Repository -->
+    <string name="appointment_resource_representation" translatable="false">
+    "custom:(
+        uuid,
+        display,
+        status,
+        reason,
+        visit:(uuid, display),
+        patient:(uuid, display),
+        appointmentType:(uuid, display, description, duration, confidential),
+        timeslot:(
+	        uuid,
+	        display,
+	        startDate,
+	        endDate,
+	        appointmentBlock:(
+			    uuid,
+			    display,
+			    startDate,
+			    endDate,
+			    location:(uuid, display),
+			    types,
+			    provider:(uuid, display)
+	        )
+        )
+    )
+    </string>
 </resources>

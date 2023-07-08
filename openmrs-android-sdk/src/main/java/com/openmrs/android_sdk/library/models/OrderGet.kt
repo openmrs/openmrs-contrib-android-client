@@ -9,7 +9,9 @@
  */
 package com.openmrs.android_sdk.library.models
 
+import androidx.room.FtsOptions.Order
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class OrderGet: Serializable {
@@ -18,10 +20,11 @@ class OrderGet: Serializable {
     val uuid: String = ""
 
     @Expose
-    val concept: String = ""
+    val display: String = ""
 
     @Expose
-    val encounter: String = ""
+    @SerializedName("encounter")
+    val encounterUuid: String = ""
 
     @Expose
     val type: String = ""
@@ -36,7 +39,8 @@ class OrderGet: Serializable {
     val doseUnits: String = ""
 
     @Expose
-    val careSetting: String = ""
+    @SerializedName("careSetting")
+    val careSettingName: String = ""
 
     @Expose
     val urgency: String = ""
@@ -64,4 +68,45 @@ class OrderGet: Serializable {
 
     @Expose
     val numberOfRepeats: String = ""
+
+    @Expose
+    val orderNumber: String = ""
+
+    @Expose
+    val accessionNumber: String = ""
+
+    @Expose
+    @SerializedName("patient")
+    val patientUuid: String = ""
+
+    @Expose
+    @SerializedName("concept")
+    val conceptUuid: String = ""
+
+    @Expose
+    val action: String = ""
+
+    @Expose
+    val scheduledDate: String = ""
+
+    @Expose
+    val autoExpireDate: String = ""
+
+    @Expose
+    val orderer: OrderResouce = OrderResouce()
+
+    @Expose
+    val orderReason: String = ""
+
+    @Expose
+    val orderType: OrderResouce = OrderResouce()
+
+    @Expose
+    val fulfillerStatus: String = ""
+
+    @Expose
+    val fulfillerComment: String = ""
+
+    @Expose
+    val specimenSource: String = ""
 }

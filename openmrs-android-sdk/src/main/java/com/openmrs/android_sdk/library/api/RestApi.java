@@ -828,11 +828,13 @@ public interface RestApi {
      * Get all orders for a patient
      *
      * @param patientUuid the patient uuid
+     * @param representation the response representation
      *
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid);
+    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+                                       @Query("v") String representation);
 
     /**
      * Get all orders for a patient and caresetting
@@ -844,19 +846,22 @@ public interface RestApi {
      */
     @GET("order")
     Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
-                                           @Query("careSetting") String careSetting);
+                                       @Query("careSetting") String careSetting,
+                                       @Query("v") String representation);
 
     /**
      * Get all orders for a patient and ordertype
      *
      * @param patientUuid the patient uuid
      * @param ordertype the theordertype string
+     * @param representation the response representation
      *
      * @return the call
      */
     @GET("order")
     Call<OrderGet> getOrdersForPatientWithOrderType(@Query("patient") String patientUuid,
-                                           @Query("ordertype") String ordertype);
+                                                    @Query("ordertype") String ordertype,
+                                                    @Query("v") String representation);
 
     /**
      * Get all orders for a patient and ordertype and caresetting
@@ -864,25 +869,29 @@ public interface RestApi {
      * @param patientUuid the patient uuid
      * @param ordertype the theordertype string
      * @param careSetting the caresetting string
+     * @param representation the response representation
      *
      * @return the call
      */
     @GET("order")
     Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
-                                           @Query("ordertype") String ordertype,
-                                           @Query("careSetting") String careSetting);
+                                       @Query("ordertype") String ordertype,
+                                       @Query("careSetting") String careSetting,
+                                       @Query("v") String representation);
 
     /**
      * Get all orders for a patient from a given date
      *
      * @param patientUuid the patient uuid
      * @param activatedOnOrAfterDate the starting date
+     * @param representation the response representation
      *
      * @return the call
      */
     @GET("order")
     Call<OrderGet> getOrdersForPatientFromDate(@Query("patient") String patientUuid,
-                                                   @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate);
+                                               @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate,
+                                               @Query("v") String representation);
 
     /**
      * Get all orders for a patient and ordertype and caresetting and from a given date
@@ -891,6 +900,7 @@ public interface RestApi {
      * @param ordertype the theordertype string
      * @param careSetting the caresetting string
      * @param activatedOnOrAfterDate the starting date
+     * @param representation the response representation
      *
      * @return the call
      */
@@ -898,7 +908,8 @@ public interface RestApi {
     Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
                                        @Query("ordertype") String ordertype,
                                        @Query("careSetting") String careSetting,
-                                       @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate);
+                                       @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate,
+                                       @Query("v") String representation);
 
     /**
      * Delete an order

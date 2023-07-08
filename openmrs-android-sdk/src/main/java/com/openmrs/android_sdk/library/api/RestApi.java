@@ -45,6 +45,8 @@ import com.openmrs.android_sdk.library.models.IdentifierType;
 import com.openmrs.android_sdk.library.models.Module;
 import com.openmrs.android_sdk.library.models.Obscreate;
 import com.openmrs.android_sdk.library.models.Observation;
+import com.openmrs.android_sdk.library.models.OrderCreate;
+import com.openmrs.android_sdk.library.models.OrderGet;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
@@ -812,4 +814,99 @@ public interface RestApi {
     @GET("appointmentscheduling/appointmenttype/{uuid}")
     Call<AppointmentType> getAppointmentTypeByUuid(@Path("uuid") String appointmentTypeUuid,
                                                    @Query("v") String representation);
+
+    /**
+     * Create an Order
+     *
+     * @param orderCreate the orderCreate type object
+     * @return the call
+     */
+    @POST("order")
+    Call<OrderGet> createOrder(@Body OrderCreate orderCreate);
+
+    /**
+     * Get all orders for a patient
+     *
+     * @param patientUuid the patient uuid
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid);
+
+    /**
+     * Get all orders for a patient and caresetting
+     *
+     * @param patientUuid the patient uuid
+     * @param careSetting the caresetting string
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+                                           @Query("careSetting") String careSetting);
+
+    /**
+     * Get all orders for a patient and ordertype
+     *
+     * @param patientUuid the patient uuid
+     * @param ordertype the theordertype string
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatientWithOrderType(@Query("patient") String patientUuid,
+                                           @Query("ordertype") String ordertype);
+
+    /**
+     * Get all orders for a patient and ordertype and caresetting
+     *
+     * @param patientUuid the patient uuid
+     * @param ordertype the theordertype string
+     * @param careSetting the caresetting string
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+                                           @Query("ordertype") String ordertype,
+                                           @Query("careSetting") String careSetting);
+
+    /**
+     * Get all orders for a patient from a given date
+     *
+     * @param patientUuid the patient uuid
+     * @param activatedOnOrAfterDate the starting date
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatientFromDate(@Query("patient") String patientUuid,
+                                                   @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate);
+
+    /**
+     * Get all orders for a patient and ordertype and caresetting and from a given date
+     *
+     * @param patientUuid the patient uuid
+     * @param ordertype the theordertype string
+     * @param careSetting the caresetting string
+     * @param activatedOnOrAfterDate the starting date
+     *
+     * @return the call
+     */
+    @GET("order")
+    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+                                       @Query("ordertype") String ordertype,
+                                       @Query("careSetting") String careSetting,
+                                       @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate);
+
+    /**
+     * Delete an order
+     *
+     * @param orderUuid the Order uuid
+     * @return the call
+     */
+    @DELETE("order/{uuid}")
+    Call<ResponseBody> deleteOrder(@Path("uuid") String orderUuid);
+
 }

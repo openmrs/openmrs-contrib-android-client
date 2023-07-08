@@ -28,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class AppointmentRepository @Inject constructor() : BaseRepository() {
 
-    val representation =  context.resources.getString(R.string.appointment_resource_representation)
+    val representation =  context.resources.getString(R.string.appointment_resource_representation).trim()
     var appointmentRoomDAO = AppDatabase.getDatabase(context).appointmentRoomDAO()
 
     /**

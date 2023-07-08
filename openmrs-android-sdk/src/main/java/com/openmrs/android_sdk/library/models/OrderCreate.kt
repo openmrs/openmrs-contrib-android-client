@@ -24,6 +24,15 @@ class OrderCreate: Serializable {
     lateinit var type: String
 
     @Expose
+    lateinit var patientUuid: String
+
+    @Expose
+    lateinit var orderer: String
+
+    @Expose
+    lateinit var careSetting: String
+
+    @Expose
     val instructions: String = ""
 
     @Expose
@@ -31,9 +40,6 @@ class OrderCreate: Serializable {
 
     @Expose
     val doseUnits: String = ""
-
-    @Expose
-    val careSetting: String = ""
 
     @Expose
     val urgency: String = ""

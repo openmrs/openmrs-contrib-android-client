@@ -14,8 +14,8 @@ import com.google.gson.annotations.Expose
 class OrderResource {
 
     @Expose
-    val uuid: String = ""
+    var uuid: String = ""
 
     @Expose
-    val display: String = ""
+    var display: String = ""
 }

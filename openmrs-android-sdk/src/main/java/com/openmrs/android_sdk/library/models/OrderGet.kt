@@ -16,96 +16,96 @@ import java.io.Serializable
 class OrderGet: Serializable {
 
     @Expose
-    val uuid: String = ""
+    var uuid: String = ""
 
     @Expose
-    val display: String = ""
+    var display: String = ""
 
     @Expose
     @SerializedName("encounter")
-    val encounterUuid: String = ""
+    var encounterUuid: String = ""
 
     @Expose
-    val type: String = ""
+    var type: String = ""
 
     @Expose
-    val instructions: String = ""
+    var instructions: String = ""
 
     @Expose
-    val frequency: String = ""
+    var frequency: String = ""
 
     @Expose
-    val doseUnits: String = ""
+    var doseUnits: String = ""
 
     @Expose
     @SerializedName("careSetting")
-    val careSettingName: String = ""
+    var careSettingName: String = ""
 
     @Expose
-    val urgency: String = ""
+    var urgency: String = ""
 
     @Expose
-    val dateStopped: String = ""
+    var dateStopped: String = ""
 
     @Expose
-    val dateActivated: String = ""
+    var dateActivated: String = ""
 
     @Expose
-    val quantity: String = ""
+    var quantity: String = ""
 
     @Expose
-    val drug: String = ""
+    var drug: String = ""
 
     @Expose
-    val dosingInstructions: String = ""
+    var dosingInstructions: String = ""
 
     @Expose
-    val duration: String = ""
+    var duration: String = ""
 
     @Expose
-    val dosingType: String = ""
+    var dosingType: String = ""
 
     @Expose
-    val numberOfRepeats: String = ""
+    var numberOfRepeats: String = ""
 
     @Expose
-    val orderNumber: String = ""
+    var orderNumber: String = ""
 
     @Expose
-    val accessionNumber: String = ""
+    var accessionNumber: String = ""
 
     @Expose
     @SerializedName("patient")
-    val patientUuid: String = ""
+    var patientUuid: String = ""
 
     @Expose
     @SerializedName("concept")
-    val conceptUuid: String = ""
+    var conceptUuid: String = ""
 
     @Expose
-    val action: String = ""
+    var action: String = ""
 
     @Expose
-    val scheduledDate: String = ""
+    var scheduledDate: String = ""
 
     @Expose
-    val autoExpireDate: String = ""
+    var autoExpireDate: String = ""
 
     @Expose
-    val orderer: OrderResource = OrderResource()
+    var orderer: OrderResource = OrderResource()
 
     @Expose
-    val orderReason: String = ""
+    var orderReason: String = ""
 
     @Expose
-    val orderType: OrderResource = OrderResource()
+    var orderType: OrderResource = OrderResource()
 
     @Expose
-    val fulfillerStatus: String = ""
+    var fulfillerStatus: String = ""
 
     @Expose
-    val fulfillerComment: String = ""
+    var fulfillerComment: String = ""
 
     @Expose
-    val specimenSource: String = ""
+    var specimenSource: String = ""
 }

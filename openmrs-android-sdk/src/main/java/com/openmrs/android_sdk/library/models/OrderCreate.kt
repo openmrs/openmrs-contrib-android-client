@@ -33,38 +33,38 @@ class OrderCreate: Serializable {
     lateinit var careSetting: String
 
     @Expose
-    val instructions: String = ""
+    var instructions: String = ""
 
     @Expose
-    val frequency: String = ""
+    var frequency: String = ""
 
     @Expose
-    val doseUnits: String = ""
+    var doseUnits: String = ""
 
     @Expose
-    val urgency: String = ""
+    var urgency: String = ""
 
     @Expose
-    val dateStopped: String = ""
+    var dateStopped: String = ""
 
     @Expose
-    val dateActivated: String = ""
+    var dateActivated: String = ""
 
     @Expose
-    val quantity: String = ""
+    var quantity: String = ""
 
     @Expose
-    val drug: String = ""
+    var drug: String = ""
 
     @Expose
-    val dosingInstructions: String = ""
+    var dosingInstructions: String = ""
 
     @Expose
-    val duration: String = ""
+    var duration: String = ""
 
     @Expose
-    val dosingType: String = ""
+    var dosingType: String = ""
 
     @Expose
-    val numberOfRepeats: String = ""
+    var numberOfRepeats: String = ""
 }

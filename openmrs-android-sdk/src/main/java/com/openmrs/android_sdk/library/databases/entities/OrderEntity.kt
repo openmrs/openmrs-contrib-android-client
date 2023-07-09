@@ -32,88 +32,86 @@ class OrderEntity {
     var display: String? = ""
 
     @ColumnInfo(name = "encounterUuid")
-    val encounterUuid: String = ""
+    var encounterUuid: String = ""
 
     @ColumnInfo(name = "type")
-    val type: String = ""
+    var type: String = ""
 
     @ColumnInfo(name = "instructions")
-    val instructions: String = ""
+    var instructions: String = ""
 
     @ColumnInfo(name = "frequency")
-    val frequency: String = ""
+    var frequency: String = ""
 
     @ColumnInfo(name = "doseUnits")
-    val doseUnits: String = ""
+    var doseUnits: String = ""
 
     @ColumnInfo(name = "careSettingName")
-    val careSettingName: String = ""
+    var careSettingName: String = ""
 
     @ColumnInfo(name = "urgency")
-    val urgency: String = ""
+    var urgency: String = ""
 
     @ColumnInfo(name = "dateStopped")
-    val dateStopped: String = ""
+    var dateStopped: String = ""
 
     @ColumnInfo(name = "dateActivated")
-    val dateActivated: String = ""
+    var dateActivated: String = ""
 
     @ColumnInfo(name = "quantity")
-    val quantity: String = ""
+    var quantity: String = ""
 
     @ColumnInfo(name = "drug")
-    val drug: String = ""
+    var drug: String = ""
 
     @ColumnInfo(name = "dosingInstructions")
-    val dosingInstructions: String = ""
+    var dosingInstructions: String = ""
 
     @ColumnInfo(name = "duration")
-    val duration: String = ""
+    var duration: String = ""
 
     @ColumnInfo(name = "dosingType")
-    val dosingType: String = ""
+    var dosingType: String = ""
 
     @ColumnInfo(name = "numberOfRepeats")
-    val numberOfRepeats: String = ""
+    var numberOfRepeats: String = ""
 
     @ColumnInfo(name = "orderNumber")
-    val orderNumber: String = ""
+    var orderNumber: String = ""
 
     @ColumnInfo(name = "accessionNumber")
-    val accessionNumber: String = ""
+    var accessionNumber: String = ""
 
     @ColumnInfo(name = "patientUuid")
-    val patientUuid: String = ""
+    var patientUuid: String = ""
 
     @ColumnInfo(name = "conceptUuid")
-    val conceptUuid: String = ""
+    var conceptUuid: String = ""
 
     @ColumnInfo(name = "action")
-    val action: String = ""
+    var action: String = ""
 
     @ColumnInfo(name = "scheduledDate")
-    val scheduledDate: String = ""
+    var scheduledDate: String = ""
 
     @ColumnInfo(name = "autoExpireDate")
-    val autoExpireDate: String = ""
+    var autoExpireDate: String = ""
 
-    @ColumnInfo(name = "orderer")
     @Embedded(prefix = "orderer_")
-    val orderer: OrderResource = OrderResource()
+    var orderer: OrderResource = OrderResource()
 
     @ColumnInfo(name = "orderReason")
-    val orderReason: String = ""
+    var orderReason: String = ""
 
-    @ColumnInfo(name = "orderType")
     @Embedded(prefix = "orderType_")
-    val orderType: OrderResource = OrderResource()
+    var orderType: OrderResource = OrderResource()
 
     @ColumnInfo(name = "fulfillerStatus")
-    val fulfillerStatus: String = ""
+    var fulfillerStatus: String = ""
 
     @ColumnInfo(name = "fulfillerComment")
-    val fulfillerComment: String = ""
+    var fulfillerComment: String = ""
 
     @ColumnInfo(name = "specimenSource")
-    val specimenSource: String = ""
+    var specimenSource: String = ""
 }

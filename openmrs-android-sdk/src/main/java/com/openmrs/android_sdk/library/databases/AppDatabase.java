@@ -40,6 +40,7 @@ import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
+import com.openmrs.android_sdk.library.databases.entities.OrderEntity;
 import com.openmrs.android_sdk.library.databases.entities.PatientEntity;
 import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity;
 import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity;
@@ -65,7 +66,8 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
         EncounterType.class,
         Encountercreate.class,
         AllergyEntity.class,
-        AppointmentEntity.class},
+        AppointmentEntity.class,
+        OrderEntity.class},
         version = 1)
 @TypeConverters({StringListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {

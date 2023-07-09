@@ -841,6 +841,7 @@ public interface RestApi {
      *
      * @param patientUuid the patient uuid
      * @param careSetting the caresetting string
+     * @param representation the response representation
      *
      * @return the call
      */

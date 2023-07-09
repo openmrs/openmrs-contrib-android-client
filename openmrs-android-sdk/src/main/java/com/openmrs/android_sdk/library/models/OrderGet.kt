@@ -9,7 +9,6 @@
  */
 package com.openmrs.android_sdk.library.models
 
-import androidx.room.FtsOptions.Order
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -93,13 +92,13 @@ class OrderGet: Serializable {
     val autoExpireDate: String = ""
 
     @Expose
-    val orderer: OrderResouce = OrderResouce()
+    val orderer: OrderResource = OrderResource()
 
     @Expose
     val orderReason: String = ""
 
     @Expose
-    val orderType: OrderResouce = OrderResouce()
+    val orderType: OrderResource = OrderResource()
 
     @Expose
     val fulfillerStatus: String = ""

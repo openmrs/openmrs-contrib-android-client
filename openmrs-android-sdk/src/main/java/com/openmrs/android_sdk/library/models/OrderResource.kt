@@ -11,7 +11,7 @@ package com.openmrs.android_sdk.library.models
 
 import com.google.gson.annotations.Expose
 
-class OrderResouce {
+class OrderResource {
 
     @Expose
     val uuid: String = ""

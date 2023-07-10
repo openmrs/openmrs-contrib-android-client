@@ -21,38 +21,9 @@ import com.openmrs.android_sdk.library.dao.EncounterDAO
 import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
 import com.openmrs.android_sdk.library.dao.ObservationDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
-import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
-import com.openmrs.android_sdk.library.databases.entities.EncounterEntity
-import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
-import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity
-import com.openmrs.android_sdk.library.databases.entities.VisitEntity
-import com.openmrs.android_sdk.library.databases.entities.TimeSlotEntity
-import com.openmrs.android_sdk.library.databases.entities.PatientEntity
-import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentTypeEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentLocationEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentProviderEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
-import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
+import com.openmrs.android_sdk.library.databases.entities.*
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
-import com.openmrs.android_sdk.library.models.Allergen
-import com.openmrs.android_sdk.library.models.Allergy
-import com.openmrs.android_sdk.library.models.Encounter
-import com.openmrs.android_sdk.library.models.EncounterType
-import com.openmrs.android_sdk.library.models.Observation
-import com.openmrs.android_sdk.library.models.Patient
-import com.openmrs.android_sdk.library.models.PatientIdentifier
-import com.openmrs.android_sdk.library.models.PersonAddress
-import com.openmrs.android_sdk.library.models.PersonName
-import com.openmrs.android_sdk.library.models.Resource
-import com.openmrs.android_sdk.library.models.Visit
-import com.openmrs.android_sdk.library.models.VisitType
-import com.openmrs.android_sdk.library.models.Appointment
-import com.openmrs.android_sdk.library.models.Person
-import com.openmrs.android_sdk.library.models.ConceptClass
+import com.openmrs.android_sdk.library.models.*
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -477,5 +448,41 @@ object AppDatabaseHelper {
         appointmentEntity.visit = appointmentVisitEntity
 
         return appointmentEntity
+    }
+
+    fun convert(orderGet: OrderGet): OrderEntity {
+        val orderEntity = OrderEntity()
+        orderEntity.uuid = orderGet.uuid
+        orderEntity.display = orderGet.display
+        orderEntity.action = orderGet.action
+        orderEntity.accessionNumber = orderGet.accessionNumber
+        orderEntity.autoExpireDate = orderGet.autoExpireDate
+        orderEntity.careSettingName = orderGet.careSettingName
+        orderEntity.conceptUuid = orderGet.conceptUuid
+        orderEntity.dateActivated = orderGet.dateActivated
+        orderEntity.dateStopped = orderGet.dateStopped
+        orderEntity.doseUnits = orderGet.doseUnits
+        orderEntity.urgency = orderGet.urgency
+        orderEntity.orderer.display = orderGet.orderer.display
+        orderEntity.orderer.uuid = orderGet.orderer.uuid
+        orderEntity.dosingType = orderGet.dosingType
+        orderEntity.drug = orderGet.drug
+        orderEntity.fulfillerStatus = orderGet.fulfillerStatus
+        orderEntity.specimenSource = orderGet.specimenSource
+        orderEntity.instructions = orderGet.instructions
+        orderEntity.type = orderGet.type
+        orderEntity.orderType.uuid = orderGet.orderType.uuid
+        orderEntity.orderType.display = orderGet.orderType.display
+        orderEntity.quantity = orderGet.quantity
+        orderEntity.dosingInstructions = orderGet.dosingInstructions
+        orderEntity.encounterUuid = orderGet.encounterUuid
+        orderEntity.fulfillerComment = orderGet.fulfillerComment
+        orderEntity.scheduledDate = orderGet.scheduledDate
+        orderEntity.numberOfRepeats = orderGet.numberOfRepeats
+        orderEntity.orderReason = orderGet.orderReason
+        orderEntity.duration = orderGet.duration
+        orderEntity.orderNumber = orderGet.orderNumber
+
+        return orderEntity
     }
 }

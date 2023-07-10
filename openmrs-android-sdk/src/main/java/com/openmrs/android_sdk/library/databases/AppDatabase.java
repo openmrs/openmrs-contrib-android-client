@@ -30,6 +30,7 @@ import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO;
 import com.openmrs.android_sdk.library.dao.FormResourceDAO;
 import com.openmrs.android_sdk.library.dao.LocationRoomDAO;
 import com.openmrs.android_sdk.library.dao.ObservationRoomDAO;
+import com.openmrs.android_sdk.library.dao.OrderRoomDAO;
 import com.openmrs.android_sdk.library.dao.PatientRoomDAO;
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
 import com.openmrs.android_sdk.library.dao.VisitRoomDAO;
@@ -178,4 +179,11 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return the Appointment Room DAO
      */
     public abstract AppointmentRoomDAO appointmentRoomDAO();
+
+    /**
+     * Order Room DAO
+     *
+     * @return the Order Room DAO
+     */
+    public abstract OrderRoomDAO orderRoomDAO();
 }

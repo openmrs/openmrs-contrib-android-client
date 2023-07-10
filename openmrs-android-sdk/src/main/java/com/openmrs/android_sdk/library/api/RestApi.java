@@ -833,7 +833,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatient(@Query("patient") String patientUuid,
                                        @Query("v") String representation);
 
     /**
@@ -846,7 +846,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatient(@Query("patient") String patientUuid,
                                        @Query("careSetting") String careSetting,
                                        @Query("v") String representation);
 
@@ -860,7 +860,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatientWithOrderType(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatientWithOrderType(@Query("patient") String patientUuid,
                                                     @Query("ordertype") String ordertype,
                                                     @Query("v") String representation);
 
@@ -875,7 +875,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatient(@Query("patient") String patientUuid,
                                        @Query("ordertype") String ordertype,
                                        @Query("careSetting") String careSetting,
                                        @Query("v") String representation);
@@ -890,7 +890,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatientFromDate(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatientFromDate(@Query("patient") String patientUuid,
                                                @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate,
                                                @Query("v") String representation);
 
@@ -906,7 +906,7 @@ public interface RestApi {
      * @return the call
      */
     @GET("order")
-    Call<OrderGet> getOrdersForPatient(@Query("patient") String patientUuid,
+    Call<Results<OrderGet>> getOrdersForPatient(@Query("patient") String patientUuid,
                                        @Query("ordertype") String ordertype,
                                        @Query("careSetting") String careSetting,
                                        @Query("activatedOnOrAfterDate") String activatedOnOrAfterDate,

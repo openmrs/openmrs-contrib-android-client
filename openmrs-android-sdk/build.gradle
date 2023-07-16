@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion "29.0.2"
 
     defaultConfig {
@@ -33,6 +33,15 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    hilt {
+        enableTransformForLocalTests = true
     }
 
     dependencies {
@@ -76,22 +85,40 @@ android {
         // test implementation
         testImplementation 'junit:junit:4.+'
         androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+
+        //Espresso
         androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+        //Mockito
+        testImplementation "org.mockito:mockito-core:5.2.0"
+        testImplementation "org.mockito:mockito-core:2.19.0"
+
+        //mockK library
+        testImplementation "io.mockk:mockk:1.11.0"
+
+        //Mockwebserver
+        testImplementation 'com.squareup.okhttp3:mockwebserver:4.0.0'
+
+        //Test Runners
+        testImplementation "androidx.test:core:1.4.0"
+
+        //Roboelectric
+        testImplementation 'org.robolectric:robolectric:4.6.1'
 
         // http request Chucker Library
         debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
         releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
 
         // Hilt Dependency Injection
-        implementation 'com.google.dagger:hilt-android:2.36'
-        kapt 'com.google.dagger:hilt-compiler:2.36'
+        implementation 'com.google.dagger:hilt-android:2.38.1'
+        kapt 'com.google.dagger:hilt-compiler:2.38.1'
         implementation("androidx.hilt:hilt-work:1.0.0")
         kapt("androidx.hilt:hilt-compiler:1.0.0") /* Use it for Kotlin Workers */
         annotationProcessor("androidx.hilt:hilt-compiler:1.0.0") /* Use it for Java Workers */
 
         // Hilt local unit testing
-        testImplementation 'com.google.dagger:hilt-android-testing:2.36'
-        kaptTest 'com.google.dagger:hilt-compiler:2.36'
+        testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+        kaptTest 'com.google.dagger:hilt-compiler:2.38.1'
     }
 
     kapt {
@@ -120,3 +147,4 @@ dokkaHtml.configure {
         }
     }
 }
+

@@ -18,6 +18,7 @@ import androidx.work.WorkManager
 import com.openmrs.android_sdk.library.OpenMRSLogger
 import com.openmrs.android_sdk.library.api.RestApi
 import com.openmrs.android_sdk.library.databases.AppDatabase
+import dagger.hilt.EntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +27,7 @@ import javax.inject.Singleton
  * The type Base repository.
  */
 @Singleton
-abstract class BaseRepository {
+open class BaseRepository {
     /**
      * The Context.
      * @see Context

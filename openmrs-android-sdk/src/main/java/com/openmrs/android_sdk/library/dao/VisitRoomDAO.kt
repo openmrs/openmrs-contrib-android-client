@@ -58,6 +58,46 @@ interface VisitRoomDAO {
     val activeVisits: Single<List<VisitEntity>>
 
     /**
+     * Gets visits by patient id and visit location.
+     *
+     * @param patientID the patient id
+     * @param visitPlace the visit place
+     * @return the visits by patient id
+     */
+    @Query("SELECT * FROM visits WHERE patient_id = :patientID AND visit_place = :visitPlace ORDER BY start_date DESC")
+    fun getVisitsByPatientIDAndVisitPlace(
+        patientID: Long,
+        visitPlace: String
+    ): Single<List<VisitEntity>>
+
+    /**
+     * Gets active visits by patient id filtered by visit place.
+     *
+     * @param patientId the patient id
+     * @param visitPlace the visit place
+     * @return the active visit by patient id
+     */
+    @Query(
+        "SELECT * FROM visits WHERE patient_id = :patientId " +
+                "AND visit_place = :visitPlace " +
+                "AND (stop_date IS NULL OR stop_date = '') " +
+                "ORDER BY start_date DESC"
+    )
+    fun getActiveVisitByPatientIdAndVisitPlace(
+        patientId: Long,
+        visitPlace: String
+    ): Single<VisitEntity>
+
+    /**
+     * Gets all visit places (which are associated to atleast one visit saved)
+     *
+     * @param patientID the patient id
+     * @return the visit_place list
+     */
+    @Query("SELECT visit_place FROM visits WHERE patient_id = :patientID")
+    fun getVisitPlacesByPatientID(patientID: Long): Single<List<String>>
+
+    /**
      * Gets visits by patient id.
      *
      * @param patientID the patient id

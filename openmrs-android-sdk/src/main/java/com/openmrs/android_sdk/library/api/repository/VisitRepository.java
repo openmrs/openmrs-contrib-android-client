@@ -52,6 +52,8 @@ public class VisitRepository extends BaseRepository {
     private final VisitDAO visitDAO;
     private final EncounterDAO encounterDAO;
 
+    String representation = "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
+
     /**
      * Instantiates a new Visit repository.
      */
@@ -63,25 +65,48 @@ public class VisitRepository extends BaseRepository {
     }
 
     /**
+     * Executes a Retrofit request
+     *
+     * @param call    the interface call
+     * @param message the error message to display
+     * @param <T>     the response type
+     * @return T
+     * @throws Exception if an error occurs during the request
+     */
+    public <T> T executeRequest(Call<T> call, String message) throws Exception {
+        Response<T> response = call.execute();
+
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body();
+        } else {
+            logger.e(message + response.message());
+            throw new Exception(response.message());
+        }
+    }
+
+    public List<Visit> fetchVisitsAndSave(Call<Results<Visit>> call, Patient patient) throws IOException {
+        Response<Results<Visit>> response = call.execute();
+
+        if (response.isSuccessful()) {
+            List<Visit> visits = response.body().getResults();
+            for (Visit visit : visits) {
+                visitDAO.saveOrUpdate(visit, patient.getId()).toBlocking().subscribe();
+            }
+            return visits;
+        } else {
+            throw new IOException("Error with fetching visits by patient UUID: " + response.message());
+        }
+    }
+
+    /**
      * This method downloads visits data asynchronously from the server.
      *
-     * @param patient
+     * @param patient the patient
      */
     public Observable<List<Visit>> syncVisitsData(@NonNull final Patient patient) {
         return AppDatabaseHelper.createObservableIO(() -> {
-            Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)");
-            Response<Results<Visit>> response = call.execute();
-
-            if (response.isSuccessful()) {
-                List<Visit> visits = response.body().getResults();
-                visitDAO.deleteVisitsByPatientId(patient.getId()).toBlocking().subscribe();
-                for (Visit visit : visits) {
-                    visitDAO.saveOrUpdate(visit, patient.getId()).toBlocking().subscribe();
-                }
-                return visits;
-            } else {
-                throw new IOException("Error with fetching visits by patient uuid: " + response.message());
-            }
+            Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), representation);
+            return fetchVisitsAndSave(call, patient);
         });
     }
 
@@ -197,6 +222,117 @@ public class VisitRepository extends BaseRepository {
                 getLogger().e("Error starting a visit: " + response.message());
                 throw new Exception(response.message());
             }
+        });
+    }
+
+    /**
+     * This method fetches visits for a particular location and saves them locally
+     *
+     * @param patient
+     * @param locationUuid
+     *
+     * @return the vist list
+     */
+    public Observable<List<Visit>> getVisitsByLocationAndSaveLocally(@NonNull final Patient patient,
+                                                                     String locationUuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findActiveVisitsByPatientAndLocation(patient.getUuid(), locationUuid,representation);
+            return fetchVisitsAndSave(call, patient);
+        });
+    }
+
+    /**
+     * This method fetches visits for a particular location and from a start date
+     * and saves them locally
+     *
+     * @param patient
+     * @param locationUuid
+     * @param fromStartDate
+     *
+     * @return the vist list
+     */
+    public Observable<List<Visit>>
+    getVisitsByLocationAndDateAndSaveLocally(@NonNull final Patient patient, String locationUuid, String fromStartDate) {
+
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findVisitsByPatientAndLocationAndDate(patient.getUuid(), locationUuid, fromStartDate, representation);
+            return fetchVisitsAndSave(call, patient);
+        });
+    }
+
+    /**
+     * This method fetches visits from a start date and saves them locally
+     *
+     * @param patient
+     * @param fromStartDate
+     *
+     * @return the vist list
+     */
+    public Observable<List<Visit>>
+    getVisitsByDateAndSaveLocally(@NonNull final Patient patient, String fromStartDate) {
+
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findVisitsByPatientAndDate(patient.getUuid(), fromStartDate, representation);
+            return fetchVisitsAndSave(call, patient);
+        });
+    }
+
+    /**
+     * This method fetches active visits from a given date and saves them locally
+     *
+     * @param patient
+     * @param fromStartDate
+     *
+     * @return the active vist list
+     */
+    public Observable<List<Visit>>
+    getActiveVisitsByDateAndSaveLocally(@NonNull final Patient patient, String fromStartDate) {
+
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findActiveVisitsByPatientAndDate(patient.getUuid(), fromStartDate, representation);
+            return fetchVisitsAndSave(call, patient);
+        });
+    }
+
+    /**
+     * This method fetches active visits for a location and saves them locally
+     *
+     * @param patient
+     * @param locationUuid
+     *
+     * @return the active vist list
+     */
+    public Observable<List<Visit>>
+    getActiveVisitsByLocationAndSaveLocally(@NonNull final Patient patient, String locationUuid) {
+
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findActiveVisitsByPatientAndLocation(patient.getUuid(), locationUuid, representation);
+            return fetchVisitsAndSave(call, patient);
+        });
+    }
+
+    /**
+     * This method fetches active visits for a location and from a start date
+     * and saves them locally
+     *
+     * @param patient
+     * @param fromStartDate
+     * @param locationUuid
+     *
+     * @return the active vist list
+     */
+    public Observable<List<Visit>>
+    getActiveVisitsByLocationAndDateAndSaveLocally(@NonNull final Patient patient, String locationUuid, String fromStartDate) {
+
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call =
+                    restApi.findActiveVisitsByPatientAndLocationAndDate(patient.getUuid(), locationUuid, fromStartDate, representation);
+            return fetchVisitsAndSave(call, patient);
         });
     }
 }

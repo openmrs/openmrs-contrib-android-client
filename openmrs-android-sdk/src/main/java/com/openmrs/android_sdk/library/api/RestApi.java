@@ -438,6 +438,175 @@ public interface RestApi {
     Call<Results<VisitType>> getVisitType();
 
     /**
+     * Fetch visits by patient uuid and location
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndLocation(@Query("patient") String patientUUID,
+                                                        @Query("location") String locationUUID,
+                                                        @Query("v") String representation);
+
+    /**
+     * Fetch visits by patient uuid and start date
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate  the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndDate(@Query("patient") String patientUUID,
+                                                    @Query("fromStartDate") String fromStartDate,
+                                                    @Query("v") String representation);
+
+    /**
+     * Fetch visits by patient uuid, location and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param fromStartDate    the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                               @Query("location") String locationUUID,
+                                                               @Query("fromStartDate") String fromStartDate,
+                                                               @Query("v") String representation);
+
+
+    /**
+     * Fetch visit resources by patient uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientUUID(@Query("patient") String patientUUID);
+
+    /**
+     * Fetch visit resources by patient uuid and location uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID   the location uuid
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndLocation(@Query("patient") String patientUUID,
+                                                                   @Query("location") String locationUUID);
+
+    /**
+     * Fetch visit resources by patient uuid, location uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID   the location uuid
+     * @param fromStartDate  starting date of the visit
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                                          @Query("location") String locationUUID,
+                                                                          @Query("fromStartDate") String fromStartDate);
+
+    /**
+     * Fetch visit resources by patient uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate  starting date of the visit
+     *
+     * @return the list of visit resources
+     */
+    @GET("visit")
+    Call<Results<Resource>> findVisitResourcesByPatientAndDate(@Query("patient") String patientUUID,
+                                                               @Query("fromStartDate") String fromStartDate);
+
+    /**
+     * Fetch active visits by patient uuid
+     *
+     * @param patientUUID    the patient uuid
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findActiveVisitsByPatientUuid(@Query("patient") String patientUUID,
+                                                       @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid and location
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findActiveVisitsByPatientAndLocation(@Query("patient") String patientUUID,
+                                                              @Query("location") String locationUUID,
+                                                              @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid, location and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param locationUUID    the loation uuid
+     * @param fromStartDate    the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findActiveVisitsByPatientAndLocationAndDate(@Query("patient") String patientUUID,
+                                                                     @Query("location") String locationUUID,
+                                                                     @Query("fromStartDate") String fromStartDate,
+                                                                     @Query("v") String representation);
+
+    /**
+     * Fetch active visits by patient uuid and fromStartDate
+     *
+     * @param patientUUID    the patient uuid
+     * @param fromStartDate    the start date
+     * @param representation the required representation
+     * @return the list of visits
+     */
+    @GET("visit?includeInactive=false")
+    Call<Results<Visit>> findActiveVisitsByPatientAndDate(@Query("patient") String patientUUID,
+                                                          @Query("fromStartDate") String fromStartDate,
+                                                          @Query("v") String representation);
+
+    /**
+     * Create Visit
+     *
+     * @param visit the Visit
+     * @return the call
+     */
+    @POST("visit")
+    Call<Visit> createVisit(@Body Visit visit);
+
+    /**
+     * Update Visit
+     *
+     * @param uuid the uuid of the visit
+     * @param visit the Visit
+     * @return the call
+     */
+    @POST("visit/{uuid}")
+    Call<Visit> createVisit(@Path("uuid") String uuid, @Body Visit visit);
+
+    /**
+     * Delete Visit
+     *
+     * @param uuid the uuid of the visit
+     * @return the call
+     */
+    @DELETE("visit/{uuid}")
+    Call<ResponseBody> deleteVisit(@Path("uuid") String uuid);
+
+    /**
      * Gets last vitals.
      *
      * @param patientUUID    the patient uuid

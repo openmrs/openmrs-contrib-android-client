@@ -26,7 +26,7 @@ import javax.inject.Singleton
  * The type Base repository.
  */
 @Singleton
-abstract class BaseRepository {
+open class BaseRepository {
     /**
      * The Context.
      * @see Context

@@ -294,7 +294,9 @@ class LoginViewModelTest : ACUnitTestBaseRx() {
         val password = "password123"
         val url = initialUrl
         val session = Session(sessionId = "123", isAuthenticated = true, user = User())
-        val visitType = VisitType(display = "Pharmacy", uuid = "uuid123")
+        val visitType = VisitType()
+        visitType.display = "Pharmacy"
+        visitType.uuid = "uuid123"
 
         `when`(NetworkUtils.isOnline()).thenReturn(true)
         `when`(OpenmrsAndroid.getUsername()).thenReturn(username)

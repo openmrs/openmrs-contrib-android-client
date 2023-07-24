@@ -2,6 +2,7 @@ package com.openmrs.android_sdk.library.di.modules
 
 import android.content.Context
 import com.openmrs.android_sdk.library.dao.AllergyRoomDAO
+import com.openmrs.android_sdk.library.dao.AppointmentRoomDAO
 import com.openmrs.android_sdk.library.dao.ConceptRoomDAO
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO
 import com.openmrs.android_sdk.library.databases.AppDatabase
@@ -34,6 +35,11 @@ object AppDatabaseModule {
     @Singleton
     fun provideAllergyRoomDAO(@ApplicationContext context: Context): AllergyRoomDAO =
             AppDatabase.getDatabase(context).allergyRoomDAO()
+
+    @Provides
+    @Singleton
+    fun provideAppointmentRoomDAO(@ApplicationContext context: Context): AppointmentRoomDAO =
+        AppDatabase.getDatabase(context).appointmentRoomDAO()
 }
 
 

@@ -1,3 +1,12 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
 package com.openmrs.android_sdk.library.api.repository
 
 import android.content.Context
@@ -67,7 +76,7 @@ class VisitRepositoryTest {
         every { appDatabase.observationRoomDAO() } returns observationRoomDAO
 
         mockWebServer = MockWebServer()
-        mockWebServer.start(8080)
+        mockWebServer.start()
 
         val gsonBuilder = GsonBuilder()
         val myGson = gsonBuilder
@@ -107,6 +116,48 @@ class VisitRepositoryTest {
         val visit = visitRepository.syncVisitsData(patient).toBlocking().first().get(0)
 
         assertEquals(visit.uuid, "36475629-6652-44e9-a42b-c2b3b7438f72")
+    }
+
+    @Test
+    fun `getVisit success return visit`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/GetVisit.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val visitUuid = "36475629-6652-44e9-a42b-c2b3b7438f72"
+
+        val visit = visitRepository.getVisit(visitUuid).toBlocking().first()
+
+        assertEquals(visit.uuid, "36475629-6652-44e9-a42b-c2b3b7438f72")
+    }
+
+    @Test
+    fun `getVisitType success return visitTypes`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/GetVisitType.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val visit = visitRepository.visitType.toBlocking().first()
+
+        assertEquals(visit.uuid, "7b0f5697-27e3-40c4-8bae-f4049abfb4ed")
+    }
+
+    @Test
+    fun `getVisitsByLocationAndSaveLocally success return visits`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val patient: Patient = mockk(relaxed = true)
+        every { patient.uuid} returns "c0cbe231-deb8-4cfa-89b4-8fb4570685fc"
+        val locationUuid = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f"
+
+        val visit = visitRepository.getVisitsByLocationAndSaveLocally(patient, locationUuid).toBlocking().first().get(0)
+
+        assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
     }
 
     fun enqueueMockResponse(fileName: String) {

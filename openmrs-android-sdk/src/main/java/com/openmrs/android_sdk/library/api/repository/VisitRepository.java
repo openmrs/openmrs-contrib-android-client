@@ -48,9 +48,9 @@ import com.openmrs.android_sdk.utilities.DateUtils;
 @Singleton
 public class VisitRepository extends BaseRepository {
 
-    private final LocationDAO locationDAO;
-    private final VisitDAO visitDAO;
-    private final EncounterDAO encounterDAO;
+    public LocationDAO locationDAO;
+    public VisitDAO visitDAO;
+    public EncounterDAO encounterDAO;
 
     String representation = "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
 

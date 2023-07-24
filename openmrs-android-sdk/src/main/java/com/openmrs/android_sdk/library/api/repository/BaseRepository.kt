@@ -33,33 +33,33 @@ open class BaseRepository {
      */
     @Inject
     @ApplicationContext
-    protected lateinit var context: Context
+    lateinit var context: Context
 
     /**
      * The Rest api
      * @see RestApi
      */
     @Inject
-    protected lateinit var restApi: RestApi
+    lateinit var restApi: RestApi
 
     /**
      * The Database instance
      * @see AppDatabase
      */
     @Inject
-    protected lateinit var db: AppDatabase
+    lateinit var db: AppDatabase
 
     /**
      * The Work manager.
      * @see WorkManager
      */
     @Inject
-    protected lateinit var workManager: WorkManager
+    lateinit var workManager: WorkManager
 
     /**
      * The Logger.
      * @see OpenMRSLogger
      */
     @Inject
-    protected lateinit var logger: OpenMRSLogger
+    lateinit var logger: OpenMRSLogger
 }

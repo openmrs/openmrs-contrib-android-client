@@ -1,0 +1,65 @@
+{
+  "encounterDatetime": "2023-07-25T10:30:00",
+  "patient": {
+    "patientId": 12345,
+    "name": "John Doe",
+    "age": 30,
+    "gender": "Male"
+  },
+  "location": {
+    "locationId": 98765,
+    "name": "Hospital A",
+    "address": "123 Main St, City"
+  },
+  "form": {
+    "formId": 54321,
+    "formName": "Medical Checkup Form",
+    "version": "v1.0"
+  },
+  "encounterType": {
+    "encounterTypeId": 7890,
+    "encounterTypeName": "Regular Checkup"
+  },
+  "obs": [
+    {
+      "uuid" : "1234",
+      "display" : "obs1",
+      "displayValue" : "101",
+      "concept" : {
+        "uuid" : "1234",
+        "display" : "concept1"
+      }
+    },
+    {
+      "uuid" : "1234",
+      "display2" : "obs1",
+      "displayValue" : "102",
+      "concept" : {
+        "uuid" : "1234",
+        "display" : "concept2"
+      }
+    }
+  ],
+  "orders": [],
+  "voided": false,
+  "visit": {
+    "visitId": 56789,
+    "visitType": {
+      "uuid": "1234",
+      "display" : "Vitals"
+    },
+    "startDate": "2023-07-25",
+    "endDate": "2023-07-25"
+  },
+  "encounterProviders": [
+    {
+      "providerUUID": "12345",
+      "encounterRoleUUID": "67890"
+    },
+    {
+      "providerUUID": "abcd",
+      "encounterRoleUUID": "efgh"
+    }
+  ],
+  "resourceVersion": "v2.1.0"
+}

@@ -1,0 +1,61 @@
+{
+  "uuid": "12345",
+  "display": "obsDisplay",
+  "concept": {
+    "uuid": "abc123",
+    "display": "Blood Pressure"
+  },
+  "value": "120/80",
+  "person": {
+    "uuid": "xyz789",
+    "display": "John Doe"
+  },
+  "obsDatetime": "2023-07-27 12:34:56",
+  "accessionNumber": 987,
+  "obsGroup": {
+    "id": 56789,
+    "concept": {
+      "uuid": "def456",
+      "display": "Temperature"
+    },
+    "value": "98.6",
+    "person": {
+      "uuid": "uvw987",
+      "display": "Jane Smith"
+    },
+    "obsDatetime": "2023-07-27 13:45:30",
+    "obsGroup": null,
+    "valueCodedName": "Normal",
+    "comment": "No concerns",
+    "location": {
+      "uuid": "mno654",
+      "display": "Clinic A"
+    },
+    "encounter": {
+      "uuid": "pqr321",
+      "display": "Initial Checkup"
+    },
+    "voided": false,
+    "formFieldPath": "/encounter/observations[0]/value",
+    "formFieldNamespace": "http://example.org/form",
+    "groupMembers": null,
+    "order": "Labs",
+    "status": "Final"
+  },
+  "valueCodedName": "Normal",
+  "comment": "No issues",
+  "location": {
+    "uuid": "mno654",
+    "display": "Clinic A"
+  },
+  "encounter": {
+    "uuid": "pqr321",
+    "display": "Initial Checkup"
+  },
+  "voided": false,
+  "formFieldPath": "/encounter/observations[0]/value",
+  "formFieldNamespace": "http://example.org/form",
+  "groupMembers": null,
+  "order": "Labs",
+  "status": "Final"
+}

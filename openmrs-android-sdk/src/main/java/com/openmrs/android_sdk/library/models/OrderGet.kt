@@ -23,7 +23,7 @@ class OrderGet: Serializable {
 
     @Expose
     @SerializedName("encounter")
-    var encounterUuid: String = ""
+    var encounter: OrderResource = OrderResource()
 
     @Expose
     var type: String = ""
@@ -76,11 +76,11 @@ class OrderGet: Serializable {
 
     @Expose
     @SerializedName("patient")
-    var patientUuid: String = ""
+    var patient: OrderResource = OrderResource()
 
     @Expose
     @SerializedName("concept")
-    var conceptUuid: String = ""
+    var concept: OrderResource = OrderResource()
 
     @Expose
     var action: String = ""

@@ -21,9 +21,40 @@ import com.openmrs.android_sdk.library.dao.EncounterDAO
 import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
 import com.openmrs.android_sdk.library.dao.ObservationDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
-import com.openmrs.android_sdk.library.databases.entities.*
+import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
+import com.openmrs.android_sdk.library.databases.entities.EncounterEntity
+import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.databases.entities.TimeSlotEntity
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneObservationEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentTypeEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentLocationEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentProviderEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
+import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
+import com.openmrs.android_sdk.library.databases.entities.OrderEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
-import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.library.models.Allergen
+import com.openmrs.android_sdk.library.models.Allergy
+import com.openmrs.android_sdk.library.models.Encounter
+import com.openmrs.android_sdk.library.models.EncounterType
+import com.openmrs.android_sdk.library.models.Observation
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.PatientIdentifier
+import com.openmrs.android_sdk.library.models.PersonAddress
+import com.openmrs.android_sdk.library.models.PersonName
+import com.openmrs.android_sdk.library.models.Resource
+import com.openmrs.android_sdk.library.models.Visit
+import com.openmrs.android_sdk.library.models.VisitType
+import com.openmrs.android_sdk.library.models.Appointment
+import com.openmrs.android_sdk.library.models.Person
+import com.openmrs.android_sdk.library.models.ConceptClass
+import com.openmrs.android_sdk.library.models.OrderGet
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -450,39 +481,46 @@ object AppDatabaseHelper {
         return appointmentEntity
     }
 
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param orderGet the deserialized response from JSON
+     *
+     * @return the type OrderEntity
+     */
     fun convert(orderGet: OrderGet): OrderEntity {
-        val orderEntity = OrderEntity()
-        orderEntity.uuid = orderGet.uuid
-        orderEntity.display = orderGet.display
-        orderEntity.action = orderGet.action
-        orderEntity.accessionNumber = orderGet.accessionNumber
-        orderEntity.autoExpireDate = orderGet.autoExpireDate
-        orderEntity.careSettingName = orderGet.careSettingName
-        orderEntity.conceptUuid = orderGet.conceptUuid
-        orderEntity.dateActivated = orderGet.dateActivated
-        orderEntity.dateStopped = orderGet.dateStopped
-        orderEntity.doseUnits = orderGet.doseUnits
-        orderEntity.urgency = orderGet.urgency
-        orderEntity.orderer.display = orderGet.orderer.display
-        orderEntity.orderer.uuid = orderGet.orderer.uuid
-        orderEntity.dosingType = orderGet.dosingType
-        orderEntity.drug = orderGet.drug
-        orderEntity.fulfillerStatus = orderGet.fulfillerStatus
-        orderEntity.specimenSource = orderGet.specimenSource
-        orderEntity.instructions = orderGet.instructions
-        orderEntity.type = orderGet.type
-        orderEntity.orderType.uuid = orderGet.orderType.uuid
-        orderEntity.orderType.display = orderGet.orderType.display
-        orderEntity.quantity = orderGet.quantity
-        orderEntity.dosingInstructions = orderGet.dosingInstructions
-        orderEntity.encounterUuid = orderGet.encounterUuid
-        orderEntity.fulfillerComment = orderGet.fulfillerComment
-        orderEntity.scheduledDate = orderGet.scheduledDate
-        orderEntity.numberOfRepeats = orderGet.numberOfRepeats
-        orderEntity.orderReason = orderGet.orderReason
-        orderEntity.duration = orderGet.duration
-        orderEntity.orderNumber = orderGet.orderNumber
-
+        val orderEntity = OrderEntity().apply {
+            uuid = orderGet.uuid
+            display = orderGet.display
+            action = orderGet.action
+            accessionNumber = orderGet.accessionNumber
+            autoExpireDate = orderGet.autoExpireDate
+            careSettingName = orderGet.careSettingName
+            conceptUuid = orderGet.concept.uuid
+            dateActivated = orderGet.dateActivated
+            dateStopped = orderGet.dateStopped
+            doseUnits = orderGet.doseUnits
+            urgency = orderGet.urgency
+            orderer.display = orderGet.orderer.display
+            orderer.uuid = orderGet.orderer.uuid
+            dosingType = orderGet.dosingType
+            drug = orderGet.drug
+            fulfillerStatus = orderGet.fulfillerStatus
+            specimenSource = orderGet.specimenSource
+            instructions = orderGet.instructions
+            type = orderGet.type
+            orderType.uuid = orderGet.orderType.uuid
+            orderType.display = orderGet.orderType.display
+            quantity = orderGet.quantity
+            dosingInstructions = orderGet.dosingInstructions
+            encounterUuid = orderGet.encounter.uuid
+            fulfillerComment = orderGet.fulfillerComment
+            scheduledDate = orderGet.scheduledDate
+            numberOfRepeats = orderGet.numberOfRepeats
+            orderReason = orderGet.orderReason
+            duration = orderGet.duration
+            orderNumber = orderGet.orderNumber
+        }
         return orderEntity
     }
 }

@@ -12,7 +12,11 @@
  */
 package com.openmrs.android_sdk.library.dao
 
-import androidx.room.*
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
+import androidx.room.Query
+import androidx.room.Dao
 import com.openmrs.android_sdk.library.databases.entities.OrderEntity
 import io.reactivex.Single
 

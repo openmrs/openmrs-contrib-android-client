@@ -16,9 +16,8 @@ import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
 import com.openmrs.android_sdk.library.models.Observation
 import com.openmrs.android_sdk.library.models.Resource
 import com.openmrs.android_sdk.utilities.NetworkUtils
+import com.openmrs.android_sdk.utilities.execute
 import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import java.util.concurrent.Callable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -132,19 +131,8 @@ class ObservationRepository @Inject constructor(
 
                 val observationResources: List<Resource> = this.body()!!.results
                 for (observationResource in observationResources) {
-                    getObservationByUuid(observationResource.uuid!!).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { observation ->
-                                observationList.add(observation)
-                            },
-                            { error ->
-                                Log.e("Observation Repository", "Error: ${error.message}")
-                            },
-                            {
-                                Log.d("Observation Repository", "Observable completed")
-                            }
-                        )
+                    val observation = getObservationByUuid(observationResource.uuid!!)
+                    observationList.add(observation.execute())
                 }
                 observationDAO.deleteAllStandaloneObservations(uuid)      //delete previous list
                 observationDAO.saveStandaloneObservations(observationList) //save latest list
@@ -172,19 +160,8 @@ class ObservationRepository @Inject constructor(
 
                 val observationResources: List<Resource> = this.body()!!.results
                 for (observationResource in observationResources) {
-                    getObservationByUuid(observationResource.uuid!!).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { observation ->
-                                observationList.add(observation)
-                            },
-                            { error ->
-                                Log.e("Observation Repository", "Error: ${error.message}")
-                            },
-                            {
-                                Log.d("Observation Repository", "Observable completed")
-                            }
-                        )
+                    val observation = getObservationByUuid(observationResource.uuid!!)
+                    observationList.add(observation.execute())
                 }
                 observationDAO.saveStandaloneObservations(observationList) //save latest list
                 return Observable.just(observationList.toList())
@@ -213,19 +190,8 @@ class ObservationRepository @Inject constructor(
 
                 val observationResources: List<Resource> = this.body()!!.results
                 for (observationResource in observationResources) {
-                    getObservationByUuid(observationResource.uuid!!).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { observation ->
-                                observationList.add(observation)
-                            },
-                            { error ->
-                                Log.e("Observation Repository", "Error: ${error.message}")
-                            },
-                            {
-                                Log.d("Observation Repository", "Observable completed")
-                            }
-                        )
+                    val observation = getObservationByUuid(observationResource.uuid!!)
+                    observationList.add(observation.execute())
                 }
                 observationDAO.saveStandaloneObservations(observationList) //save latest list
                 return Observable.just(observationList.toList())

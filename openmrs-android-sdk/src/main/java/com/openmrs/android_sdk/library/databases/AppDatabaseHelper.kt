@@ -65,9 +65,6 @@ import java.io.ByteArrayOutputStream
 import java.util.concurrent.Callable
 
 object AppDatabaseHelper {
-    val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
-        OpenmrsAndroid.getInstance()!!.applicationContext
-    ).encounterRoomDAO()
 
     @JvmStatic
     fun convert(obs: Observation, encounterID: Long): ObservationEntity {
@@ -87,6 +84,9 @@ object AppDatabaseHelper {
 
     @JvmStatic
     fun convert(obs: ObservationEntity): Observation {
+        val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
+            OpenmrsAndroid.getInstance()!!.applicationContext
+        ).encounterRoomDAO()
 
         val observation = Observation()
 

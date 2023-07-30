@@ -1,0 +1,48 @@
+{
+  "results": [
+    {
+      "uuid": "94616eb5-6a87-4b83-b1e2-2083b3f7a36b",
+      "display": "Text of encounter note: Lorem ipsum dolor sit amet",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/obs/94616eb5-6a87-4b83-b1e2-2083b3f7a36b",
+          "resourceAlias": "obs"
+        }
+      ]
+    },
+    {
+      "uuid": "99a0c42b-d50e-4ae3-b826-d1959c737e74",
+      "display": "Visit Diagnoses: Primary, Confirmed diagnosis, Disease of bone and joint",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/obs/99a0c42b-d50e-4ae3-b826-d1959c737e74",
+          "resourceAlias": "obs"
+        }
+      ]
+    },
+    {
+      "uuid": "33c83406-cd64-4c04-9506-7bdf754570a3",
+      "display": "Diagnosis order: Primary",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/obs/33c83406-cd64-4c04-9506-7bdf754570a3",
+          "resourceAlias": "obs"
+        }
+      ]
+    },
+    {
+      "uuid": "fbcc82b6-65af-43ec-8939-5e96ecf9a335",
+      "display": "Diagnosis certainty: Confirmed diagnosis",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/obs/fbcc82b6-65af-43ec-8939-5e96ecf9a335",
+          "resourceAlias": "obs"
+        }
+      ]
+    }
+  ]
+}

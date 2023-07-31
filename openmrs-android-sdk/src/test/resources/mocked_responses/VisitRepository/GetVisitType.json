@@ -1,0 +1,15 @@
+{
+  "results": [
+    {
+      "uuid": "7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+      "display": "Facility Visit",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/visittype/7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+          "resourceAlias": "visittype"
+        }
+      ]
+    }
+  ]
+}

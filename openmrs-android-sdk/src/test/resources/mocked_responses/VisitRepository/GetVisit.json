@@ -1,0 +1,79 @@
+{
+  "uuid": "46fa593e-b656-484e-9095-517c4ae8f193",
+  "display": "Facility Visit @ Amani Hospital - 31/07/2023 17:45",
+  "patient": {
+    "uuid": "eafd4117-3d8b-4541-9a60-c0bd353155ab",
+    "display": "100JCL - Isuru Weerasinghe",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/patient/eafd4117-3d8b-4541-9a60-c0bd353155ab",
+        "resourceAlias": "patient"
+      }
+    ]
+  },
+  "visitType": {
+    "uuid": "7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+    "display": "Facility Visit",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/visittype/7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+        "resourceAlias": "visittype"
+      }
+    ]
+  },
+  "indication": null,
+  "location": {
+    "uuid": "aff27d58-a15c-49a6-9beb-d30dcfc0c66e",
+    "display": "Amani Hospital",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/location/aff27d58-a15c-49a6-9beb-d30dcfc0c66e",
+        "resourceAlias": "location"
+      }
+    ]
+  },
+  "startDatetime": "2023-07-31T17:45:40.000+0000",
+  "stopDatetime": null,
+  "encounters": [
+    {
+      "uuid": "9c3dfd13-6c6c-473f-ae59-02e170ba4540",
+      "display": "Visit Note 31/07/2023",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/encounter/9c3dfd13-6c6c-473f-ae59-02e170ba4540",
+          "resourceAlias": "encounter"
+        }
+      ]
+    },
+    {
+      "uuid": "3127d9ee-c2ef-48fe-9f3a-91f65abc40aa",
+      "display": "Vitals 31/07/2023",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/encounter/3127d9ee-c2ef-48fe-9f3a-91f65abc40aa",
+          "resourceAlias": "encounter"
+        }
+      ]
+    }
+  ],
+  "attributes": [],
+  "voided": false,
+  "links": [
+    {
+      "rel": "self",
+      "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/visit/46fa593e-b656-484e-9095-517c4ae8f193",
+      "resourceAlias": "visit"
+    },
+    {
+      "rel": "full",
+      "uri": "http://demo.openmrs.org/openmrshttp://demo.openmrs.org/openmrs/ws/rest/v1/visit/46fa593e-b656-484e-9095-517c4ae8f193?v=full",
+      "resourceAlias": "visit"
+    }
+  ],
+  "resourceVersion": "1.9"
+}

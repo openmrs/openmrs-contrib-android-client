@@ -13,16 +13,24 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.api.RestApi
-import com.openmrs.android_sdk.library.dao.*
+import com.openmrs.android_sdk.library.dao.LocationRoomDAO
+import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
+import com.openmrs.android_sdk.library.dao.VisitRoomDAO
+import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO
+import com.openmrs.android_sdk.library.dao.ObservationRoomDAO
+import com.openmrs.android_sdk.library.dao.VisitDAO
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.models.Observation
 import com.openmrs.android_sdk.library.models.Patient
 import com.openmrs.android_sdk.library.models.Resource
+import com.openmrs.android_sdk.library.models.Visit
+import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.ObservationDeserializer
 import com.openmrs.android_sdk.utilities.ResourceSerializer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -32,6 +40,7 @@ import okio.buffer
 import okio.source
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,6 +49,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import rx.Observable
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -67,6 +77,8 @@ class VisitRepositoryTest {
         every { context.getApplicationContext() } returns appContext
         mockkStatic(OpenmrsAndroid::class)
         every { OpenmrsAndroid.getInstance() } returns context
+        every { OpenmrsAndroid.getVisitTypeUUID() } returns "fakeUuid"
+        every { OpenmrsAndroid.getLocation() } returns "fakeLocation"
         mockkStatic(AppDatabase::class)
         every { AppDatabase.getDatabase(appContext) } returns appDatabase
         every { appDatabase.locationRoomDAO() } returns locationRoomDAO
@@ -97,6 +109,7 @@ class VisitRepositoryTest {
 
     @After
     fun tearDown() {
+        clearAllMocks()
         mockWebServer.shutdown()
     }
 
@@ -129,7 +142,45 @@ class VisitRepositoryTest {
 
         val visit = visitRepository.getVisit(visitUuid).toBlocking().first()
 
-        assertEquals(visit.uuid, "36475629-6652-44e9-a42b-c2b3b7438f72")
+        assertEquals(visit.uuid, "46fa593e-b656-484e-9095-517c4ae8f193")
+    }
+
+    @Test
+    fun `startVisit success return visit`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/GetVisit.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.locationDAO = mockk(relaxed = true)
+        val visitDAO: VisitDAO = mockk(relaxed = true)
+        every { visitDAO.saveOrUpdate(any(), any()) } returns Observable.just(55L)
+        visitRepository.visitDAO = visitDAO
+
+        val patient: Patient = mockk(relaxed = true)
+        mockkStatic(DateUtils::class)
+        every { DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT) } returns "fakeTime"
+
+        val visit = visitRepository.startVisit(patient).toBlocking().first()
+
+        assertEquals(visit.uuid, "46fa593e-b656-484e-9095-517c4ae8f193")
+        assertEquals(visit.display, "Facility Visit @ Amani Hospital - 31/07/2023 17:45")
+    }
+
+    fun `endVisit success return true`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/GetVisit.json")
+
+        visitRepository.restApi = visitApi
+
+        val visitDAO: VisitDAO = mockk(relaxed = true)
+        every { visitDAO.saveOrUpdate(any(), any()) } returns Observable.just(55L)
+        visitRepository.visitDAO = visitDAO
+        mockkStatic(DateUtils::class)
+        every { DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT) } returns "fakeTime"
+
+        val visit: Visit = mockk(relaxed = true)
+        every { visit.uuid } returns "fakeVisitUuid"
+        val result = visitRepository.endVisit(visit).toBlocking().first()
+
+        assertNotEquals(false, result)
     }
 
     @Test
@@ -145,7 +196,7 @@ class VisitRepositoryTest {
     }
 
     @Test
-    fun `getVisitsByLocationAndSaveLocally success return visits`(){
+    fun `getVisitsByLocationAndSaveLocally success return list of visits`(){
         enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
 
         visitRepository.restApi = visitApi
@@ -156,6 +207,72 @@ class VisitRepositoryTest {
         val locationUuid = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f"
 
         val visit = visitRepository.getVisitsByLocationAndSaveLocally(patient, locationUuid).toBlocking().first().get(0)
+
+        assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
+    }
+
+    @Test
+    fun `getVisitsByLocationAndDateAndSaveLocally success return list of visits`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val patient: Patient = mockk(relaxed = true)
+        every { patient.uuid} returns "c0cbe231-deb8-4cfa-89b4-8fb4570685fc"
+        val locationUuid = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f"
+        val fromStartDate = "2023-08-01T08:25:30Z"
+
+        val visit = visitRepository.getVisitsByLocationAndDateAndSaveLocally(patient, locationUuid, fromStartDate).toBlocking().first().get(0)
+
+        assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
+    }
+
+    @Test
+    fun `getVisitsByDateAndSaveLocally success return list of visits`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val patient: Patient = mockk(relaxed = true)
+        every { patient.uuid} returns "c0cbe231-deb8-4cfa-89b4-8fb4570685fc"
+        val fromStartDate = "2023-08-01T08:25:30Z"
+
+        val visit = visitRepository.getVisitsByDateAndSaveLocally(patient, fromStartDate).toBlocking().first().get(0)
+
+        assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
+    }
+
+    @Test
+    fun `getActiveVisitsByLocationAndSaveLocally success return list of visits`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val patient: Patient = mockk(relaxed = true)
+        every { patient.uuid} returns "c0cbe231-deb8-4cfa-89b4-8fb4570685fc"
+        val locationUuid = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f"
+
+        val visit = visitRepository.getActiveVisitsByLocationAndSaveLocally(patient, locationUuid).toBlocking().first().get(0)
+
+        assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
+    }
+
+    @Test
+    fun `getActiveVisitsByLocationAndDateAndSaveLocally success return list of visits`(){
+        enqueueMockResponse("mocked_responses/VisitRepository/VisitsGet-success.json")
+
+        visitRepository.restApi = visitApi
+        visitRepository.visitDAO = mockk(relaxed = true)
+
+        val patient: Patient = mockk(relaxed = true)
+        every { patient.uuid} returns "c0cbe231-deb8-4cfa-89b4-8fb4570685fc"
+        val locationUuid = "8d6c993e-c2cc-11de-8d13-0010c6dffd0f"
+        val fromStartDate = "2023-08-01T08:25:30Z"
+
+        val visit = visitRepository.getActiveVisitsByLocationAndDateAndSaveLocally(patient, locationUuid, fromStartDate).toBlocking().first().get(0)
 
         assertEquals(visit.location.uuid, "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
     }

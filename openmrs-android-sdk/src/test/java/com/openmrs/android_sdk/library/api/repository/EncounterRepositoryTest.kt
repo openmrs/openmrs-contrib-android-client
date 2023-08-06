@@ -13,22 +13,33 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.api.RestApi
-import com.openmrs.android_sdk.library.dao.*
+import com.openmrs.android_sdk.library.dao.LocationRoomDAO
+import com.openmrs.android_sdk.library.dao.VisitRoomDAO
+import com.openmrs.android_sdk.library.dao.EncounterRoomDAO
+import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO
+import com.openmrs.android_sdk.library.dao.ObservationRoomDAO
+import com.openmrs.android_sdk.library.dao.EncounterDAO
+import com.openmrs.android_sdk.library.dao.PatientDAO
+import com.openmrs.android_sdk.library.dao.PatientRoomDAO
+import com.openmrs.android_sdk.library.dao.VisitDAO
 import com.openmrs.android_sdk.library.databases.AppDatabase
-import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.Obscreate
+import com.openmrs.android_sdk.library.models.Encountercreate
+import com.openmrs.android_sdk.library.models.EncounterProviderCreate
+import com.openmrs.android_sdk.library.models.Visit
 import com.openmrs.android_sdk.utilities.NetworkUtils
-import com.openmrs.android_sdk.utilities.ObservationDeserializer
-import com.openmrs.android_sdk.utilities.ResourceSerializer
 import com.openmrs.android_sdk.utilities.execute
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.*
+import io.reactivex.Single
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
 import okio.source
-import org.checkerframework.common.reflection.qual.NewInstance
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -56,18 +67,46 @@ class EncounterRepositoryTest {
     val appContext: Context = mockk(relaxed = true)
     val appDatabase: AppDatabase = mockk()
     val locationRoomDAO: LocationRoomDAO = mockk()
-    val encounterRoomDAO: EncounterRoomDAO = mockk()
+    val encounterRoomDAO: EncounterRoomDAO = mockk(relaxed = true)
     val visitRoomDAO: VisitRoomDAO = mockk()
+    val encounterDAO: EncounterDAO = mockk(relaxed = true)
     val encounterTypeRoomDAO: EncounterTypeRoomDAO = mockk()
     val observationRoomDAO: ObservationRoomDAO = mockk()
     val patientRoomDAO: PatientRoomDAO = mockk()
-    val encounterCreateRoomDAO: EncounterCreateRoomDAO = mockk()
+    val encounterCreate = Encountercreate()
 
     @Before
     fun init() {
-        every { context.getApplicationContext() } returns appContext
+        encounterCreate.id = 1
+        encounterCreate.visit = "Some visit"
+        encounterCreate.patient = "Some patient"
+        encounterCreate.patientId = 1234
+        encounterCreate.encounterType = "Some encounter type"
+        encounterCreate.formname = "Some form name"
+        encounterCreate.synced = false
+        val obs1 = Obscreate()
+        obs1.value = "101"
+        obs1.concept = "Observation1"
+        val obs2 = Obscreate()
+        obs2.value = "102"
+        obs2.concept = "Observation2"
+        encounterCreate.observations = listOf(obs1, obs2)
+        encounterCreate.formUuid = "Some form UUID"
+        encounterCreate.location = "Some location"
+        val provider1 = EncounterProviderCreate("12345", "67890")
+        val provider2 = EncounterProviderCreate("abcd", "efgh")
+        encounterCreate.encounterProvider = listOf(provider1, provider2)
+
+        val standaloneEncounterEntity: StandaloneEncounterEntity = mockk(relaxed = true)
+        every { standaloneEncounterEntity.uuid } returns "d3360c01-9813-4ff8-bd81-909af6612632"
+        val listToReturn: List<StandaloneEncounterEntity> = listOf(standaloneEncounterEntity)
+        every { encounterRoomDAO.getAllStandAloneEncounters() } returns Single.just(listToReturn)
+
+        every { encounterDAO.saveStandaloneEncounters(any()) } returns listOf(1L,2L,3L)
+
         mockkStatic(OpenmrsAndroid::class)
         every { OpenmrsAndroid.getInstance() } returns context
+        every { context.getApplicationContext() } returns appContext
         mockkStatic(AppDatabase::class)
         every { AppDatabase.getDatabase(appContext) } returns appDatabase
         every { appDatabase.locationRoomDAO() } returns locationRoomDAO
@@ -115,6 +154,7 @@ class EncounterRepositoryTest {
 
     @After
     fun tearDown() {
+        clearAllMocks()
         mockWebServer.shutdown()
     }
 
@@ -122,37 +162,62 @@ class EncounterRepositoryTest {
     lateinit var encounterRepository: EncounterRepository
 
     @Test
-    fun `saveEncounter success return Success`(){
-        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterPost-success.json")
+    fun `getAllEncounterResourcesByPatientUuid success return List of resources`(){
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterResourcesGet-success.json")
 
         encounterRepository.restApi = encounterApi
+        val patientUuid = "96be32d2-9367-4d1d-a285-79a5e5db12b8"
+        val resourceList = encounterRepository.getAllEncounterResourcesByPatientUuid(patientUuid).toBlocking().first()
+        val testResource = resourceList.get(2)
 
-        val encounterCreate = Encountercreate()
-        encounterCreate.id = 1
-        encounterCreate.visit = "Some visit"
-        encounterCreate.patient = "Some patient"
-        encounterCreate.patientId = 1234
-        encounterCreate.encounterType = "Some encounter type"
-        encounterCreate.formname = "Some form name"
-        encounterCreate.synced = false
-        val obs1 = Obscreate()
-        obs1.value = "101"
-        obs1.concept = "Observation1"
-        val obs2 = Obscreate()
-        obs2.value = "102"
-        obs2.concept = "Observation2"
-        encounterCreate.observations = listOf(obs1, obs2)
-        encounterCreate.formUuid = "Some form UUID"
-        encounterCreate.location = "Some location"
-        val provider1 = EncounterProviderCreate("12345", "67890")
-        val provider2 = EncounterProviderCreate("abcd", "efgh")
-        encounterCreate.encounterProvider = listOf(provider1, provider2)
+        assertEquals(testResource.uuid, "0cc4a9e5-d44a-461e-ad64-0f04817c5bd0")
+        assertEquals(testResource.display, "Vitals 19/04/2015")
+    }
 
-        every { encounterCreateRoomDAO.updateExistingEncounter(encounterCreate) } just Runs
+    @Test
+    fun `getAllEncountersByPatientUuidAndSaveLocally success returns List of Encounters`(){
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterResourcesGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
 
-        val resultType = encounterRepository.saveEncounter(encounterCreate).toBlocking().first()
+        encounterRepository.restApi = encounterApi
+        val patientUuid = "96be32d2-9367-4d1d-a285-79a5e5db12b8"
+        val resourceList = encounterRepository.getAllEncountersByPatientUuidAndSaveLocally(patientUuid).toBlocking().first()
+        val testResource = resourceList.get(1)
 
-        assertEquals(ResultType.EncounterSubmissionSuccess, resultType)
+        assertEquals(testResource.uuid, "d3360c01-9813-4ff8-bd81-909af6612632")
+        assertEquals(testResource.display, "Vitals 24/02/2015")
+    }
+
+    @Test
+    fun `getAllEncounterResourcesByVisitUuid success returns encounters`(){
+        enqueueMockResponse("mocked_responses/EncounterRepository/VisitGet-success.json")
+
+        encounterRepository.visitRepository.restApi = encounterApi
+        val visitUuid = "4d67b954-216a-4b19-9cab-94c59cc5b705"
+        val encounter = encounterRepository.getAllEncounterResourcesByVisitUuid(visitUuid)!!.toBlocking().first()
+
+        assertEquals(encounter.uuid, "1ef9e5ee-ca7a-4a4b-852c-42c107526f81")
+        assertEquals(encounter.display, "Discharge 11/12/2016")
+    }
+
+    @Test
+    fun `getAllEncountersByPatientUuidAndEncounterTypeAndSaveLocally success returns List of encounters`(){
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterResourcesGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
+        enqueueMockResponse("mocked_responses/EncounterRepository/EncounterGet-success.json")
+
+        encounterRepository.restApi = encounterApi
+        val patientUuid = "96be32d2-9367-4d1d-a285-79a5e5db12b8"
+        val encounterTypeUuid = "67a71486-1a54-468f-ac3e-7091a9a79584"
+
+        val resourceList = encounterRepository.getAllEncountersByPatientUuidAndEncounterTypeAndSaveLocally(patientUuid, encounterTypeUuid).toBlocking().first()
+        val testResource = resourceList.get(1)
+
+        assertEquals(testResource.uuid, "d3360c01-9813-4ff8-bd81-909af6612632")
+        assertEquals(testResource.display, "Vitals 24/02/2015")
     }
 
     fun enqueueMockResponse(fileName: String) {

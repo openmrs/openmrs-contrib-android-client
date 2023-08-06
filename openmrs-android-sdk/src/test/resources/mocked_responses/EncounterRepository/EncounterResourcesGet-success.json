@@ -1,0 +1,37 @@
+{
+  "results": [
+    {
+      "uuid": "d3360c01-9813-4ff8-bd81-909af6612632",
+      "display": "Vitals 24/02/2015",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/d3360c01-9813-4ff8-bd81-909af6612632",
+          "resourceAlias": "encounter"
+        }
+      ]
+    },
+    {
+      "uuid": "37dd30bd-b969-40a9-981a-4942bb94debf",
+      "display": "Visit Note 24/02/2015",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/37dd30bd-b969-40a9-981a-4942bb94debf",
+          "resourceAlias": "encounter"
+        }
+      ]
+    },
+    {
+      "uuid": "0cc4a9e5-d44a-461e-ad64-0f04817c5bd0",
+      "display": "Vitals 19/04/2015",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/0cc4a9e5-d44a-461e-ad64-0f04817c5bd0",
+          "resourceAlias": "encounter"
+        }
+      ]
+    }
+  ]
+}

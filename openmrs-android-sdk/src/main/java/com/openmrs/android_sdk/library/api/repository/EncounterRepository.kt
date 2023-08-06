@@ -27,8 +27,8 @@ import javax.inject.Singleton
 
 @Singleton
 class EncounterRepository @Inject constructor(
-    private val visitRepository: VisitRepository,
-    private val encounterDAO: EncounterDAO
+    val visitRepository: VisitRepository,
+    val encounterDAO: EncounterDAO
 ) : BaseRepository() {
 
     val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
@@ -145,19 +145,8 @@ class EncounterRepository @Inject constructor(
 
                 val encounterResources: List<Resource> = this.body()!!.results
                 for (encounterResource in encounterResources) {
-                    getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { encounter ->
-                                encounterList.add(encounter)
-                            },
-                            { error ->
-                                Log.e("Encounter Repository", "Error: ${error.message}")
-                            },
-                            {
-                                Log.d("Encounter Repository", "Observable completed")
-                            }
-                        )
+                    val encounter = getEncounterByUuid(encounterResource.uuid!!).execute()
+                    encounterList.add(encounter)
                 }
                 encounterDAO.deleteAllStandaloneEncounters(uuid)      //delete previous list
                 encounterDAO.saveStandaloneEncounters(encounterList) //save latest list
@@ -176,23 +165,8 @@ class EncounterRepository @Inject constructor(
      */
     fun getAllEncounterResourcesByVisitUuid(visitUuid: String): Observable<Resource>? {
         var encounterResourceList: List<Resource> = mutableListOf()
-        var fetchedVisit: Visit? = null
-
-        visitRepository.getVisit(visitUuid).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { visit ->
-                    fetchedVisit = visit
-                },
-                { error ->
-                    Log.e("Visit Repository", "Error: ${error.message}")
-                },
-                {
-                    Log.d("Visit Repository", "Observable completed")
-                }
-            )
-
-        if(fetchedVisit != null) encounterResourceList = fetchedVisit!!.encounters
+        val fetchedVisit: Visit? = visitRepository.getVisit(visitUuid).execute()
+        if(fetchedVisit != null) encounterResourceList = fetchedVisit.encounters
 
         return Observable.from(encounterResourceList)
     }
@@ -270,19 +244,8 @@ class EncounterRepository @Inject constructor(
 
                     val encounterResources: List<Resource> = this.body()!!.results
                     for (encounterResource in encounterResources) {
-                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                { encounter ->
-                                    encounterList.add(encounter)
-                                },
-                                { error ->
-                                    Log.e("Encounter Repository", "Error: ${error.message}")
-                                },
-                                {
-                                    Log.d("Encounter Repository", "Observable completed")
-                                }
-                            )
+                        val encounter = getEncounterByUuid(encounterResource.uuid!!).execute()
+                        encounterList.add(encounter)
                     }
 
                     saveLocallyIfNotExist(encounterList)
@@ -319,19 +282,8 @@ class EncounterRepository @Inject constructor(
 
                     val encounterResources: List<Resource> = this.body()!!.results
                     for (encounterResource in encounterResources) {
-                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                { encounter ->
-                                    encounterList.add(encounter)
-                                },
-                                { error ->
-                                    Log.e("Encounter Repository", "Error: ${error.message}")
-                                },
-                                {
-                                    Log.d("Encounter Repository", "Observable completed")
-                                }
-                            )
+                        val encounter = getEncounterByUuid(encounterResource.uuid!!).execute()
+                        encounterList.add(encounter)
                     }
 
                     saveLocallyIfNotExist(encounterList)
@@ -368,19 +320,8 @@ class EncounterRepository @Inject constructor(
 
                     val encounterResources: List<Resource> = this.body()!!.results
                     for (encounterResource in encounterResources) {
-                        getEncounterByUuid(encounterResource.uuid!!).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                { encounter ->
-                                    encounterList.add(encounter)
-                                },
-                                { error ->
-                                    Log.e("Encounter Repository", "Error: ${error.message}")
-                                },
-                                {
-                                    Log.d("Encounter Repository", "Observable completed")
-                                }
-                            )
+                        val encounter = getEncounterByUuid(encounterResource.uuid!!).execute()
+                        encounterList.add(encounter)
                     }
 
                     saveLocallyIfNotExist(encounterList)

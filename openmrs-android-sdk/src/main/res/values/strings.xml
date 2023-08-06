@@ -544,4 +544,33 @@
         )
     )
     </string>
+
+    <!-- Order Repository -->
+    <string name="orderGet_resource_representation" translatable="false">
+    "custom:(
+        uuid,
+        display,
+        orderNumber,
+        accessionNumber,
+        patient:(uuid),
+        concept:(uuid),
+        action,
+        careSetting,
+        dateActivated,
+        scheduledDate,
+        dateStopped,
+        autoExpireDate,
+        encounter:(uuid),
+        orderer:(uuid,display),
+        orderReason,
+        orderType:(uuid,display),
+        urgency,
+        type,
+        numberOfRepeats,
+        frequency,
+        fulfillerStatus,
+        fulfillerComment,
+        specimenSource
+    )
+    </string>
 </resources>

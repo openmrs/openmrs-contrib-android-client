@@ -37,6 +37,7 @@ import com.openmrs.android_sdk.library.databases.entities.AppointmentProviderEnt
 import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
+import com.openmrs.android_sdk.library.databases.entities.OrderEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
 import com.openmrs.android_sdk.library.models.Allergy
@@ -53,6 +54,7 @@ import com.openmrs.android_sdk.library.models.VisitType
 import com.openmrs.android_sdk.library.models.Appointment
 import com.openmrs.android_sdk.library.models.Person
 import com.openmrs.android_sdk.library.models.ConceptClass
+import com.openmrs.android_sdk.library.models.OrderGet
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -480,5 +482,48 @@ object AppDatabaseHelper {
         appointmentEntity.visit = appointmentVisitEntity
 
         return appointmentEntity
+    }
+
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param orderGet the deserialized response from JSON
+     *
+     * @return the type OrderEntity
+     */
+    fun convert(orderGet: OrderGet): OrderEntity {
+        val orderEntity = OrderEntity().apply {
+            uuid = orderGet.uuid
+            display = orderGet.display
+            action = orderGet.action
+            accessionNumber = orderGet.accessionNumber
+            autoExpireDate = orderGet.autoExpireDate
+            careSettingName = orderGet.careSettingName
+            conceptUuid = orderGet.concept.uuid
+            dateActivated = orderGet.dateActivated
+            dateStopped = orderGet.dateStopped
+            doseUnits = orderGet.doseUnits
+            urgency = orderGet.urgency
+            orderer.display = orderGet.orderer.display
+            orderer.uuid = orderGet.orderer.uuid
+            dosingType = orderGet.dosingType
+            drug = orderGet.drug
+            fulfillerStatus = orderGet.fulfillerStatus
+            specimenSource = orderGet.specimenSource
+            instructions = orderGet.instructions
+            type = orderGet.type
+            orderType.uuid = orderGet.orderType.uuid
+            orderType.display = orderGet.orderType.display
+            quantity = orderGet.quantity
+            dosingInstructions = orderGet.dosingInstructions
+            encounterUuid = orderGet.encounter.uuid
+            fulfillerComment = orderGet.fulfillerComment
+            scheduledDate = orderGet.scheduledDate
+            numberOfRepeats = orderGet.numberOfRepeats
+            orderReason = orderGet.orderReason
+            duration = orderGet.duration
+            orderNumber = orderGet.orderNumber
+        }
+        return orderEntity
     }
 }

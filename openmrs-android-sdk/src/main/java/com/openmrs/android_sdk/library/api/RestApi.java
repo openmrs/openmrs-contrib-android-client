@@ -35,6 +35,8 @@ import com.openmrs.android_sdk.library.models.AppointmentBlock;
 import com.openmrs.android_sdk.library.models.AppointmentType;
 import com.openmrs.android_sdk.library.models.ConceptAnswers;
 import com.openmrs.android_sdk.library.models.ConceptMembers;
+import com.openmrs.android_sdk.library.models.Drug;
+import com.openmrs.android_sdk.library.models.DrugCreate;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.EncounterType;
 import com.openmrs.android_sdk.library.models.Encountercreate;
@@ -1089,5 +1091,52 @@ public interface RestApi {
      */
     @DELETE("order/{uuid}")
     Call<ResponseBody> deleteOrder(@Path("uuid") String orderUuid);
+
+    /**
+     * Get all the available Drugs
+     *
+     * @param version the representation to return
+     * @return the call
+     */
+    @GET("drugs")
+    Call<Results<Drug>> getAllDrugs(@Query("v") String version);
+
+    /**
+     * Get a Drug by UUID
+     *
+     * @param uuid the uuid of the drug
+     * @param version the representation to return
+     * @return the call
+     */
+    @GET("drugs/{uuid}")
+    Call<Results<Drug>> getDrugByUuid(@Path("uuid") String uuid, @Query("v") String version);
+
+    /**
+     * Get a Drug by UUID
+     *
+     * @param drug the object of type DrugCreate object to create
+     * @return the call
+     */
+    @POST("drug")
+    Call<Drug> createDrug(@Body DrugCreate drug);
+
+    /**
+     * Update a Drug by UUID
+     *
+     * @param uuid the uuid of the Drug
+     * @param drug the object of type DrugCreate object to create
+     * @return the call
+     */
+    @POST("drug/{uuid}")
+    Call<Drug> updateDrug(@Path("uuid") String uuid, @Body Drug drug);
+
+    /**
+     * Delete a Drug
+     *
+     * @param uuid the uuid of the Drug
+     * @return the call
+     */
+    @DELETE("drug/{uuid}")
+    Call<ResponseBody> deleteDrug(@Path("uuid") String uuid);
 
 }

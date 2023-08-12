@@ -54,4 +54,12 @@ interface DrugRoomDAO {
      */
     @Query("DELETE FROM drugs WHERE uuid = :uuid")
     fun deleteDrugByUuid(uuid: String)
+
+    /**
+     * Saves all drug enteries of a list to database
+     *
+     * @param drugs the drug list
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdateDrugs(drugs: List<DrugEntity>): List<Long>
 }

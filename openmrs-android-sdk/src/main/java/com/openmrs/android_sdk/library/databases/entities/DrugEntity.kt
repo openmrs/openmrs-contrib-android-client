@@ -10,44 +10,44 @@ import com.openmrs.android_sdk.library.models.DosageForm
 class DrugEntity {
 
     @PrimaryKey
-    val uuid: String = ""
+    var uuid: String = ""
 
     @ColumnInfo(name = "display")
-    val display: String = ""
+    var display: String = ""
 
     @ColumnInfo(name = "description")
-    val description: String = ""
+    var description: String = ""
 
     @ColumnInfo(name = "combination")
-    val combination: Boolean = false
+    var combination: Boolean = false
 
     @ColumnInfo(name = "maximumDailyDose")
-    val maximumDailyDose: Int = 0
+    var maximumDailyDose: Int = 0
 
     @ColumnInfo(name = "minimumDailyDose")
-    val minimumDailyDose: Int = 0
+    var minimumDailyDose: Int = 0
 
     @ColumnInfo(name = "concept")
-    val concept: String = ""
+    var concept: String = ""
 
     @Embedded(prefix = "dosageForm_")
-    val dosageForm: DosageFormEntity? = null
+    var dosageForm: DosageFormEntity? = null
 
     @ColumnInfo(name = "drugReferenceMaps")
-    val drugReferenceMaps: List<String>? = null
+    var drugReferenceMaps: List<String>? = null
 
     @ColumnInfo(name = "ingredients")
-    val ingredients: List<String>? = null
+    var ingredients: List<String>? = null
 
     @ColumnInfo(name = "name")
-    val name: String = ""
+    var name: String = ""
 
     @ColumnInfo(name = "retired")
-    val retired: Boolean = false
+    var retired: Boolean = false
 
     @ColumnInfo(name = "strength")
-    val strength: String = ""
+    var strength: String = ""
 
     @ColumnInfo(name = "resourceVersion")
-    val resourceVersion: String = ""
+    var resourceVersion: String = ""
 }

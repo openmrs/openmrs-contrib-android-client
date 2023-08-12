@@ -1,5 +1,6 @@
 package com.openmrs.android_sdk.library.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,6 +10,7 @@ import com.openmrs.android_sdk.library.databases.entities.DrugEntity
 /**
  * The interface Drug Room DAO.
  */
+@Dao
 interface DrugRoomDAO {
 
     /**

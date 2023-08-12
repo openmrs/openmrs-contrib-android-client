@@ -1095,21 +1095,21 @@ public interface RestApi {
     /**
      * Get all the available Drugs
      *
-     * @param version the representation to return
+     * @param representation the representation to return
      * @return the call
      */
-    @GET("drugs")
-    Call<Results<Drug>> getAllDrugs(@Query("v") String version);
+    @GET("drug")
+    Call<Results<Drug>> getAllDrugs(@Query("v") String representation);
 
     /**
      * Get a Drug by UUID
      *
      * @param uuid the uuid of the drug
-     * @param version the representation to return
+     * @param representaion the representation to return
      * @return the call
      */
-    @GET("drugs/{uuid}")
-    Call<Results<Drug>> getDrugByUuid(@Path("uuid") String uuid, @Query("v") String version);
+    @GET("drug/{uuid}")
+    Call<Drug> getDrugByUuid(@Path("uuid") String uuid, @Query("v") String representaion);
 
     /**
      * Get a Drug by UUID
@@ -1128,7 +1128,7 @@ public interface RestApi {
      * @return the call
      */
     @POST("drug/{uuid}")
-    Call<Drug> updateDrug(@Path("uuid") String uuid, @Body Drug drug);
+    Call<Drug> updateDrug(@Path("uuid") String uuid, @Body DrugCreate drug);
 
     /**
      * Delete a Drug
@@ -1137,6 +1137,5 @@ public interface RestApi {
      * @return the call
      */
     @DELETE("drug/{uuid}")
-    Call<ResponseBody> deleteDrug(@Path("uuid") String uuid);
-
+    Call<Drug> deleteDrug(@Path("uuid") String uuid);
 }

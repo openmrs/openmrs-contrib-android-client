@@ -113,7 +113,7 @@ class DrugRepository @Inject constructor() : BaseRepository(){
 
             if (isSuccessful && this.body() != null) {
                 val drugs: List<Drug> = this.body()!!.results
-                val convertedList = AppDatabaseHelper.convert(drugs)
+                val convertedList = AppDatabaseHelper.convertDrugListToEntityList(drugs)
                 drugRoomDAO.insertOrUpdateDrugs(convertedList)
                 return Observable.just(drugs)
             } else {

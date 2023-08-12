@@ -534,7 +534,7 @@ object AppDatabaseHelper {
      *
      * @return the list of type DrugEntity
      */
-    fun convert(drugList: List<Drug>): List<DrugEntity> {
+    fun convertDrugListToEntityList(drugList: List<Drug>): List<DrugEntity> {
         val drugEnitityList = mutableListOf<DrugEntity>()
 
         for(drug in drugList){

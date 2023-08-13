@@ -1112,7 +1112,7 @@ public interface RestApi {
     Call<Drug> getDrugByUuid(@Path("uuid") String uuid, @Query("v") String representaion);
 
     /**
-     * Get a Drug by UUID
+     * Create a Drug by UUID
      *
      * @param drug the object of type DrugCreate object to create
      * @return the call

@@ -68,7 +68,7 @@ class DrugRepository @Inject constructor() : BaseRepository(){
     fun getAllDrugs(): Observable<List<Drug>> {
         return AppDatabaseHelper.createObservableIO<List<Drug>>(Callable {
             val call = restApi.getAllDrugs(representation)
-            executeRequest(call, "Error creating Drug: ").results
+            executeRequest(call, "Error getting all Drugs: ").results
         })
     }
 
@@ -109,7 +109,7 @@ class DrugRepository @Inject constructor() : BaseRepository(){
     fun deleteDrug(uuid: String): Observable<Drug> {
         return AppDatabaseHelper.createObservableIO<Drug>(Callable {
             val call = restApi.deleteDrug(uuid)
-            executeRequest(call, "Error updating the drug ")
+            executeRequest(call, "Error deleting the drug ")
         })
     }
 

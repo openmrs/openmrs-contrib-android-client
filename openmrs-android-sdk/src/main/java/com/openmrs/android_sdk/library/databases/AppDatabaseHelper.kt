@@ -38,6 +38,7 @@ import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEnti
 import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
 import com.openmrs.android_sdk.library.databases.entities.OrderEntity
+import com.openmrs.android_sdk.library.databases.entities.ProgramEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
 import com.openmrs.android_sdk.library.models.Allergy
@@ -55,6 +56,7 @@ import com.openmrs.android_sdk.library.models.Appointment
 import com.openmrs.android_sdk.library.models.Person
 import com.openmrs.android_sdk.library.models.ConceptClass
 import com.openmrs.android_sdk.library.models.OrderGet
+import com.openmrs.android_sdk.library.models.ProgramGet
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -522,5 +524,42 @@ object AppDatabaseHelper {
             orderNumber = orderGet.orderNumber
         }
         return orderEntity
+    }
+
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param programList the list of type ProgramGet
+     *
+     * @return the list of type ProgramEntity
+     */
+    fun convertProgramListToEntityList(programList: List<ProgramGet>): List<ProgramEntity> {
+        val programEnitityList = mutableListOf<ProgramEntity>()
+
+        for(program in programList){
+            val programEntity = ProgramEntity().apply {
+                uuid = program.uuid
+                name = program.name
+                allWorkflows = program.allWorkflows
+            }
+            programEnitityList.add(programEntity)
+        }
+        return programEnitityList
+    }
+
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param program the type ProgramGet
+     *
+     * @return the type ProgramEntity
+     */
+    fun convert(program: ProgramGet): ProgramEntity {
+        val programEntity = ProgramEntity().apply {
+            uuid = program.uuid
+            name = program.name
+            allWorkflows = program.allWorkflows
+        }
+        return programEntity
     }
 }

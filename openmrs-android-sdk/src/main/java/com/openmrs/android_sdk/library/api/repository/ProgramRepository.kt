@@ -17,6 +17,7 @@ import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.ProgramCreate
 import com.openmrs.android_sdk.library.models.ProgramGet
+import com.openmrs.android_sdk.utilities.NetworkUtils
 import retrofit2.Call
 import rx.Observable
 import java.util.concurrent.Callable
@@ -113,4 +114,46 @@ class ProgramRepository @Inject constructor() : BaseRepository(){
         })
     }
 
+    /**
+     * Get all drugs from the server and save to local database
+     *
+     * @return Observable<List<Drug>>
+     */
+
+    fun getAllProgramsAndSaveLocally(): Observable<List<ProgramGet>> {
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch Programs")
+        restApi.getAllPrograms("full").execute().run {
+
+            if (isSuccessful && this.body() != null) {
+                val programs: List<ProgramGet> = this.body()!!.results
+                val convertedList = AppDatabaseHelper.convertProgramListToEntityList(programs)
+                programRoomDAO.insertOrUpdatePrograms(convertedList)
+                return Observable.just(programs)
+            } else {
+                throw Exception("getAllProgramsAndSaveLocally error: ${message()}")
+            }
+        }
+    }
+
+    /**
+     * Get a Program by UUID and save to local database
+     *
+     * @param uuid the uuid of the Program to fetch and save
+     *
+     * @return the Program fetched from the server
+     */
+    fun getProgramByUuidAndSaveLocally(uuid: String): Observable<ProgramGet> {
+        if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch Program")
+        restApi.getProgramByUuid(uuid, "full").execute().run {
+
+            if (isSuccessful && this.body() != null) {
+                val program: ProgramGet = this.body()!!
+                val programEntity = AppDatabaseHelper.convert(program)
+                programRoomDAO.insertProgram(programEntity)
+                return Observable.just(program)
+            } else {
+                throw Exception("getProgramByUuidAndSaveLocally error: ${message()}")
+            }
+        }
+    }
 }

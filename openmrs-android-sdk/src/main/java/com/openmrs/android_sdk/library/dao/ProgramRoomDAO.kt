@@ -68,4 +68,12 @@ interface ProgramRoomDAO {
      */
     @Query("SELECT * FROM programs WHERE name = :name")
     fun getProgramByName(name: String): List<ProgramEntity>
+
+    /**
+     * Saves all program entries of a list to database
+     *
+     * @param programs the program list
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdatePrograms(programs: List<ProgramEntity>): List<Long>
 }

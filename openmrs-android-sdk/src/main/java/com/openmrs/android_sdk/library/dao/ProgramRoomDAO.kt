@@ -49,7 +49,7 @@ interface ProgramRoomDAO {
      * @return the id that was deleted
      */
     @Query("DELETE FROM programs WHERE uuid = :uuid")
-    fun deleteProgramByUuid(uuid: String): Long
+    fun deleteProgramByUuid(uuid: String): Int
 
     /**
      * Get a program with given uuid

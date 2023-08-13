@@ -134,6 +134,13 @@ class DrugRepository @Inject constructor() : BaseRepository(){
         }
     }
 
+    /**
+     * Get a Drug by UUID and save to local database
+     *
+     * @param uuid the uuid of the Drug to fetch and save
+     *
+     * @return the Drug fetched from the server
+     */
     fun getDrugByUuidAndSaveLocally(uuid: String): Observable<Drug> {
         if (!NetworkUtils.isOnline()) throw Exception("Must be online to fetch drug")
         restApi.getDrugByUuid(uuid, "full").execute().run {
@@ -148,5 +155,4 @@ class DrugRepository @Inject constructor() : BaseRepository(){
             }
         }
     }
-
 }

@@ -186,7 +186,9 @@ ACUnitTestBase {
     protected Visit createVisit(String display, long patientId) {
         Visit visit = new Visit();
         visit.location = new LocationEntity(display);
-        visit.visitType = new VisitType(display);
+        VisitType visitType = new VisitType();
+        visitType.setDisplay(display);
+        visit.visitType = visitType;
         visit.patient = createPatient(patientId);
         return visit;
     }

@@ -185,6 +185,4 @@ class AppointmentRepositoryTest {
             mockWebServer.enqueue(mockResponse)
         }
     }
-
-
 }

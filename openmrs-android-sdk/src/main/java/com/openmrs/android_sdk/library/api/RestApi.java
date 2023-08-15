@@ -433,7 +433,7 @@ public interface RestApi {
      */
 
     @GET("visit/{visitUuid}")
-    Call<Visit> getVisitFromUuid(String visitUuid);
+    Call<Visit> getVisitFromUuid(@Path("visitUuid") String visitUuid);
 
     /**
      * Gets visit type.

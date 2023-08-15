@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "uuid": "36475629-6652-44e9-a42b-c2b3b7438f72",
+      "location": {
+        "uuid": "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+        "display": "Unknown Location"
+      },
+      "visitType": {
+        "uuid": "7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+        "display": "Facility Visit"
+      },
+      "startDatetime": "2017-01-18T06:35:03.000+0000",
+      "stopDatetime": "2017-01-18T08:20:03.000+0000",
+      "encounters": [
+        {
+          "uuid": "bc8098b3-2da2-450d-be67-54024dcc5c2c",
+          "display": "Visit Note 18/01/2017",
+          "location": {
+            "uuid": "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "Unknown Location",
+            "name": "Unknown Location",
+            "description": "null"
+          }
+        }
+      ]
+    }
+  ]
+}

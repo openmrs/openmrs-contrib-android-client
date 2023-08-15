@@ -200,7 +200,7 @@ public abstract class AppDatabase extends RoomDatabase {
      */
     public abstract ProgramRoomDAO programRoomDAO();
 
-     * Drug Room DAO
+     /** Drug Room DAO
      *
      * @return the Drug Room DAO
      */

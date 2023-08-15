@@ -37,6 +37,8 @@ import com.openmrs.android_sdk.library.databases.entities.AppointmentProviderEnt
 import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
+import com.openmrs.android_sdk.library.databases.entities.DosageFormEntity
+import com.openmrs.android_sdk.library.databases.entities.DrugEntity
 import com.openmrs.android_sdk.library.databases.entities.OrderEntity
 import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint
 import com.openmrs.android_sdk.library.models.Allergen
@@ -54,6 +56,7 @@ import com.openmrs.android_sdk.library.models.VisitType
 import com.openmrs.android_sdk.library.models.Appointment
 import com.openmrs.android_sdk.library.models.Person
 import com.openmrs.android_sdk.library.models.ConceptClass
+import com.openmrs.android_sdk.library.models.Drug
 import com.openmrs.android_sdk.library.models.OrderGet
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
@@ -522,5 +525,72 @@ object AppDatabaseHelper {
             orderNumber = orderGet.orderNumber
         }
         return orderEntity
+    }
+
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param drugList the list of type Drug
+     *
+     * @return the list of type DrugEntity
+     */
+    fun convertDrugListToEntityList(drugList: List<Drug>): List<DrugEntity> {
+        val drugEnitityList = mutableListOf<DrugEntity>()
+
+        for(drug in drugList){
+            val dosageFormConverted = DosageFormEntity().apply{
+                uuid = drug.dosageForm!!.uuid!!
+                display = drug.dosageForm!!.display!!
+            }
+            val drugEntity = DrugEntity().apply {
+                uuid = drug.uuid!!
+                display = drug.display!!
+                description = drug.description!!
+                combination = drug.combination!!
+                maximumDailyDose = drug.maximumDailyDose!!
+                minimumDailyDose = drug.minimumDailyDose!!
+                concept = drug.concept!!
+                dosageForm = dosageFormConverted
+                drugReferenceMaps = drug.drugReferenceMaps
+                ingredients = drug.ingredients
+                name = drug.name!!
+                retired = drug.retired!!
+                strength = drug.strength!!
+                resourceVersion = drug.resourceVersion!!
+            }
+            drugEnitityList.add(drugEntity)
+        }
+        return drugEnitityList
+    }
+
+    /**
+     * Convert a retrofit model response to Room Entity
+     *
+     * @param drug the type Drug
+     *
+     * @return the type DrugEntity
+     */
+    fun convert(drug: Drug): DrugEntity {
+        val dosageFormConverted = DosageFormEntity().apply {
+            uuid = drug.dosageForm!!.uuid!!
+            display = drug.dosageForm!!.display!!
+        }
+        val drugEntity = DrugEntity().apply {
+            uuid = drug.uuid!!
+            display = drug.display!!
+            description = drug.description!!
+            combination = drug.combination!!
+            maximumDailyDose = drug.maximumDailyDose!!
+            minimumDailyDose = drug.minimumDailyDose!!
+            concept = drug.concept!!
+            dosageForm = dosageFormConverted
+            drugReferenceMaps = drug.drugReferenceMaps
+            ingredients = drug.ingredients
+            name = drug.name!!
+            retired = drug.retired!!
+            strength = drug.strength!!
+            resourceVersion = drug.resourceVersion!!
+        }
+        return drugEntity
     }
 }

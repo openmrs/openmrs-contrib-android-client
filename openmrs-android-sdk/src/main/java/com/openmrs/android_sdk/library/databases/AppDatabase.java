@@ -24,6 +24,7 @@ import androidx.room.TypeConverters;
 import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
 import com.openmrs.android_sdk.library.dao.AppointmentRoomDAO;
 import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
+import com.openmrs.android_sdk.library.dao.DrugRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO;
@@ -37,6 +38,7 @@ import com.openmrs.android_sdk.library.dao.VisitRoomDAO;
 import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
 import com.openmrs.android_sdk.library.databases.entities.AppointmentEntity;
 import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
+import com.openmrs.android_sdk.library.databases.entities.DrugEntity;
 import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
@@ -68,7 +70,8 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
         Encountercreate.class,
         AllergyEntity.class,
         AppointmentEntity.class,
-        OrderEntity.class},
+        OrderEntity.class,
+        DrugEntity.class},
         version = 1)
 @TypeConverters({StringListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -186,4 +189,11 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return the Order Room DAO
      */
     public abstract OrderRoomDAO orderRoomDAO();
+
+    /**
+     * Drug Room DAO
+     *
+     * @return the Drug Room DAO
+     */
+    public abstract DrugRoomDAO drugRoomDAO();
 }

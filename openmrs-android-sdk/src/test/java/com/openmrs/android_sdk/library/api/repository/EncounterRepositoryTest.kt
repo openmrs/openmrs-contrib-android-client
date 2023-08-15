@@ -148,7 +148,6 @@ class EncounterRepositoryTest {
             .build()
 
         encounterApi = retrofit.create(RestApi::class.java)
-
         hiltRule.inject()
     }
 

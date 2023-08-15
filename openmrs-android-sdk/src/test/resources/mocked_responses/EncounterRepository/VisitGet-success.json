@@ -1,0 +1,75 @@
+{
+  "uuid": "4d67b954-216a-4b19-9cab-94c59cc5b705",
+  "display": "Facility Visit @ Unknown Location - 09/12/2016 06:00",
+  "patient": {
+    "uuid": "96be32d2-9367-4d1d-a285-79a5e5db12b8",
+    "display": "1000C6 - Elizabeth Johnson",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/patient/96be32d2-9367-4d1d-a285-79a5e5db12b8",
+        "resourceAlias": "patient"
+      }
+    ]
+  },
+  "visitType": {
+    "uuid": "7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+    "display": "Facility Visit",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/visittype/7b0f5697-27e3-40c4-8bae-f4049abfb4ed",
+        "resourceAlias": "visittype"
+      }
+    ]
+  },
+  "indication": null,
+  "location": {
+    "uuid": "8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+    "display": "Unknown Location",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/location/8d6c993e-c2cc-11de-8d13-0010c6dffd0f",
+        "resourceAlias": "location"
+      }
+    ]
+  },
+  "startDatetime": "2016-12-09T06:00:32.000+0000",
+  "stopDatetime": "2016-12-11T07:56:32.000+0000",
+  "encounters": [
+    {
+      "uuid": "1ef9e5ee-ca7a-4a4b-852c-42c107526f81",
+      "display": "Discharge 11/12/2016",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/1ef9e5ee-ca7a-4a4b-852c-42c107526f81",
+          "resourceAlias": "encounter"
+        }
+      ]
+    },
+    {
+      "uuid": "ad17948a-cc20-4d9b-b606-3526063fea8c",
+      "display": "Admission 09/12/2016",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/ad17948a-cc20-4d9b-b606-3526063fea8c",
+          "resourceAlias": "encounter"
+        }
+      ]
+    },
+    {
+      "uuid": "5942684a-288d-4caa-b37e-e4ff28fadfcf",
+      "display": "Visit Note 09/12/2016",
+      "links": [
+        {
+          "rel": "self",
+          "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/encounter/5942684a-288d-4caa-b37e-e4ff28fadfcf",
+          "resourceAlias": "encounter"
+        }
+      ]
+    }
+  ]
+}

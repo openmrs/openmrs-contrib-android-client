@@ -1,0 +1,16 @@
+{
+  "uuid": "d3360c01-9813-4ff8-bd81-909af6612632",
+  "display": "Vitals 24/02/2015",
+  "encounterDatetime": "2015-02-24T06:08:25.000+0000",
+  "patient": {
+    "uuid": "96be32d2-9367-4d1d-a285-79a5e5db12b8",
+    "display": "1000C6 - Elizabeth Johnson",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://demo.openmrs.org/openmrs/ws/rest/v1/patient/96be32d2-9367-4d1d-a285-79a5e5db12b8",
+        "resourceAlias": "patient"
+      }
+    ]
+  }
+}

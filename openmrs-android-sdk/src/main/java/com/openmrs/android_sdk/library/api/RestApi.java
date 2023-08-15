@@ -53,6 +53,8 @@ import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
 import com.openmrs.android_sdk.library.models.PatientPhoto;
+import com.openmrs.android_sdk.library.models.ProgramCreate;
+import com.openmrs.android_sdk.library.models.ProgramGet;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.library.models.Resource;
 import com.openmrs.android_sdk.library.models.Results;
@@ -1091,7 +1093,7 @@ public interface RestApi {
      */
     @DELETE("order/{uuid}")
     Call<ResponseBody> deleteOrder(@Path("uuid") String orderUuid);
-
+  
     /**
      * Get all the available Drugs
      *
@@ -1138,4 +1140,51 @@ public interface RestApi {
      */
     @DELETE("drug/{uuid}")
     Call<Drug> deleteDrug(@Path("uuid") String uuid);
+  
+    /**
+     * Get all the available Programs
+     *
+     * @param representation the representation to return
+     * @return the call
+     */
+    @GET("program")
+    Call<Results<ProgramGet>> getAllPrograms(@Query("v") String representation);
+
+    /**
+     * Get a Program by UUID
+     *
+     * @param uuid the uuid of the Program
+     * @param representaion the representation to return
+     * @return the call
+     */
+    @GET("program/{uuid}")
+    Call<ProgramGet> getProgramByUuid(@Path("uuid") String uuid, @Query("v") String representaion);
+
+    /**
+     * Create a new Program
+     *
+     * @param program the object of type ProgramCreate
+     * @return the call
+     */
+    @POST("program")
+    Call<ProgramGet> createProgram(@Body ProgramCreate program);
+
+    /**
+     * Update a Program by UUID
+     *
+     * @param uuid the uuid of the Program
+     * @param updatedProgram the object of type ProgramCreate
+     * @return the call
+     */
+    @POST("program/{uuid}")
+    Call<ProgramGet> updateProgram(@Path("uuid") String uuid, @Body ProgramCreate updatedProgram);
+
+    /**
+     * Delete a Program
+     *
+     * @param uuid the uuid of the Program to delete
+     * @return the call
+     */
+    @DELETE("program/{uuid}")
+    Call<ProgramGet> deleteProgram(@Path("uuid") String uuid);
 }

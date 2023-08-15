@@ -74,7 +74,6 @@ class ObservationRepositoryTest {
             .build()
 
         observationApi = retrofit.create(RestApi::class.java)
-
         hiltRule.inject()
     }
 

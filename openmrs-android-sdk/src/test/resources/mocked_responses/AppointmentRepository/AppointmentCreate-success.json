@@ -1,0 +1,59 @@
+{
+  "timeSlot": {
+    "startDate": "2023-07-15T10:00:00Z",
+    "endDate": "2023-07-15T11:00:00Z",
+    "appointmentBlock": {
+      "startDate": "2023-07-15T10:00:00Z",
+      "endDate": "2023-07-15T11:00:00Z",
+      "provider": {
+        "name": "John Doe",
+        "specialty": "General Medicine"
+      },
+      "location": {
+        "name": "Sample Clinic",
+        "address": "123 Main St"
+      },
+      "types": [
+        {
+          "visitType": {
+            "uuid": "12345678-1234-1234-1234-123456789abc",
+            "display": "Type A"
+          },
+          "description": "Sample description 1",
+          "duration": "30 minutes",
+          "confidential": false
+        },
+        {
+          "visitType": {
+            "uuid": "98765432-5432-5432-5432-987654321fed",
+            "display": "Type B"
+          },
+          "description": "Sample description 2",
+          "duration": "60 minutes",
+          "confidential": true
+        }
+      ]
+    }
+  },
+  "visit": {
+    "uuid": "12345678-1234-1234-1234-123456789abc",
+    "display": "Visit 1"
+  },
+  "patient": {
+    "uuid": "87654321-4321-4321-4321-987654321cba",
+    "display": "John Doe"
+  },
+  "status": "Scheduled",
+  "reason": "Appointment reason",
+  "cancelReason": "Cancellation reason",
+  "appointmentType":  {
+    "uuid": "98765432-5432-5432-5432-987654321fed",
+    "visitType": {
+      "uuid": "12345678-1234-1234-1234-123456789abc",
+      "display": "Type A"
+    },
+    "description": "Sample description 1",
+    "duration": "30 minutes",
+    "confidential": false
+  }
+}

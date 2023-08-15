@@ -818,10 +818,10 @@ public interface RestApi {
      * @return the call
      */
     @POST("appointmentscheduling/appointment")
-    Call<Appointment> createAppointment(@Field("patient") String patientUUID,
-                                        @Field("status") String status,
-                                        @Field("appointmentType") String typeUUID,
-                                        @Field("timeSlot") TimeSlot timeslot);
+    Call<Appointment> createAppointment(@Query("patient") String patientUUID,
+                                        @Query("status") String status,
+                                        @Query("appointmentType") String typeUUID,
+                                        @Query("timeSlot") TimeSlot timeslot);
 
     /**
      * Get an Appointment
@@ -830,7 +830,7 @@ public interface RestApi {
      * @return the Appointment
      */
     @GET("appointmentscheduling/appointment/{uuid}")
-    Call<Appointment> getAppointment(@Path("uuid") String uuid);
+    Call<Results<Appointment>> getAppointment(@Path("uuid") String uuid);
 
     /**
      * Delete Appointment
@@ -880,9 +880,9 @@ public interface RestApi {
      * @return the call
      */
     @POST("appointmentscheduling/timeslot")
-    Call<TimeSlot> createTimeslot(@Field("startDate") String startDate,
-                                  @Field("endDate") String endDate,
-                                  @Field("location") AppointmentBlock appointmentBlock);
+    Call<TimeSlot> createTimeslot(@Query("startDate") String startDate,
+                                  @Query("endDate") String endDate,
+                                  @Query("location") AppointmentBlock appointmentBlock);
 
     /**
      * Get a TimeSlot
@@ -924,10 +924,10 @@ public interface RestApi {
      * @return the call
      */
     @POST("appointmentscheduling/appointmentblock")
-    Call<AppointmentBlock> createAppointmentBlock(@Field("startDate") String startDate,
-                                                  @Field("endDate") String endDate,
-                                                  @Field("location") String location,
-                                                  @Field("types") List<AppointmentType> types);
+    Call<AppointmentBlock> createAppointmentBlock(@Query("startDate") String startDate,
+                                                  @Query("endDate") String endDate,
+                                                  @Query("location") String location,
+                                                  @Query("types") List<AppointmentType> types);
 
     /**
      * Delete Appointment Block

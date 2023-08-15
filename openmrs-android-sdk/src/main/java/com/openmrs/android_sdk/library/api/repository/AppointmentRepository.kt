@@ -13,7 +13,11 @@
  */
 package com.openmrs.android_sdk.library.api.repository
 
+import android.content.Context
 import com.openmrs.android_sdk.R
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.api.RestApi
+import com.openmrs.android_sdk.library.dao.AppointmentRoomDAO
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
@@ -26,10 +30,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppointmentRepository @Inject constructor() : BaseRepository() {
+class AppointmentRepository @Inject constructor(
+    val context: Context,
+    val logger: OpenMRSLogger,
+    var restApi: RestApi,
+    val appointmentRoomDAO: AppointmentRoomDAO
+) {
 
     val representation =  context.resources.getString(R.string.appointment_resource_representation).trim()
-    var appointmentRoomDAO = AppDatabase.getDatabase(context).appointmentRoomDAO()
 
     /**
      * Executes a retrofit request

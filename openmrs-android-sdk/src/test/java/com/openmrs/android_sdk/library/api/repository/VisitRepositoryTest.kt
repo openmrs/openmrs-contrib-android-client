@@ -103,7 +103,6 @@ class VisitRepositoryTest {
             .build()
 
         visitApi = retrofit.create(RestApi::class.java)
-
         hiltRule.inject()
     }
 

@@ -11,40 +11,39 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.EncounterEntity;
-import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
-import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity;
-import com.openmrs.android_sdk.library.models.Encounter;
-import com.openmrs.android_sdk.library.models.EncounterType;
-import com.openmrs.android_sdk.library.models.Observation;
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.convert
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.convertToStandalone
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
+import com.openmrs.android_sdk.library.databases.entities.EncounterEntity
+import com.openmrs.android_sdk.library.databases.entities.StandaloneEncounterEntity
+import com.openmrs.android_sdk.library.models.Encounter
+import com.openmrs.android_sdk.library.models.EncounterType
+import rx.Observable
+import java.util.concurrent.Callable
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * The type Encounter dao.
  */
 @Singleton
-public class EncounterDAO {
-    EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterRoomDAO();
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
-    EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
+class EncounterDAO @Inject constructor(
+    val observationDAO: ObservationDAO
+) {
+    var encounterRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).encounterRoomDAO()
+    var observationRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).observationRoomDAO()
+    var encounterTypeRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).encounterTypeRoomDAO()
 
-    @Inject
-    ObservationDAO observationDAO;
-
-    @Inject
-    public EncounterDAO() { }
     /**
      * Save encounter long.
      *
@@ -52,10 +51,9 @@ public class EncounterDAO {
      * @param visitID   the visit id
      * @return the long
      */
-    public long saveEncounter(Encounter encounter, Long visitID) {
-        EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);
-        long id = encounterRoomDAO.addEncounter(encounterEntity);
-        return id;
+    fun saveEncounter(encounter: Encounter, visitID: Long?): Long {
+        val encounterEntity: EncounterEntity = convert(encounter, visitID)
+        return encounterRoomDAO.addEncounter(encounterEntity)
     }
 
     /**
@@ -64,10 +62,10 @@ public class EncounterDAO {
      * @param encounter the encounter
      * @return the long
      */
-    public long saveStandaloneEncounter(Encounter encounter) {
-        StandaloneEncounterEntity standaloneEncounterEntity = AppDatabaseHelper.convertToStandalone(encounter);
-        long id = encounterRoomDAO.addEncounterStandaloneEntity(standaloneEncounterEntity);
-        return id;
+    fun saveStandaloneEncounter(encounter: Encounter): Long {
+        val standaloneEncounterEntity =
+            convertToStandalone(encounter)
+        return encounterRoomDAO.addEncounterStandaloneEntity(standaloneEncounterEntity)
     }
 
     /**
@@ -76,14 +74,13 @@ public class EncounterDAO {
      * @param encounterList the encounter
      * @return the long
      */
-    public List<Long> saveStandaloneEncounters(List<Encounter> encounterList) {
-        List<StandaloneEncounterEntity> standaloneEncounterEntityList = new ArrayList<>();
-        for(Encounter encounter: encounterList){
-            StandaloneEncounterEntity standaloneEncounterEntity = AppDatabaseHelper.convertToStandalone(encounter);
-            standaloneEncounterEntityList.add(standaloneEncounterEntity);
+    fun saveStandaloneEncounters(encounterList: List<Encounter?>): List<Long> {
+        val standaloneEncounterEntityList: MutableList<StandaloneEncounterEntity> = ArrayList()
+        for (encounter in encounterList) {
+            val standaloneEncounterEntity = convertToStandalone(encounter!!)
+            standaloneEncounterEntityList.add(standaloneEncounterEntity)
         }
-        List<Long> id = encounterRoomDAO.addEncounterStandaloneEntityList(standaloneEncounterEntityList);
-        return id;
+        return encounterRoomDAO.addEncounterStandaloneEntityList(standaloneEncounterEntityList)
     }
 
     /**
@@ -92,11 +89,11 @@ public class EncounterDAO {
      * @param patientUuid the patient uuid for which the standalone encounters should be deleted
      * @return the long
      */
-    public Observable<Boolean> deleteAllStandaloneEncounters(String patientUuid) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            encounterRoomDAO.deleteStandaloneEncounter(patientUuid);
-            return true;
-        });
+    fun deleteAllStandaloneEncounters(patientUuid: String?): Observable<Boolean> {
+        return createObservableIO(Callable {
+            encounterRoomDAO.deleteStandaloneEncounter(patientUuid)
+            true
+        })
     }
 
     /**
@@ -105,8 +102,8 @@ public class EncounterDAO {
      * @param formName the form name
      * @return the encounter type by form name
      */
-    public EncounterType getEncounterTypeByFormName(String formName) {
-        return encounterTypeRoomDAO.getEncounterTypeByFormName(formName);
+    fun getEncounterTypeByFormName(formName: String?): EncounterType {
+        return encounterTypeRoomDAO.getEncounterTypeByFormName(formName)
     }
 
     /**
@@ -115,25 +112,25 @@ public class EncounterDAO {
      * @param encounter   the encounter
      * @param patientUUID the patient uuid
      */
-    public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
+    fun saveLastVitalsEncounter(encounter: Encounter?, patientUUID: String?) {
         if (null != encounter) {
-            encounter.setPatientUUID(patientUUID);
-            long oldLastVitalsEncounterID;
-            try {
-                oldLastVitalsEncounterID = encounterRoomDAO.getLastVitalsEncounterID(patientUUID).blockingGet();
-            } catch (Exception e) {
-                oldLastVitalsEncounterID = 0;
+            encounter.patientUUID = patientUUID
+            val oldLastVitalsEncounterID: Long
+            oldLastVitalsEncounterID = try {
+                encounterRoomDAO.getLastVitalsEncounterID(patientUUID).blockingGet()
+            } catch (e: Exception) {
+                0
             }
-            if (0 != oldLastVitalsEncounterID) {
-                for (Observation obs : new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, 1L);
-                    observationRoomDAO.deleteObservation(observationEntity);
+            if (0L != oldLastVitalsEncounterID) {
+                for (obs in ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
+                    val observationEntity = convert(obs!!, 1L)
+                    observationRoomDAO.deleteObservation(observationEntity)
                 }
-                encounterRoomDAO.deleteEncounterByID(oldLastVitalsEncounterID);
+                encounterRoomDAO.deleteEncounterByID(oldLastVitalsEncounterID)
             }
-            long encounterID = saveEncounter(encounter, null);
-            for (Observation obs : encounter.getObservations()) {
-                observationDAO.saveObservation(obs, encounterID);
+            val encounterID = saveEncounter(encounter, null)
+            for (obs in encounter.observations) {
+                observationDAO.saveObservation(obs, encounterID)
             }
         }
     }
@@ -144,11 +141,11 @@ public class EncounterDAO {
      * @param patientUUID the patient uuid
      * @return the last vitals encounter
      */
-    public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
-            return AppDatabaseHelper.convert(encounterEntity);
-        });
+    fun getLastVitalsEncounter(patientUUID: String?): Observable<Encounter> {
+        return createObservableIO(Callable {
+            val encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet()
+            convert(encounterEntity)
+        })
     }
 
     /**
@@ -159,11 +156,14 @@ public class EncounterDAO {
      * @param visitID     the visit id
      * @return the int
      */
-    public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
-        EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);
-        encounterEntity.setId(encounterID);
-        int id = encounterRoomDAO.updateEncounter(encounterEntity);
-        return id;
+    fun updateEncounter(
+        encounterID: Long,
+        encounter: Encounter?,
+        visitID: Long
+    ): Int {
+        val encounterEntity = convert(encounter!!, visitID)
+        encounterEntity.id = encounterID
+        return encounterRoomDAO.updateEncounter(encounterEntity)
     }
 
     /**
@@ -172,17 +172,16 @@ public class EncounterDAO {
      * @param visitID the visit id
      * @return the list
      */
-    public List<Encounter> findEncountersByVisitID(Long visitID) {
-        List<Encounter> encounters = new ArrayList<>();
-        try {
-            List<EncounterEntity> encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet();
-
-            for (EncounterEntity entity : encounterEntities) {
-                encounters.add(AppDatabaseHelper.convert(entity));
+    fun findEncountersByVisitID(visitID: Long): List<Encounter> {
+        val encounters: MutableList<Encounter> = ArrayList()
+        return try {
+            val encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet()
+            for (entity in encounterEntities) {
+                encounters.add(convert(entity!!))
             }
-            return encounters;
-        } catch (Exception e) {
-            return encounters;
+            encounters
+        } catch (e: Exception) {
+            encounters
         }
     }
 
@@ -193,20 +192,21 @@ public class EncounterDAO {
      * @param type      the type
      * @return the all encounters by type
      */
-    public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            List<Encounter> encounters = new ArrayList<>();
-            List<EncounterEntity> encounterEntities;
+    fun getAllEncountersByType(patientID: Long?, type: EncounterType): Observable<List<Encounter>> {
+        return createObservableIO<List<Encounter>>(Callable<List<Encounter>> {
+            val encounters: MutableList<Encounter> = ArrayList()
+            val encounterEntities: List<EncounterEntity>
             try {
-                encounterEntities = encounterRoomDAO.getAllEncountersByType(patientID, type.getDisplay()).blockingGet();
-                for (EncounterEntity entity : encounterEntities) {
-                    encounters.add(AppDatabaseHelper.convert(entity));
+                encounterEntities =
+                    encounterRoomDAO.getAllEncountersByType(patientID, type.display).blockingGet()
+                for (entity in encounterEntities) {
+                    encounters.add(convert(entity!!))
                 }
-                return encounters;
-            } catch (Exception e) {
-                return new ArrayList<>();
+                return@Callable encounters
+            } catch (e: Exception) {
+                return@Callable ArrayList<Encounter>()
             }
-        });
+        })
     }
 
     /**
@@ -215,11 +215,11 @@ public class EncounterDAO {
      * @param encounterUUID the encounter uuid
      * @return the encounter by uuid
      */
-    public long getEncounterByUUID(final String encounterUUID) {
-        try {
-            return encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet();
-        } catch (Exception e) {
-            return 0;
+    fun getEncounterByUUID(encounterUUID: String?): Long {
+        return try {
+            encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet()
+        } catch (e: Exception) {
+            0
         }
     }
 }

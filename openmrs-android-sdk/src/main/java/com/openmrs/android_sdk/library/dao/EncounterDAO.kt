@@ -31,9 +31,11 @@ import javax.inject.Singleton
  * The type Encounter dao.
  */
 @Singleton
-class EncounterDAO @Inject constructor(
-    val observationDAO: ObservationDAO
-) {
+class EncounterDAO @Inject constructor() {
+
+    var observationDAO: ObservationDAO? = null
+        @Inject set
+
     var encounterRoomDAO = AppDatabase.getDatabase(
         OpenmrsAndroid.getInstance()!!.applicationContext
     ).encounterRoomDAO()
@@ -130,7 +132,7 @@ class EncounterDAO @Inject constructor(
             }
             val encounterID = saveEncounter(encounter, null)
             for (obs in encounter.observations) {
-                observationDAO.saveObservation(obs, encounterID)
+                observationDAO?.saveObservation(obs, encounterID)
             }
         }
     }
@@ -172,7 +174,7 @@ class EncounterDAO @Inject constructor(
      * @param visitID the visit id
      * @return the list
      */
-    fun findEncountersByVisitID(visitID: Long): List<Encounter> {
+    fun findEncountersByVisitID(visitID: Long?): List<Encounter> {
         val encounters: MutableList<Encounter> = ArrayList()
         return try {
             val encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet()

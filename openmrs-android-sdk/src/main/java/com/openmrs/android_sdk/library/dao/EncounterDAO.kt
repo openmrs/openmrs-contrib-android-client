@@ -194,13 +194,13 @@ class EncounterDAO @Inject constructor() {
      * @param type      the type
      * @return the all encounters by type
      */
-    fun getAllEncountersByType(patientID: Long?, type: EncounterType): Observable<List<Encounter>> {
+    fun getAllEncountersByType(patientID: Long?, type: EncounterType?): Observable<List<Encounter>> {
         return createObservableIO<List<Encounter>>(Callable<List<Encounter>> {
             val encounters: MutableList<Encounter> = ArrayList()
             val encounterEntities: List<EncounterEntity>
             try {
                 encounterEntities =
-                    encounterRoomDAO.getAllEncountersByType(patientID, type.display).blockingGet()
+                    encounterRoomDAO.getAllEncountersByType(patientID, type?.display).blockingGet()
                 for (entity in encounterEntities) {
                     encounters.add(convert(entity!!))
                 }

@@ -109,7 +109,7 @@ interface ObservationRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
-    fun findObservationByEncounterID(encounterID: Long): Single<List<ObservationEntity?>?>?
+    fun findObservationByEncounterID(encounterID: Long): Single<List<ObservationEntity>>
 
     /**
      * Gets observation by uuid.
@@ -118,7 +118,7 @@ interface ObservationRoomDAO {
      * @return the observation by uuid
      */
     @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
-    fun getObservationByUUID(observationUUID: String): Single<ObservationEntity?>?
+    fun getObservationByUUID(observationUUID: String): Single<ObservationEntity>
 
     /**
      * Gets observation by patient uuid
@@ -127,7 +127,7 @@ interface ObservationRoomDAO {
      * @return the observation
      */
     @Query("SELECT * FROM observations WHERE patient_uuid = :patient_uuid")
-    fun getObservationForPatientByPatientUuid(patient_uuid: String): Single<ObservationEntity?>?
+    fun getObservationForPatientByPatientUuid(patient_uuid: String): Single<ObservationEntity>
 
     /**
      * Gets observation by patient uuid and concept uuid.
@@ -137,7 +137,7 @@ interface ObservationRoomDAO {
      * @return the observation
      */
     @Query("SELECT * FROM observations WHERE patient_uuid = :patient_uuid AND conceptUuid = :concept_uuid")
-    fun getObservationForPatientByConceptUuid(patient_uuid: String, concept_uuid: String): Single<ObservationEntity?>?
+    fun getObservationForPatientByConceptUuid(patient_uuid: String, concept_uuid: String): Single<ObservationEntity>
 
     /**
      * Gets all observations.
@@ -145,7 +145,7 @@ interface ObservationRoomDAO {
      * @return the all observations
      */
     @Query("SELECT * FROM observations")
-    fun getAllObservations(): Single<List<ObservationEntity?>?>?
+    fun getAllObservations(): Single<List<ObservationEntity>>
 
     /**
      * Gets all Standalone Observations
@@ -153,7 +153,7 @@ interface ObservationRoomDAO {
      * @return all Standalone observations
      */
     @Query("SELECT * FROM standaloneObservations")
-    fun getAllStandaloneObservations(): Single<List<StandaloneObservationEntity?>?>?
+    fun getAllStandaloneObservations(): Single<List<StandaloneObservationEntity>>
 
     /**
      * Gets all Standalone Observations by uuid

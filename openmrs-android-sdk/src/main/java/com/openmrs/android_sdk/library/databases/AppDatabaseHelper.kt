@@ -200,7 +200,7 @@ object AppDatabaseHelper {
         encounter.display = entity.display
         val dateTime = entity.encounterDateTime.toLong()
         encounter.setEncounterDatetime(convertTime(dateTime, DateUtils.OPEN_MRS_REQUEST_FORMAT))
-        encounter.observations = ObservationDAO().findObservationByEncounterID(entity.id)
+        encounter.observations = ObservationDAO().findObservationByEncounterID(entity.id!!)
         encounter.patient = PatientDAO().findPatientByUUID(entity.patientUuid)
         val location: LocationEntity? = try {
             AppDatabase

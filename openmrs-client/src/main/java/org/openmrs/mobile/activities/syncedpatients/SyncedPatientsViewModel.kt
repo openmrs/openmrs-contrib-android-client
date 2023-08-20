@@ -39,7 +39,7 @@ class SyncedPatientsViewModel @Inject constructor(private val patientDAO: Patien
     fun deleteSyncedPatient(patient: Patient) {
         setLoading()
         patientDAO.deletePatient(patient.id!!)
-        addSubscription(visitDAO.deleteVisitsByPatientId(patient.id)
+        addSubscription(visitDAO.deleteVisitsByPatientId(patient.id!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe())
     }

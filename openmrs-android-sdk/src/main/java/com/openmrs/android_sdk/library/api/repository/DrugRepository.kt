@@ -12,6 +12,7 @@
 */
 package com.openmrs.android_sdk.library.api.repository
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.Drug
@@ -25,7 +26,7 @@ import javax.inject.Inject
 class DrugRepository @Inject constructor() : BaseRepository(){
 
     val representation =  "full"
-    var drugRoomDAO = AppDatabase.getDatabase(context).drugRoomDAO()
+    var drugRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()!!.applicationContext).drugRoomDAO()
 
     /**
      * Executes a retrofit request

@@ -16,7 +16,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.openmrs.android_sdk.library.models.DosageForm
 
 @Entity(tableName = "drugs")
 class DrugEntity {
@@ -39,8 +38,8 @@ class DrugEntity {
     @ColumnInfo(name = "minimumDailyDose")
     var minimumDailyDose: Int = 0
 
-    @ColumnInfo(name = "concept")
-    var concept: String = ""
+    @Embedded(prefix = "concept_")
+    var concept: DrugConceptEntity? = null
 
     @Embedded(prefix = "dosageForm_")
     var dosageForm: DosageFormEntity? = null

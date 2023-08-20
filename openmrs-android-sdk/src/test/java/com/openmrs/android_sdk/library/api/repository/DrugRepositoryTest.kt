@@ -104,7 +104,7 @@ class DrugRepositoryTest {
     @Test
     fun getAllDrugs_success_returnsListOfDrugs(){
         drugRepository.restApi = drugApi
-        enqueueMockResponse("mocked_responses/DrugRepository/DrugGetALl-success.json")
+        enqueueMockResponse("mocked_responses/DrugRepository/DrugGetAll-success.json")
 
         val result: List<Drug> = drugRepository.getAllDrugs().toBlocking().first()
 

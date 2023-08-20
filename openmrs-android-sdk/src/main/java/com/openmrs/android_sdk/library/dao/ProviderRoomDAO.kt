@@ -11,31 +11,25 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.TypeConverters;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.models.Person;
-import com.openmrs.android_sdk.library.models.Provider;
-import com.openmrs.android_sdk.library.models.typeConverters.PersonConverter;
-
-import java.util.List;
-
-import io.reactivex.Single;
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.TypeConverters
+import androidx.room.Update
+import com.openmrs.android_sdk.library.models.Person
+import com.openmrs.android_sdk.library.models.Provider
+import com.openmrs.android_sdk.library.models.typeConverters.PersonConverter
+import io.reactivex.Single
 
 /**
  * The interface Provider room dao.
  */
 @Dao
-public interface ProviderRoomDAO {
-
+interface ProviderRoomDAO {
     /**
      * Add provider long.
      *
@@ -43,7 +37,7 @@ public interface ProviderRoomDAO {
      * @return the long
      */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    long addProvider(Provider provider);
+    fun addProvider(provider: Provider): Long
 
     /**
      * Insert all orders.
@@ -51,7 +45,7 @@ public interface ProviderRoomDAO {
      * @param order the order
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAllOrders(List<Provider> order);
+    fun insertAllOrders(order: List<Provider>)
 
     /**
      * Delete provider.
@@ -59,7 +53,7 @@ public interface ProviderRoomDAO {
      * @param provider the provider
      */
     @Delete
-    void deleteProvider(Provider provider);
+    fun deleteProvider(provider: Provider)
 
     /**
      * Delete by uuid.
@@ -67,7 +61,7 @@ public interface ProviderRoomDAO {
      * @param uuid the uuid
      */
     @Query("DELETE FROM provider_table WHERE uuid = :uuid")
-    void deleteByUuid(String uuid);
+    fun deleteByUuid(uuid: String)
 
     /**
      * Update provider.
@@ -75,7 +69,7 @@ public interface ProviderRoomDAO {
      * @param provider the provider
      */
     @Update
-    void updateProvider(Provider provider);
+    fun updateProvider(provider: Provider)
 
     /**
      * since the current implementation of the provider update operation
@@ -87,9 +81,15 @@ public interface ProviderRoomDAO {
      * @param uuid       the uuid
      * @param identifier the identifier
      */
-    @TypeConverters(PersonConverter.class)
+    @TypeConverters(PersonConverter::class)
     @Query("UPDATE provider_table SET person= :person, _id= :id, display=:display, identifier=:identifier WHERE uuid = :uuid")
-    void updateProviderByUuid(String display, long id, Person person, String uuid, String identifier);
+    fun updateProviderByUuid(
+        display: String,
+        id: Long,
+        person: Person,
+        uuid: String,
+        identifier: String
+    )
 
     /**
      * Update provider uuid by id.
@@ -98,7 +98,7 @@ public interface ProviderRoomDAO {
      * @param uuid the uuid
      */
     @Query("UPDATE provider_table SET uuid=:uuid WHERE _id=:id")
-    void updateProviderUuidById(long id, String uuid);
+    fun updateProviderUuidById(id: Long, uuid: String)
 
     /**
      * Gets provider list.
@@ -106,7 +106,7 @@ public interface ProviderRoomDAO {
      * @return the provider list
      */
     @Query("SELECT * FROM provider_table")
-    Single<List<Provider>> getProviderList();
+    fun getProviderList(): Single<List<Provider>>
 
     /**
      * Find provider by id single.
@@ -115,7 +115,7 @@ public interface ProviderRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM provider_table WHERE _id = :id")
-    Single<Provider> findProviderByID(long id);
+    fun findProviderByID(id: Long): Single<Provider>
 
     /**
      * Find provider by uuid single.
@@ -124,7 +124,7 @@ public interface ProviderRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM provider_table WHERE uuid = :uuid")
-    Single<Provider> findProviderByUUID(String uuid);
+    fun findProviderByUUID(uuid: String): Single<Provider>
 
     /**
      * Gets current uui ds.
@@ -132,11 +132,11 @@ public interface ProviderRoomDAO {
      * @return the current uui ds
      */
     @Query("SELECT uuid FROM provider_table")
-    Single<List<String>> getCurrentUUIDs();
+    fun getCurrentUUIDs(): Single<List<String>>
 
     /**
      * Delete all.
      */
     @Query("DELETE FROM provider_table")
-    void deleteAll();
+    fun deleteAll()
 }

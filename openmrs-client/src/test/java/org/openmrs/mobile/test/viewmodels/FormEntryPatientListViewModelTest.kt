@@ -38,7 +38,7 @@ class FormEntryPatientListViewModelTest : ACUnitTestBaseRx() {
     fun `fetch all saved patients with active visits should succeed`() {
         val visits = createVisitList()
         val patients = mutableListOf<Patient>().apply { visits.forEach { this += it.patient } }
-        `when`(visitDAO.activeVisits).thenReturn(Observable.just(visits))
+        `when`(visitDAO.getActiveVisits()).thenReturn(Observable.just(visits))
 
         viewModel.fetchSavedPatientsWithActiveVisits()
         val result = viewModel.result.value as Result.Success<List<Patient>>
@@ -50,7 +50,7 @@ class FormEntryPatientListViewModelTest : ACUnitTestBaseRx() {
     fun `fetch all saved patients with active visits should return error`() {
         val errorMsg = "Error message!"
         val throwable = Throwable(errorMsg)
-        `when`(visitDAO.activeVisits).thenReturn(Observable.error(throwable))
+        `when`(visitDAO.getActiveVisits()).thenReturn(Observable.error(throwable))
 
         viewModel.fetchSavedPatientsWithActiveVisits()
         val result = (viewModel.result.value as Result.Error).throwable.message
@@ -65,7 +65,7 @@ class FormEntryPatientListViewModelTest : ACUnitTestBaseRx() {
         patients[0].name.givenName = "Alex"
         val filteredPatients = listOf(patients[0])
 
-        `when`(visitDAO.activeVisits).thenReturn(Observable.just(visits))
+        `when`(visitDAO.getActiveVisits()).thenReturn(Observable.just(visits))
 
         viewModel.fetchSavedPatientsWithActiveVisits("Alex")
 

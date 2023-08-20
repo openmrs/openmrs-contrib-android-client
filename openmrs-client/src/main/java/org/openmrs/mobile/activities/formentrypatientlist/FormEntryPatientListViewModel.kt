@@ -20,7 +20,7 @@ class FormEntryPatientListViewModel @Inject constructor(
     fun fetchSavedPatientsWithActiveVisits(query: String? = null) {
         mQuery = query
         setLoading()
-        addSubscription(visitDAO.activeVisits
+        addSubscription(visitDAO.getActiveVisits()
                 .map { visits ->
                     val patients = mutableListOf<Patient>()
                     visits.forEach { patients += it.patient }

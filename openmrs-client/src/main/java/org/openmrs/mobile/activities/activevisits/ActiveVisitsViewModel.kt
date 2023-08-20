@@ -15,7 +15,7 @@ class ActiveVisitsViewModel @Inject constructor(private val visitDAO: VisitDAO) 
 
     fun fetchActiveVisits() {
         setLoading()
-        addSubscription(visitDAO.activeVisits
+        addSubscription(visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { visits: List<Visit> -> setContent(visits) },
@@ -25,7 +25,7 @@ class ActiveVisitsViewModel @Inject constructor(private val visitDAO: VisitDAO) 
 
     fun fetchActiveVisits(query: String) {
         setLoading()
-        addSubscription(visitDAO.activeVisits
+        addSubscription(visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { visits: List<Visit> ->

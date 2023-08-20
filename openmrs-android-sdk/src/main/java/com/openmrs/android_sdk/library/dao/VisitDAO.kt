@@ -11,47 +11,38 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-import android.content.Context;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
-import com.openmrs.android_sdk.library.databases.entities.VisitEntity;
-import com.openmrs.android_sdk.library.models.Encounter;
-import com.openmrs.android_sdk.library.models.Observation;
-import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.convert
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
+import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.models.Visit
+import rx.Observable
+import java.util.concurrent.Callable
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * The type Visit dao.
  */
 @Singleton
-public class VisitDAO {
-
+class VisitDAO @Inject constructor() {
     /**
      * The Context.
      */
-    Context context = OpenmrsAndroid.getInstance().getApplicationContext();
+    var context = OpenmrsAndroid.getInstance()!!.applicationContext
+
     /**
      * The Observation room dao.
      */
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
+    var observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO()
+
     /**
      * The Visit room dao.
      */
-    VisitRoomDAO visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO();
-
-    @Inject
-    public VisitDAO() { }
+    var visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO()
 
     /**
      * Save or update observable.
@@ -60,65 +51,62 @@ public class VisitDAO {
      * @param patientId the patient id
      * @return the observable
      */
-    public Observable<Long> saveOrUpdate(Visit visit, long patientId) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            Long visitId = visit.getId();
+    fun saveOrUpdate(visit: Visit, patientId: Long): Observable<Long?> {
+        return createObservableIO(Callable {
+            var visitId = visit.id
             if (visitId == null) {
-                visitId = getVisitsIDByUUID(visit.getUuid()).toBlocking().first();
+                visitId = getVisitsIDByUUID(visit.uuid!!).toBlocking().first()
             }
-            if (visitId > 0) {
-                updateVisit(visit, visitId, patientId);
+            if (visitId!! > 0) {
+                updateVisit(visit, visitId, patientId)
             } else {
-                visitId = saveVisit(visit, patientId);
+                visitId = saveVisit(visit, patientId)
             }
-            return visitId;
-        });
+            visitId
+        })
     }
 
-    private long saveVisit(Visit visit, long patientID) {
-        EncounterDAO encounterDAO = new EncounterDAO();
-        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(patientID)));
-        VisitEntity visitEntity = AppDatabaseHelper.convert(visit);
-        long visitID = visitRoomDAO.addVisit(visitEntity);
-        if (visit.getEncounters() != null) {
-            for (Encounter encounter : visit.getEncounters()) {
-                long encounterID = encounterDAO.saveEncounter(encounter, visitID);
-                for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
-                    observationRoomDAO.addObservation(observationEntity);
+    private fun saveVisit(visit: Visit, patientID: Long): Long {
+        val encounterDAO = EncounterDAO()
+        visit.patient = PatientDAO().findPatientByID(patientID.toString())
+        val visitEntity = convert(visit)
+        val visitID = visitRoomDAO.addVisit(visitEntity)
+        if (visit.encounters != null) {
+            for (encounter in visit.encounters) {
+                val encounterID = encounterDAO.saveEncounter(encounter, visitID)
+                for (obs in encounter.observations) {
+                    val observationEntity = convert(obs, encounterID)
+                    observationRoomDAO.addObservation(observationEntity)
                 }
             }
         }
-        return visitID;
+        return visitID
     }
 
-    private boolean updateVisit(Visit visit, long visitID, long patientID) {
-        EncounterDAO encounterDAO = new EncounterDAO();
-        ObservationDAO observationDAO = new ObservationDAO();
-        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(patientID)));
-        if (visit.getEncounters() != null) {
-            for (Encounter encounter : visit.getEncounters()) {
-                long encounterID = encounterDAO.getEncounterByUUID(encounter.getUuid());
-
+    private fun updateVisit(visit: Visit, visitID: Long, patientID: Long): Boolean {
+        val encounterDAO = EncounterDAO()
+        val observationDAO = ObservationDAO()
+        visit.patient = PatientDAO().findPatientByID(patientID.toString())
+        if (visit.encounters != null) {
+            for (encounter in visit.encounters) {
+                var encounterID = encounterDAO.getEncounterByUUID(encounter.uuid)
                 if (encounterID > 0) {
-                    encounterDAO.updateEncounter(encounterID, encounter, visitID);
+                    encounterDAO.updateEncounter(encounterID, encounter, visitID)
                 } else {
-                    encounterID = encounterDAO.saveEncounter(encounter, visitID);
+                    encounterID = encounterDAO.saveEncounter(encounter, visitID)
                 }
-
-                List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
-                for (Observation obs : oldObs) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
-                    observationRoomDAO.deleteObservation(observationEntity);
+                val oldObs = observationDAO.findObservationByEncounterID(encounterID)
+                for (obs in oldObs) {
+                    val observationEntity = convert(obs, encounterID)
+                    observationRoomDAO.deleteObservation(observationEntity)
                 }
-
-                for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
-                    observationRoomDAO.addObservation(observationEntity);
+                for (obs in encounter.observations) {
+                    val observationEntity = convert(obs, encounterID)
+                    observationRoomDAO.addObservation(observationEntity)
                 }
             }
         }
-        return visitRoomDAO.updateVisit(AppDatabaseHelper.convert(visit)) > 0;
+        return visitRoomDAO.updateVisit(convert(visit)) > 0
     }
 
     /**
@@ -126,20 +114,20 @@ public class VisitDAO {
      *
      * @return the active visits
      */
-    public Observable<List<Visit>> getActiveVisits() {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            List<Visit> visits = new ArrayList<>();
-            List<VisitEntity> visitEntities;
+    fun getActiveVisits(): Observable<List<Visit>> {
+        return createObservableIO<List<Visit>>(Callable<List<Visit>> {
+            val visits: MutableList<Visit> = ArrayList()
+            val visitEntities: List<VisitEntity>
             try {
-                visitEntities = visitRoomDAO.getActiveVisits().blockingGet();
-                for (VisitEntity entity : visitEntities) {
-                    visits.add(AppDatabaseHelper.convert(entity));
+                visitEntities = visitRoomDAO.activeVisits.blockingGet()
+                for (entity in visitEntities) {
+                    visits.add(convert(entity))
                 }
-                return visits;
-            } catch (Exception e) {
-                return new ArrayList<>();
+                return@Callable visits
+            } catch (e: Exception) {
+                return@Callable ArrayList<Visit>()
             }
-        });
+        })
     }
 
     /**
@@ -148,20 +136,20 @@ public class VisitDAO {
      * @param patientID the patient id
      * @return the visits by patient id
      */
-    public Observable<List<Visit>> getVisitsByPatientID(final Long patientID) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            List<Visit> visits = new ArrayList<>();
-            List<VisitEntity> visitEntities;
+    fun getVisitsByPatientID(patientID: Long?): Observable<List<Visit>> {
+        return createObservableIO<List<Visit>>(Callable<List<Visit>> {
+            val visits: MutableList<Visit> = ArrayList()
+            val visitEntities: List<VisitEntity>
             try {
-                visitEntities = visitRoomDAO.getVisitsByPatientID(patientID).blockingGet();
-                for (VisitEntity entity : visitEntities) {
-                    visits.add(AppDatabaseHelper.convert(entity));
+                visitEntities = visitRoomDAO.getVisitsByPatientID(patientID!!).blockingGet()
+                for (entity in visitEntities) {
+                    visits.add(convert(entity))
                 }
-                return visits;
-            } catch (Exception e) {
-                return visits;
+                return@Callable visits
+            } catch (e: Exception) {
+                return@Callable visits
             }
-        });
+        })
     }
 
     /**
@@ -170,15 +158,15 @@ public class VisitDAO {
      * @param patientId the patient id
      * @return the active visit by patient id
      */
-    public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
-        return AppDatabaseHelper.createObservableIO(() -> {
+    fun getActiveVisitByPatientId(patientId: Long): Observable<Visit> {
+        return createObservableIO<Visit>(Callable<Visit> {
             try {
-                VisitEntity visitEntity = visitRoomDAO.getActiveVisitByPatientId(patientId).blockingGet();
-                return AppDatabaseHelper.convert(visitEntity);
-            } catch (Exception e) {
-                return null;
+                val visitEntity = visitRoomDAO.getActiveVisitByPatientId(patientId)!!.blockingGet()
+                return@Callable convert(visitEntity)
+            } catch (e: Exception) {
+                return@Callable null
             }
-        });
+        })
     }
 
     /**
@@ -187,15 +175,15 @@ public class VisitDAO {
      * @param visitID the visit id
      * @return the visit by id
      */
-    public Observable<Visit> getVisitByID(final Long visitID) {
-        return AppDatabaseHelper.createObservableIO(() -> {
+    fun getVisitByID(visitID: Long): Observable<Visit> {
+        return createObservableIO<Visit>(Callable<Visit> {
             try {
-                VisitEntity visitEntity = visitRoomDAO.getVisitByID(visitID).blockingGet();
-                return AppDatabaseHelper.convert(visitEntity);
-            } catch (Exception e) {
-                return null;
+                val visitEntity = visitRoomDAO.getVisitByID(visitID)!!.blockingGet()
+                return@Callable convert(visitEntity)
+            } catch (e: Exception) {
+                return@Callable null
             }
-        });
+        })
     }
 
     /**
@@ -204,8 +192,10 @@ public class VisitDAO {
      * @param visitUUID the visit uuid
      * @return the visits id by uuid
      */
-    public Observable<Long> getVisitsIDByUUID(final String visitUUID) {
-        return AppDatabaseHelper.createObservableIO(() -> visitRoomDAO.getVisitsIDByUUID(visitUUID));
+    fun getVisitsIDByUUID(visitUUID: String): Observable<Long> {
+        return createObservableIO(Callable {
+            visitRoomDAO.getVisitsIDByUUID(visitUUID)
+        })
     }
 
     /**
@@ -214,15 +204,15 @@ public class VisitDAO {
      * @param uuid the uuid
      * @return the visit by uuid
      */
-    public Observable<Visit> getVisitByUuid(String uuid) {
-        return AppDatabaseHelper.createObservableIO(() -> {
+    fun getVisitByUuid(uuid: String?): Observable<Visit> {
+        return createObservableIO<Visit>(Callable<Visit> {
             try {
-                VisitEntity visitEntity = visitRoomDAO.getVisitByUuid(uuid).blockingGet();
-                return AppDatabaseHelper.convert(visitEntity);
-            } catch (Exception e) {
-                return null;
+                val visitEntity = visitRoomDAO.getVisitByUuid(uuid!!)!!.blockingGet()
+                return@Callable convert(visitEntity)
+            } catch (e: Exception) {
+                return@Callable null
             }
-        });
+        })
     }
 
     /**
@@ -231,10 +221,10 @@ public class VisitDAO {
      * @param id the id
      * @return the observable
      */
-    public Observable<Boolean> deleteVisitsByPatientId(Long id) {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            visitRoomDAO.deleteVisitsByPatientId(id);
-            return true;
-        });
+    fun deleteVisitsByPatientId(id: Long): Observable<Boolean> {
+        return createObservableIO(Callable {
+            visitRoomDAO.deleteVisitsByPatientId(id)
+            true
+        })
     }
 }

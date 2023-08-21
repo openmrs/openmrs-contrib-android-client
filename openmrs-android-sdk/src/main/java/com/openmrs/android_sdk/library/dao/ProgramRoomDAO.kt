@@ -32,7 +32,7 @@ interface ProgramRoomDAO {
      * @return the long
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProgram(program: ProgramEntity)
+    fun insertProgram(program: ProgramEntity): Long
 
     /**
      * Fetch all programs from the table

@@ -13,6 +13,7 @@
  */
 package com.openmrs.android_sdk.library.api.repository
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.ProgramCreate
@@ -26,7 +27,7 @@ import javax.inject.Inject
 class ProgramRepository @Inject constructor() : BaseRepository(){
 
     val representation =  "full"
-    var programRoomDAO = AppDatabase.getDatabase(context).programRoomDAO()
+    var programRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()!!.applicationContext).programRoomDAO()
 
     /**
      * Executes a retrofit request

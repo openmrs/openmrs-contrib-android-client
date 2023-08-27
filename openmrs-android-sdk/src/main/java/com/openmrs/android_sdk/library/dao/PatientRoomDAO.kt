@@ -11,25 +11,20 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.databases.entities.PatientEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity
+import io.reactivex.Single
 
 /**
  * The interface Patient room dao.
  */
 @Dao
-public interface PatientRoomDAO {
+interface PatientRoomDAO {
     /**
      * Add patient long.
      *
@@ -37,7 +32,7 @@ public interface PatientRoomDAO {
      * @return the long
      */
     @Insert
-    long addPatient(PatientEntity patientEntity);
+    fun addPatient(patientEntity: PatientEntity): Long
 
     /**
      * Delete patient.
@@ -45,7 +40,7 @@ public interface PatientRoomDAO {
      * @param id the id
      */
     @Query("DELETE FROM patients WHERE _id = :id")
-    void deletePatient(long id);
+    fun deletePatient(id: Long)
 
     /**
      * Update patient int.
@@ -54,7 +49,7 @@ public interface PatientRoomDAO {
      * @return the int
      */
     @Update
-    int updatePatient(PatientEntity patientEntity);
+    fun updatePatient(patientEntity: PatientEntity): Int
 
     /**
      * Gets all patients.
@@ -62,7 +57,7 @@ public interface PatientRoomDAO {
      * @return the all patients
      */
     @Query("SELECT * FROM patients")
-    Single<List<PatientEntity>> getAllPatients();
+    fun getAllPatients(): Single<List<PatientEntity>>
 
     /**
      * Find patient by uuid single.
@@ -71,7 +66,7 @@ public interface PatientRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM patients WHERE uuid = :uuid")
-    Single<PatientEntity> findPatientByUUID(String uuid);
+    fun findPatientByUUID(uuid: String): Single<PatientEntity>
 
     /**
      * Gets unsynced patients.
@@ -79,7 +74,7 @@ public interface PatientRoomDAO {
      * @return the unsynced patients
      */
     @Query("SELECT * FROM patients WHERE synced = 0")
-    Single<List<PatientEntity>> getUnsyncedPatients();
+    fun getUnsyncedPatients(): Single<List<PatientEntity>>
 
     /**
      * Find patient by id single.
@@ -88,5 +83,5 @@ public interface PatientRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM patients WHERE _id = :id")
-    Single<PatientEntity> findPatientByID(String id);
+    fun findPatientByID(id: String): Single<PatientEntity>
 }

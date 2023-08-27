@@ -91,6 +91,9 @@ object AppDatabaseHelper {
 
     @JvmStatic
     fun convert(obs: ObservationEntity): Observation {
+        val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
+            OpenmrsAndroid.getInstance()!!.applicationContext
+        ).encounterRoomDAO()
 
         val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
             OpenmrsAndroid.getInstance()!!.applicationContext

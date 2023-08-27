@@ -19,7 +19,7 @@ data class Drug(
     var combination: Boolean?,
     var maximumDailyDose: Int?,
     var minimumDailyDose: Int?,
-    var concept: String?,
+    var concept: DrugConcept?,
     var dosageForm: DosageForm?,
     var drugReferenceMaps: List<String>?,
     var ingredients: List<String>?,

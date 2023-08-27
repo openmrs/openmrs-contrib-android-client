@@ -38,6 +38,7 @@ import com.openmrs.android_sdk.library.databases.entities.AppointmentPatientEnti
 import com.openmrs.android_sdk.library.databases.entities.AppointmentBlockEntity
 import com.openmrs.android_sdk.library.databases.entities.AppointmentVisitEntity
 import com.openmrs.android_sdk.library.databases.entities.DosageFormEntity
+import com.openmrs.android_sdk.library.databases.entities.DrugConceptEntity
 import com.openmrs.android_sdk.library.databases.entities.DrugEntity
 import com.openmrs.android_sdk.library.databases.entities.OrderEntity
 import com.openmrs.android_sdk.library.databases.entities.ProgramEntity
@@ -550,20 +551,24 @@ object AppDatabaseHelper {
                 uuid = drug.dosageForm!!.uuid!!
                 display = drug.dosageForm!!.display!!
             }
+            val conceptConverted = DrugConceptEntity().apply {
+                uuid = drug.concept!!.uuid!!
+                display = drug.dosageForm!!.display!!
+            }
             val drugEntity = DrugEntity().apply {
                 uuid = drug.uuid!!
                 display = drug.display!!
-                description = drug.description!!
+                description = drug.description ?: "No Description"
                 combination = drug.combination!!
-                maximumDailyDose = drug.maximumDailyDose!!
-                minimumDailyDose = drug.minimumDailyDose!!
-                concept = drug.concept!!
+                maximumDailyDose = drug.maximumDailyDose ?: 0
+                minimumDailyDose = drug.minimumDailyDose ?: 0
+                concept = conceptConverted
                 dosageForm = dosageFormConverted
                 drugReferenceMaps = drug.drugReferenceMaps
                 ingredients = drug.ingredients
                 name = drug.name!!
                 retired = drug.retired!!
-                strength = drug.strength!!
+                strength = drug.strength ?: "NA"
                 resourceVersion = drug.resourceVersion!!
             }
             drugEnitityList.add(drugEntity)
@@ -583,20 +588,24 @@ object AppDatabaseHelper {
             uuid = drug.dosageForm!!.uuid!!
             display = drug.dosageForm!!.display!!
         }
+        val conceptConverted = DrugConceptEntity().apply {
+            uuid = drug.concept!!.uuid!!
+            display = drug.dosageForm!!.display!!
+        }
         val drugEntity = DrugEntity().apply {
             uuid = drug.uuid!!
             display = drug.display!!
-            description = drug.description!!
+            description = drug.description ?: "No Description"
             combination = drug.combination!!
-            maximumDailyDose = drug.maximumDailyDose!!
-            minimumDailyDose = drug.minimumDailyDose!!
-            concept = drug.concept!!
+            maximumDailyDose = drug.maximumDailyDose ?: 0
+            minimumDailyDose = drug.minimumDailyDose ?: 0
+            concept = conceptConverted
             dosageForm = dosageFormConverted
             drugReferenceMaps = drug.drugReferenceMaps
             ingredients = drug.ingredients
             name = drug.name!!
             retired = drug.retired!!
-            strength = drug.strength!!
+            strength = drug.strength ?: "NA"
             resourceVersion = drug.resourceVersion!!
         }
         return drugEntity

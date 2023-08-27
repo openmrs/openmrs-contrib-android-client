@@ -1,0 +1,48 @@
+{
+  "display": "Test Drug",
+  "uuid": "2d91f706-d1f9-4175-a4ba-f1314f3e520c",
+  "name": "Test Drug",
+  "description": null,
+  "retired": false,
+  "dosageForm": {
+    "uuid": "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "display": "Tablet",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://o3.openmrs.org/openmrs/ws/rest/v1/concept/1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "resourceAlias": "concept"
+      }
+    ]
+  },
+  "maximumDailyDose": 6.0,
+  "minimumDailyDose": 2.0,
+  "concept": {
+    "uuid": "c9c0c627-7ba6-4880-a702-cfc985a296fa",
+    "display": "Griseofulvine",
+    "links": [
+      {
+        "rel": "self",
+        "uri": "http://o3.openmrs.org/openmrs/ws/rest/v1/concept/c9c0c627-7ba6-4880-a702-cfc985a296fa",
+        "resourceAlias": "concept"
+      }
+    ]
+  },
+  "combination": true,
+  "strength": null,
+  "drugReferenceMaps": [],
+  "ingredients": [],
+  "links": [
+    {
+      "rel": "self",
+      "uri": "http://o3.openmrs.org/openmrs/ws/rest/v1/drug/2d91f706-d1f9-4175-a4ba-f1314f3e520c",
+      "resourceAlias": "drug"
+    },
+    {
+      "rel": "full",
+      "uri": "http://o3.openmrs.org/openmrs/ws/rest/v1/drug/2d91f706-d1f9-4175-a4ba-f1314f3e520c?v=full",
+      "resourceAlias": "drug"
+    }
+  ],
+  "resourceVersion": "1.12"
+}

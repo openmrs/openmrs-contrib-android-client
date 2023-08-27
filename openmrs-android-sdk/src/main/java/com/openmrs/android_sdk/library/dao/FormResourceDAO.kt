@@ -11,22 +11,19 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import java.util.List;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity
 
 /**
  * The interface Form resource dao.
  */
 @Dao
-public interface FormResourceDAO {
+interface FormResourceDAO {
+
     /**
      * Gets form resource by name.
      *
@@ -34,7 +31,7 @@ public interface FormResourceDAO {
      * @return the form resource by name
      */
     @Query("SELECT * FROM forms WHERE name = :name")
-    FormResourceEntity getFormResourceByName(String name);
+    fun getFormResourceByName(name: String): FormResourceEntity
 
     /**
      * Gets form resource list.
@@ -42,7 +39,7 @@ public interface FormResourceDAO {
      * @return the form resource list
      */
     @Query("SELECT * FROM forms")
-    List<FormResourceEntity> getFormResourceList();
+    fun getFormResourceList(): List<FormResourceEntity>
 
     /**
      * Gets form by uuid.
@@ -51,13 +48,13 @@ public interface FormResourceDAO {
      * @return the form by uuid
      */
     @Query("SELECT * FROM forms WHERE uuid = :uuid")
-    FormResourceEntity getFormByUuid(String uuid);
+    fun getFormByUuid(uuid: String): FormResourceEntity
 
     /**
      * Delete all forms.
      */
     @Query("DELETE FROM forms")
-    void deleteAllForms();
+    fun deleteAllForms()
 
     /**
      * Add form resource.
@@ -65,5 +62,5 @@ public interface FormResourceDAO {
      * @param formResourceEntity the form resource entity
      */
     @Insert
-    void addFormResource(FormResourceEntity formResourceEntity);
+    fun addFormResource(formResourceEntity: FormResourceEntity)
 }

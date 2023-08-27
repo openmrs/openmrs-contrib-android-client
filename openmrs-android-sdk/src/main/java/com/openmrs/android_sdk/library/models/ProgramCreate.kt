@@ -14,5 +14,5 @@ data class ProgramCreate(
     var description: String,
     var retired: Boolean,
     var concept: String,
-    var outcomesConcept: String
+    var outcomesConcept: String?
 )

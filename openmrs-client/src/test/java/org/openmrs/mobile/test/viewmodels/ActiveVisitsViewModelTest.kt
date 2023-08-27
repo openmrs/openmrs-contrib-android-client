@@ -41,7 +41,7 @@ class ActiveVisitsViewModelTest : ACUnitTestBaseRx() {
 
     @Test
     fun getActiveVisits_success(){
-        Mockito.`when`(visitDAO.activeVisits).thenReturn(Observable.just(visitList))
+        Mockito.`when`(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList))
 
         viewModel.fetchActiveVisits()
 
@@ -54,7 +54,7 @@ class ActiveVisitsViewModelTest : ACUnitTestBaseRx() {
     fun getActiveVisits_error(){
         val errorMsg = "Error message!"
         val throwable = Throwable(errorMsg)
-        Mockito.`when`(visitDAO.activeVisits).thenReturn(Observable.error(throwable))
+        Mockito.`when`(visitDAO.getActiveVisits()).thenReturn(Observable.error(throwable))
 
         viewModel.fetchActiveVisits()
 
@@ -67,7 +67,7 @@ class ActiveVisitsViewModelTest : ACUnitTestBaseRx() {
     fun getActiveVisitsWithQuery_success(){
         val visit = visitList[0]
         val filteredVisits = listOf(visit)
-        Mockito.`when`(visitDAO.activeVisits).thenReturn(Observable.just(filteredVisits))
+        Mockito.`when`(visitDAO.getActiveVisits()).thenReturn(Observable.just(filteredVisits))
 
         viewModel.fetchActiveVisits(visit.display!!)
 
@@ -78,7 +78,7 @@ class ActiveVisitsViewModelTest : ACUnitTestBaseRx() {
 
     @Test
     fun getActiveVisitsWithQuery_noMatchingVisits(){
-        Mockito.`when`(visitDAO.activeVisits).thenReturn(Observable.just(emptyList()))
+        Mockito.`when`(visitDAO.getActiveVisits()).thenReturn(Observable.just(emptyList()))
 
         viewModel.fetchActiveVisits("Visit99")
 
@@ -91,7 +91,7 @@ class ActiveVisitsViewModelTest : ACUnitTestBaseRx() {
     fun getActiveVisitsWithQuery_error(){
         val errorMsg = "Error message!"
         val throwable = Throwable(errorMsg)
-        Mockito.`when`(visitDAO.activeVisits).thenReturn(Observable.error(throwable))
+        Mockito.`when`(visitDAO.getActiveVisits()).thenReturn(Observable.error(throwable))
 
         viewModel.fetchActiveVisits("visit1")
 

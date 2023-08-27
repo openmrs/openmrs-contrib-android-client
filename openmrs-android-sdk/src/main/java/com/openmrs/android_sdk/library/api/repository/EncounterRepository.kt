@@ -44,7 +44,7 @@ class EncounterRepository @Inject constructor(
     fun saveEncounter(encounterCreate: Encountercreate): Observable<ResultType> {
         return AppDatabaseHelper.createObservableIO(Callable {
             val patient = PatientDAO().findPatientByID(encounterCreate.patientId.toString())
-            val activeVisit = VisitDAO().getActiveVisitByPatientId(encounterCreate.patientId).execute()
+            val activeVisit = VisitDAO().getActiveVisitByPatientId(encounterCreate.patientId!!).execute()
             if (patient == null || activeVisit == null || encounterCreate.synced) {
                 return@Callable ResultType.EncounterSubmissionError
             }

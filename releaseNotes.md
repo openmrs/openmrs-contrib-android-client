@@ -1,6 +1,45 @@
 
 # Release Notes
 
+### Version 3.1.1
+
+1. [AC-1068] - Not able to Login due to session id
+2. [AC-1069] - Offline Patient click crashes the app
+3. [AC-1070] - Identifier not created for the offline patient
+4. [AC-1071] - Add new functions and enhancements in the SDK
+5. [AC-1072] - Add more APIs for the Encounter operations in the SDK
+6. [AC-1073] - Migrate EncounterCreateRoomDAO to Kotllin
+7. [AC-1074] - Migrate ObservationRoomDAO to Kotlin
+8. [AC-1075] - CI/CD pipeline fix for GitHub
+9. [AC-1077] - Add/Enhance APIs for Observation operations in the SDK
+10. [AC-1078] - Migrate VisitRoomDAO to Kotlin
+11. [AC-1079] - Add/Enhance APIs for Visit operations in the SDK
+12. [AC-1080] - Add Appointment Scheduling feature to the SDK
+13. [AC-1081] - Migrate ConceptRoomDAO to Kotlin
+14. [AC-1082] - Add Orders feature to the SDK
+15. [AC-1088] - Add unit tests for the Appointment Repository
+16. [AC-1089] - Add base changes for Unit testing
+17. [AC-1090] - Add unit tests for Visit Repository
+18. [AC-1091] - Add unit tests for Encounter Repository
+19. [AC-1092] - Add unit tests for Observation Repository
+20. [AC-1093] - Add Drugs Feature to the SDK
+21. [AC-1094] - Add Program, Program Workflow and Program Workflow states to the SDK
+22. [AC-1095] - Add CI check for Unit Tests
+23. [AC-1096] - Migrate EncounterDAO to Kotlin
+24. [AC-1097] - Migrate EncounterRoomDAO to Kotllin
+25. [AC-1098] - Migrate EncounterTypeRoomDAO to Kotlin
+26. [AC-1099] - Migrate FormResourceDAO to Kotlin
+27. [AC-1100] - Migrate LocationRoomDAO to Kotllin
+28. [AC-1101] - Migrate LocationDAO to Kotlin
+29. [AC-1102] - Migrate ObservationDAO to Kotlin
+30. [AC-1103] - Add yml for Jitpack
+31. [AC-1104] - Migrate PatientRoomDAO to Kotlin
+32. [AC-1105] - Migrate ProviderRoomDAO to Kotlin
+33. [AC-1106] - Migrate VisitDAO to Kotlin
+34. [AC-1107] - Add Unit Tests for Drug Repository and fix bugs
+35. [AC-1108] - Add Unit Tests for Program Repository and fix bugs
+36. [AC-1109] - Fix erros due to Kotlin Migration
+
 ### Version 3.0.0
 
 1. [AC-574] - Android Client cannot update provider password

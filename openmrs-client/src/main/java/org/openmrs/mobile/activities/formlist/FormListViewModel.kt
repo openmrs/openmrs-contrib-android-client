@@ -111,7 +111,7 @@ class FormListViewModel @Inject constructor(
         private fun click() {
             formName = formResourceList[position].name
             encounterName = formName!!.split("\\(".toRegex()).toTypedArray()[0].trim { it <= ' ' }
-            encounterType = encounterDAO.getEncounterTypeByFormName(encounterName)?.uuid
+            encounterType = encounterDAO.getEncounterTypeByFormName(encounterName!!)?.uuid
             formResourceList[position].resources.forEach {
                 if (it.name == "json") formFieldsJson = it.valueReference
             }

@@ -96,10 +96,6 @@ object AppDatabaseHelper {
             OpenmrsAndroid.getInstance()!!.applicationContext
         ).encounterRoomDAO()
 
-        val encounterRoomDAO: EncounterRoomDAO = AppDatabase.getDatabase(
-            OpenmrsAndroid.getInstance()!!.applicationContext
-        ).encounterRoomDAO()
-
         val observation = Observation()
 
         val encounter = Encounter()

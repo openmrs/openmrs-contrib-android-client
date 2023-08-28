@@ -91,7 +91,7 @@ class EncounterDAO @Inject constructor() {
      * @param patientUuid the patient uuid for which the standalone encounters should be deleted
      * @return the long
      */
-    fun deleteAllStandaloneEncounters(patientUuid: String?): Observable<Boolean> {
+    fun deleteAllStandaloneEncounters(patientUuid: String): Observable<Boolean> {
         return createObservableIO(Callable {
             encounterRoomDAO.deleteStandaloneEncounter(patientUuid)
             true
@@ -104,7 +104,7 @@ class EncounterDAO @Inject constructor() {
      * @param formName the form name
      * @return the encounter type by form name
      */
-    fun getEncounterTypeByFormName(formName: String?): EncounterType {
+    fun getEncounterTypeByFormName(formName: String): EncounterType {
         return encounterTypeRoomDAO.getEncounterTypeByFormName(formName)
     }
 
@@ -114,7 +114,7 @@ class EncounterDAO @Inject constructor() {
      * @param encounter   the encounter
      * @param patientUUID the patient uuid
      */
-    fun saveLastVitalsEncounter(encounter: Encounter?, patientUUID: String?) {
+    fun saveLastVitalsEncounter(encounter: Encounter?, patientUUID: String) {
         if (null != encounter) {
             encounter.patientUUID = patientUUID
             val oldLastVitalsEncounterID: Long
@@ -145,7 +145,7 @@ class EncounterDAO @Inject constructor() {
      */
     fun getLastVitalsEncounter(patientUUID: String?): Observable<Encounter> {
         return createObservableIO(Callable {
-            val encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet()
+            val encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID!!, EncounterType.VITALS).blockingGet()
             convert(encounterEntity)
         })
     }
@@ -200,7 +200,7 @@ class EncounterDAO @Inject constructor() {
             val encounterEntities: List<EncounterEntity>
             try {
                 encounterEntities =
-                    encounterRoomDAO.getAllEncountersByType(patientID, type?.display).blockingGet()
+                    encounterRoomDAO.getAllEncountersByType(patientID!!, type?.display!!).blockingGet()
                 for (entity in encounterEntities) {
                     encounters.add(convert(entity!!))
                 }
@@ -219,7 +219,7 @@ class EncounterDAO @Inject constructor() {
      */
     fun getEncounterByUUID(encounterUUID: String?): Long {
         return try {
-            encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet()
+            encounterRoomDAO.getEncounterByUUID(encounterUUID!!).blockingGet()
         } catch (e: Exception) {
             0
         }

@@ -83,7 +83,7 @@ class LocationDAO @Inject constructor() {
         return if (!notNull(name)) {
             null
         } else try {
-            locationRoomDAO.findLocationByName(name).blockingGet()
+            locationRoomDAO.findLocationByName(name!!).blockingGet()
         } catch (e: Exception) {
             LocationEntity(name!!)
         }
@@ -99,7 +99,7 @@ class LocationDAO @Inject constructor() {
         return if (!notNull(uuid)) {
             null
         } else try {
-            locationRoomDAO.findLocationByUUID(uuid).blockingGet()
+            locationRoomDAO.findLocationByUUID(uuid!!).blockingGet()
         } catch (e: Exception) {
             LocationEntity("")
         }

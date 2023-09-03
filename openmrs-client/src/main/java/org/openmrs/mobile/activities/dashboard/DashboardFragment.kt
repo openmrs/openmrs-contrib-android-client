@@ -15,12 +15,14 @@ package org.openmrs.mobile.activities.dashboard
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
@@ -177,11 +179,21 @@ class DashboardFragment : BaseFragment(), View.OnClickListener {
         val directionToActiveVisits = DashboardFragmentDirections.actionDashboardFragmentToActiveVisitsActivity()
         when (v.id) {
             R.id.findPatientView -> findNavController().navigate(directionToFindPatent)
-            R.id.registryPatientView -> findNavController().navigate(directionToRegister)
+            R.id.registryPatientView -> navigateToScreen(directionToRegister)
             R.id.captureVitalsView -> findNavController().navigate(directionToFormEntry)
             R.id.activeVisitsView -> findNavController().navigate(directionToActiveVisits)
             R.id.dashboardProviderManagementView -> findNavController().navigate(directionToProviderManager)
             else -> {
+            }
+        }
+    }
+
+    private fun navigateToScreen(destination: NavDirections) {
+        (activity as DashboardActivity).apply {
+            if (!isNavigationInProgress) {
+                showProgressBar()
+                isNavigationInProgress = true
+                findNavController().navigate(destination)
             }
         }
     }

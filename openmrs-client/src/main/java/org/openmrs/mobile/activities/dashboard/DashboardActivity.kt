@@ -16,6 +16,8 @@ package org.openmrs.mobile.activities.dashboard
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
+import android.widget.ProgressBar
 import androidx.navigation.fragment.NavHostFragment
 import com.openmrs.android_sdk.utilities.ToastUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +41,7 @@ class DashboardActivity : ACBaseActivity() {
             doubleBackToExitPressedOnce = false
         }
     }
+    internal var isNavigationInProgress = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,11 +99,21 @@ class DashboardActivity : ACBaseActivity() {
         }
     }*/
 
+    internal fun showProgressBar() {
+        findViewById<ProgressBar>(R.id.pbDashboardActivity).visibility = View.VISIBLE
+    }
+
     override fun onResume() {
         super.onResume()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.dashboard_nav_host_fragment) as NavHostFragment
         val dashboardFragment: DashboardFragment? = navHostFragment.childFragmentManager.primaryNavigationFragment as DashboardFragment?
         dashboardFragment?.bindDrawableResources()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        isNavigationInProgress = false
+        findViewById<ProgressBar>(R.id.pbDashboardActivity).visibility = View.GONE
     }
 
     override fun onBackPressed() {

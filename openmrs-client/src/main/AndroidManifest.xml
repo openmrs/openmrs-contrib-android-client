@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -43,7 +45,8 @@
         <activity
             android:name=".activities.introduction.SplashActivity"
             android:noHistory="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +66,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.ConceptDownloadService" />
+        <service
+            android:name=".services.ConceptDownloadService"
+            android:foregroundServiceType="dataSync" />
 
         <activity
             android:name=".activities.dashboard.DashboardActivity"
@@ -77,6 +82,7 @@
             android:name=".activities.syncedpatients.SyncedPatientsActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_synced_patients"
+            android:exported="false"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeOrig">
 
@@ -120,6 +126,7 @@
             android:name=".activities.activevisits.ActiveVisitsActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_active_visits"
+            android:exported="false"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeOrig">
 
@@ -215,6 +222,7 @@
             android:name=".activities.lastviewedpatients.LastViewedPatientsActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_download_patients"
+            android:exported="false"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeOrig">
 

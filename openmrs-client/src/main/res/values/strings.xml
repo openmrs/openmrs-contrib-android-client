@@ -14,8 +14,8 @@
   -->
 
 <resources>
-    <string name="app_name">OpenMRS Android Client</string>
-    <string name="organization_name" translatable="false">OpenMRS</string>
+    <string name="app_name">MediHealth</string>
+    <string name="organization_name" translatable="false">MediHealth</string>
     <string name="client_name" translatable="false">Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
@@ -79,7 +79,7 @@
 
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Logging out</string>
-    <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
+    <string name="logout_dialog_message">Are you sure you want to logout from MediHealth client?</string>
     <string name="logout_dialog_button">Logout</string>
     <!--Credentials Changed dialog-->
     <string name="credentials_changed_dialog_title">Credentials changed</string>
@@ -182,7 +182,7 @@
     <string name="search_visits_no_results">No active visits in database</string>
 
     <!-- ACBase activity -->
-    <string name="error_email_subject_app_crashed">OpenMRS android client crashed</string>
+    <string name="error_email_subject_app_crashed">MediHealth android client crashed</string>
     <string name="choose_a_email_client">Choose an Email client :</string>
     <string name="no_internet_connection_message">No internet connection</string>
 
@@ -256,7 +256,7 @@
     <string name="charts_view_toolbar_title">Charts View</string>
 
     <!-- Image content description strings -->
-    <string name="openmrs_logo">OpenMRS logo</string>
+    <string name="openmrs_logo">MediHealth logo</string>
     <string name="toast_with_black_background">Toast with black background</string>
     <string name="edit_form">Edit form</string>
     <string name="patient_photo">Patient Photo</string>

@@ -103,7 +103,7 @@ public class ConceptDownloadService extends Service {
         Intent notificationIntent = new Intent(this, SettingsActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.putExtra(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT, downloadedConcepts);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_openmrs);
 

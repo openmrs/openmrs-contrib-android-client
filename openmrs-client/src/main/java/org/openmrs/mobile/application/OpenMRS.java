@@ -46,7 +46,6 @@ public class OpenMRS extends MultiDexApplication implements Configuration.Provid
     public static OpenMRS getInstance() {
         return instance;
     }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -56,10 +55,20 @@ public class OpenMRS extends MultiDexApplication implements Configuration.Provid
         if (mExternalDirectoryPath == null) {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }
-        Intent i = new Intent(this, FormListService.class);
-        startService(i);
-        Intent intent = new Intent(this, AuthenticateCheckService.class);
-        startService(intent);
+
+        try {
+            Intent i = new Intent(this, FormListService.class);
+            startService(i);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Intent intent = new Intent(this, AuthenticateCheckService.class);
+            startService(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @NotNull

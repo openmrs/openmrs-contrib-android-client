@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'maven-publish'
-    id 'org.jetbrains.dokka'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
@@ -13,7 +12,7 @@ android {
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
@@ -51,11 +50,11 @@ android {
         implementation 'com.google.code.gson:gson:2.8.5'
 
         // room
-        implementation 'androidx.room:room-runtime:2.3.0-alpha01'
-        implementation 'android.arch.persistence.room:rxjava2:1.1.1'
+        implementation 'androidx.room:room-runtime:2.4.3'
+        implementation 'androidx.room:room-rxjava2:2.4.3'
 
         //no inspection
-        kapt 'androidx.room:room-compiler:2.1.0-alpha04'
+        kapt 'androidx.room:room-compiler:2.4.3'
 
         // joda time
         implementation 'joda-time:joda-time:2.10.6'
@@ -77,7 +76,7 @@ android {
         implementation "com.google.code.gson:gson:2.8.5"
 
         // Work Manager
-        implementation "androidx.work:work-runtime:2.3.4"
+        implementation "androidx.work:work-runtime:2.7.1"
 
         // test implementation
         testImplementation 'junit:junit:4.+'
@@ -135,10 +134,3 @@ android {
     }
 }
 
-dokkaHtml.configure {
-    dokkaSourceSets {
-        named("main") {
-            noAndroidSdkLink.set(false)
-        }
-    }
-}

@@ -160,7 +160,7 @@ dependencies {
 
     // Database components
     implementation "androidx.room:room-runtime:${versions.roomRuntime}"
-    implementation "android.arch.persistence.room:rxjava2:${versions.roomPersistence}"
+    implementation "androidx.room:room-rxjava2:${versions.roomPersistence}"
 
     // Noinspection GradleDependency
     annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"
@@ -231,7 +231,6 @@ dependencies {
     kaptTest "com.google.dagger:hilt-compiler:${versions.hilt}"
 
     // Leak Canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
     // Debug database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

@@ -1,8 +1,8 @@
 ext.versions = [:]
 
-versions.compileSdk = 29
+versions.compileSdk = 31
 versions.minSdk = 19
-versions.targetSdk = 29
+versions.targetSdk = 34
 versions.appVersion = "2.9.0"
 
 // Libraries

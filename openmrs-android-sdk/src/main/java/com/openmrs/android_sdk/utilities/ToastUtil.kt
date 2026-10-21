@@ -99,8 +99,8 @@ object ToastUtil {
         }
         logger.d("Decode bitmap: $bitmap")
         val toast = Toast(context)
-        toast.view = toastRoot
-        toast.duration = duration
+        toast.setView(toastRoot)
+        toast.setDuration(duration)
         toast.show()
         val thread = ToastThread(duration)
         if (toastQueue.size == 0) {

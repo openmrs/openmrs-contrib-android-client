@@ -62,6 +62,7 @@ class ForceClose @Inject constructor(private val context: Context) : Thread.Unca
         val i = context.packageManager.getLaunchIntentForPackage("org.openmrs.mobile")
         i?.putExtra("flag", true)
         i?.putExtra("error", errorReport.toString())
+        i?.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(i)
         Process.killProcess(Process.myPid())
         exitProcess(10)

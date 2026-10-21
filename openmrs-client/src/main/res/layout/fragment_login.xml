@@ -135,6 +135,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginUsernameField"
+                    android:text="admin"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
@@ -158,6 +159,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginPasswordField"
+                    android:text="Admin123"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"

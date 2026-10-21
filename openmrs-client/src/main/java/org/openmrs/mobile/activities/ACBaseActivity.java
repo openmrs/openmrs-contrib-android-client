@@ -129,7 +129,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 && !(this instanceof ContactUsActivity) && !(this instanceof SplashActivity)) {
             mAuthorizationManager.moveToLoginActivity();
         }
-        registerReceiver(mPasswordChangedReceiver, mIntentFilter);
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            registerReceiver(mPasswordChangedReceiver, mIntentFilter, 4 /* RECEIVER_NOT_EXPORTED */);
+        } else {
+            registerReceiver(mPasswordChangedReceiver, mIntentFilter);
+        }
         ToastUtil.setAppVisible(true);
     }
 

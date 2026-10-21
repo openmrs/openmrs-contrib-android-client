@@ -54,7 +54,7 @@ public class FormListService extends IntentService {
                 formResourceDAO.addFormResource(formResourceEntity);
             }
         } catch (Exception e) {
-            ToastUtil.error(response.message());
+            ToastUtil.error(response != null ? response.message() : e.getMessage());
         }
         // Refresh encounter types
         EncounterTypeRoomDAO encounterTypeRoomDAO = appDatabase.encounterTypeRoomDAO();
@@ -68,7 +68,7 @@ public class FormListService extends IntentService {
                 encounterTypeRoomDAO.addEncounterType(encounterType);
             }
         } catch (Exception e) {
-            ToastUtil.error(response2.message());
+            ToastUtil.error(response2 != null ? response2.message() : e.getMessage());
         }
     }
 }
